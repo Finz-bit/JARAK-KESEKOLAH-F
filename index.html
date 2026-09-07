@@ -18,6 +18,13 @@
     <title>JARAK KESEKOLAH</title>
 
     <link rel="stylesheet" href="style.css">
+    <!-- Leaflet CSS -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIINfQ3x6L1jY8cX8K8y0k2p7R5F5r5E5E="
+    crossorigin=""
+>
 </head>
 
 <body>
@@ -440,78 +447,150 @@
             </section>
 
 
-            <!-- =================================
-                 MAP PAGE
-            ================================== -->
+           <!-- =================================
+     MAP PAGE
+================================== -->
 
-            <section
-                class="page"
-                id="mapPage"
+<section
+    class="page"
+    id="mapPage"
+>
+
+    <div class="page-heading">
+
+        <span class="eyebrow">
+            PETA PERJALANAN
+        </span>
+
+        <h1>
+            Peta
+        </h1>
+
+        <p>
+            Tentukan dan lihat lokasi perjalanan
+            rumah menuju sekolah.
+        </p>
+
+    </div>
+
+
+    <!-- MAP CARD -->
+
+    <div class="map-card">
+
+        <div
+            id="map"
+            class="map"
+        ></div>
+
+    </div>
+
+
+    <!-- MAP INFORMATION -->
+
+    <div class="map-info-card">
+
+        <div class="map-info-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
             >
 
-                <div class="page-heading">
+                <path
+                    d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                />
 
-                    <span class="eyebrow">
-                        PETA PERJALANAN
-                    </span>
+                <circle
+                    cx="12"
+                    cy="9.5"
+                    r="2.5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                />
 
-                    <h1>
-                        Peta
-                    </h1>
+            </svg>
 
-                    <p>
-                        Peta perjalanan akan tersedia
-                        pada tahap berikutnya.
-                    </p>
+        </div>
 
-                </div>
+        <div>
+
+            <strong>
+                Peta aktif
+            </strong>
+
+            <span id="mapStatus">
+                Peta Jalan
+            </span>
+
+        </div>
+
+    </div>
 
 
-                <div class="map-placeholder">
+    <!-- MAP ACTION -->
 
-                    <div class="map-placeholder-icon">
+    <button
+        class="primary-button"
+        id="locateMapButton"
+        type="button"
+    >
 
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
+        <span>
+            Pusatkan peta
+        </span>
 
-                            <path
-                                d="M9 18L3 21V6L9 3L15 6L21 3V18L15 21L9 18Z"
-                                stroke="currentColor"
-                                stroke-width="1.7"
-                                stroke-linejoin="round"
-                            />
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
 
-                            <path
-                                d="M9 3V18"
-                                stroke="currentColor"
-                                stroke-width="1.7"
-                            />
+            <circle
+                cx="12"
+                cy="12"
+                r="3"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
 
-                            <path
-                                d="M15 6V21"
-                                stroke="currentColor"
-                                stroke-width="1.7"
-                            />
+            <path
+                d="M12 2V5"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
 
-                        </svg>
+            <path
+                d="M12 19V22"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
 
-                    </div>
+            <path
+                d="M2 12H5"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
 
-                    <h2>
-                        Peta perjalanan
-                    </h2>
+            <path
+                d="M19 12H22"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
 
-                    <p>
-                        Leaflet akan ditambahkan
-                        pada Tahap 2.
-                    </p>
+        </svg>
 
-                </div>
+    </button>
 
-            </section>
+</section>
 
 
             <!-- =================================
@@ -1101,7 +1180,14 @@
     </div>
 
 
-    <script src="app.js"></script>
+<!-- Leaflet JS -->
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+></script>
 
+<script src="app.js"></script>
+    
 </body>
 </html>
