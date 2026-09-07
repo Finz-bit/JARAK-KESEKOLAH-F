@@ -239,25 +239,6 @@ const scheduleStatus =
     document.getElementById("scheduleStatus");
 
 
-/* =========================================
-   REMINDER
-========================================= */
-
-const departureReminderToggle =
-    document.getElementById("departureReminderToggle");
-
-const reminderSoundSelect =
-    document.getElementById("reminderSoundSelect");
-
-const testReminderSoundButton =
-    document.getElementById("testReminderSoundButton");
-
-const reminderStatusTitle =
-    document.getElementById("reminderStatusTitle");
-
-const reminderStatusText =
-    document.getElementById("reminderStatusText");
-
 
 /* =========================================
    HISTORY
