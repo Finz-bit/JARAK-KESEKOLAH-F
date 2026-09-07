@@ -78,7 +78,7 @@ const STORAGE_KEY = "jarak_ke_sekolah_data";
 const SETTINGS_KEY = "jarak_ke_sekolah_settings";
 const HISTORY_KEY = "jarak_ke_sekolah_history";
 const SCHEDULE_KEY = "jarak_ke_sekolah_schedule";
-const TUTORIAL_KEY = "jarak_ke_sekolah_tutorial_seen";
+const TUTORIAL_KEY = "jarak_ke_sekolah_tutorial_seen_v3";
 
 
 /* =========================================
