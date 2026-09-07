@@ -4030,3 +4030,282 @@ if (window.matchMedia) {
 ========================================= */
 
 initializeApp();
+
+/* =========================================
+   FIX TUTORIAL + SCROLL
+========================================= */
+
+/* Pastikan halaman selalu bisa di-scroll */
+document.documentElement.style.overflowY = "auto";
+document.body.style.overflowY = "auto";
+document.body.style.overflowX = "hidden";
+
+
+/* CSS tutorial dibuat langsung dari JavaScript
+   supaya tetap tampil meskipun style.css belum
+   memiliki class tutorial. */
+
+(function fixTutorialUI() {
+
+    const style = document.createElement("style");
+
+    style.id = "tutorial-fix-style";
+
+    style.textContent = `
+        .tutorial-overlay {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 99999 !important;
+            display: none !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 20px !important;
+            background: rgba(0, 0, 0, 0.55) !important;
+            overflow-y: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        .tutorial-overlay.show {
+            display: flex !important;
+        }
+
+        .tutorial-modal {
+            width: 100% !important;
+            max-width: 430px !important;
+            max-height: calc(100vh - 40px) !important;
+            overflow-y: auto !important;
+            background: #ffffff !important;
+            border-radius: 24px !important;
+            padding: 24px !important;
+            box-sizing: border-box !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25) !important;
+            position: relative !important;
+        }
+
+        .tutorial-modal button {
+            cursor: pointer !important;
+        }
+
+        .tutorial-icon {
+            width: 64px !important;
+            height: 64px !important;
+            margin: 0 auto 16px !important;
+            border-radius: 18px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #eef4ff !important;
+        }
+
+        .tutorial-icon svg {
+            width: 32px !important;
+            height: 32px !important;
+        }
+
+        .tutorial-step-label {
+            text-align: center !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            letter-spacing: .08em !important;
+            opacity: .6 !important;
+            margin-bottom: 10px !important;
+        }
+
+        .tutorial-title {
+            text-align: center !important;
+            font-size: 22px !important;
+            font-weight: 800 !important;
+            margin: 0 0 10px !important;
+        }
+
+        .tutorial-description {
+            font-size: 15px !important;
+            line-height: 1.65 !important;
+            text-align: center !important;
+            opacity: .78 !important;
+            margin-bottom: 20px !important;
+        }
+
+        .tutorial-dots {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 7px !important;
+            margin: 10px 0 20px !important;
+        }
+
+        .tutorial-dot {
+            width: 7px !important;
+            height: 7px !important;
+            border-radius: 50% !important;
+            background: #cbd5e1 !important;
+            transition: .2s !important;
+        }
+
+        .tutorial-dot.active {
+            width: 22px !important;
+            border-radius: 10px !important;
+            background: #2563eb !important;
+        }
+
+        .tutorial-actions,
+        .tutorial-navigation {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .tutorial-navigation {
+            justify-content: space-between !important;
+        }
+
+        .tutorial-navigation button {
+            min-height: 46px !important;
+            border: 0 !important;
+            border-radius: 14px !important;
+            padding: 0 18px !important;
+            font-weight: 700 !important;
+        }
+
+        .tutorial-skip {
+            background: transparent !important;
+            border: 0 !important;
+            opacity: .65 !important;
+            font-weight: 600 !important;
+        }
+
+        #tutorialBackButton {
+            background: #eef2f7 !important;
+        }
+
+        #tutorialNextButton {
+            background: #2563eb !important;
+            color: white !important;
+        }
+
+        #tutorialCloseButton {
+            position: absolute !important;
+            top: 14px !important;
+            right: 14px !important;
+            width: 38px !important;
+            height: 38px !important;
+            border: 0 !important;
+            border-radius: 50% !important;
+            background: #f1f5f9 !important;
+            font-size: 20px !important;
+        }
+
+        @media (max-width: 480px) {
+            .tutorial-overlay {
+                padding: 14px !important;
+            }
+
+            .tutorial-modal {
+                max-height: calc(100vh - 28px) !important;
+                border-radius: 22px !important;
+                padding: 22px 18px !important;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html[data-theme="dark"] .tutorial-modal {
+                background: #151922 !important;
+                color: #ffffff !important;
+            }
+
+            html[data-theme="dark"] .tutorial-icon {
+                background: #202b43 !important;
+            }
+
+            html[data-theme="dark"] #tutorialBackButton {
+                background: #252b36 !important;
+                color: #ffffff !important;
+            }
+
+            html[data-theme="dark"] #tutorialCloseButton {
+                background: #252b36 !important;
+                color: #ffffff !important;
+            }
+        }
+    `;
+
+    document.head.appendChild(style);
+
+})();
+
+
+/* =========================================
+   FIX TUTORIAL SCROLL LOCK
+========================================= */
+
+function unlockPageScroll() {
+
+    document.documentElement.style.overflowY =
+        "auto";
+
+    document.body.style.overflow =
+        "";
+
+    document.body.style.overflowY =
+        "auto";
+
+    document.body.style.overflowX =
+        "hidden";
+}
+
+
+/* =========================================
+   PERBAIKI CLOSE TUTORIAL
+========================================= */
+
+const originalCloseTutorial =
+    closeTutorial;
+
+closeTutorial = function(markAsSeen = true) {
+
+    originalCloseTutorial(markAsSeen);
+
+    unlockPageScroll();
+
+};
+
+
+/* =========================================
+   PERBAIKI OPEN TUTORIAL
+========================================= */
+
+const originalOpenTutorial =
+    openTutorial;
+
+openTutorial = function(fromFirstStep = true) {
+
+    originalOpenTutorial(fromFirstStep);
+
+    /* Tutorial boleh scroll sendiri,
+       tetapi halaman utama tetap terkendali. */
+
+    if (tutorialOverlay) {
+
+        tutorialOverlay.style.overflowY =
+            "auto";
+
+    }
+
+};
+
+
+/* =========================================
+   PAKSA SCROLL AKTIF SAAT APP DIMULAI
+========================================= */
+
+setTimeout(() => {
+
+    if (
+        !tutorialIsOpen
+    ) {
+
+        unlockPageScroll();
+
+    }
+
+}, 1200);
