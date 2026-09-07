@@ -4,6 +4,8 @@
    COMPLETE VERSION
    SISTEM PILIH LOKASI LANGSUNG DI PETA
    + TUTORIAL PENGGUNAAN
+   + INDIKATOR JENIS PETA
+   + MARKER RUMAH/SEKOLAH LEBIH BESAR
 ========================================= */
 
 
@@ -148,6 +150,18 @@ let modePilihLokasi = null;
 ========================================= */
 
 let mapLayers = {};
+
+
+/* =========================================
+   NAMA PETA
+========================================= */
+
+const MAP_TYPE_NAMES = {
+    street: "Peta Jalan",
+    satellite: "Peta Satelit",
+    terrain: "Peta Terrain",
+    dark: "Peta Dark"
+};
 
 
 /* =========================================
@@ -406,6 +420,76 @@ if (settingsButton) {
 
 
 /* =========================================
+   MAP ACTIVE INDICATOR
+========================================= */
+
+function updateActiveMapUI() {
+
+    const mapName =
+        MAP_TYPE_NAMES[currentMapType] ||
+        "Peta Jalan";
+
+    /*
+       Mendukung beberapa kemungkinan ID
+       agar indikator tetap bekerja tanpa
+       mengganggu HTML yang sudah ada.
+    */
+
+    const possibleElements = [
+
+        document.getElementById(
+            "activeMapName"
+        ),
+
+        document.getElementById(
+            "activeMapType"
+        ),
+
+        document.getElementById(
+            "activeMapLabel"
+        ),
+
+        document.getElementById(
+            "activeMapText"
+        ),
+
+        document.querySelector(
+            ".active-map-name"
+        ),
+
+        document.querySelector(
+            ".active-map-type"
+        ),
+
+        document.querySelector(
+            ".active-map-label"
+        )
+
+    ];
+
+    const updated =
+        new Set();
+
+    possibleElements.forEach((element) => {
+
+        if (
+            element &&
+            !updated.has(element)
+        ) {
+
+            element.textContent =
+                mapName;
+
+            updated.add(element);
+
+        }
+
+    });
+
+}
+
+
+/* =========================================
    MAP INITIALIZATION
 ========================================= */
 
@@ -522,6 +606,8 @@ function initializeMap() {
     }, 200);
 
     updateMapSelect();
+
+    updateActiveMapUI();
 
     restoreMapLocations();
 
@@ -773,8 +859,10 @@ function changeMapType(type) {
         settings
     );
 
+    updateActiveMapUI();
+
     showToast(
-        "Jenis peta berhasil diubah."
+        `${MAP_TYPE_NAMES[type] || "Jenis peta"} aktif.`
     );
 
 }
@@ -789,11 +877,14 @@ function updateMapSelect() {
 
     }
 
+    updateActiveMapUI();
+
 }
 
 
 /* =========================================
    CUSTOM MAP MARKER
+   UKURAN DIPERBESAR
 ========================================= */
 
 function createHomeIcon() {
@@ -804,11 +895,22 @@ function createHomeIcon() {
             "custom-marker",
 
         html: `
-            <div class="marker-pin marker-home">
+            <div
+                class="marker-pin marker-home"
+                style="
+                    width:60px;
+                    height:60px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    transform:scale(1.25);
+                    transform-origin:center bottom;
+                "
+            >
                 <svg
                     viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
+                    width="34"
+                    height="34"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
@@ -823,18 +925,18 @@ function createHomeIcon() {
         `,
 
         iconSize: [
-            44,
-            52
+            60,
+            68
         ],
 
         iconAnchor: [
-            22,
-            52
+            30,
+            68
         ],
 
         popupAnchor: [
             0,
-            -50
+            -62
         ]
 
     });
@@ -850,11 +952,22 @@ function createSchoolIcon() {
             "custom-marker",
 
         html: `
-            <div class="marker-pin marker-school">
+            <div
+                class="marker-pin marker-school"
+                style="
+                    width:60px;
+                    height:60px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    transform:scale(1.25);
+                    transform-origin:center bottom;
+                "
+            >
                 <svg
                     viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
+                    width="34"
+                    height="34"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
@@ -871,18 +984,18 @@ function createSchoolIcon() {
         `,
 
         iconSize: [
-            44,
-            52
+            60,
+            68
         ],
 
         iconAnchor: [
-            22,
-            52
+            30,
+            68
         ],
 
         popupAnchor: [
             0,
-            -50
+            -62
         ]
 
     });
@@ -3193,6 +3306,10 @@ function saveSettings() {
             currentMapType
         );
 
+    } else {
+
+        updateActiveMapUI();
+
     }
 
     showToast(
@@ -3255,6 +3372,10 @@ function resetSettings() {
         changeMapType(
             currentMapType
         );
+
+    } else {
+
+        updateActiveMapUI();
 
     }
 
@@ -3960,6 +4081,8 @@ function initializeApp() {
 
     renderHistory();
 
+    updateActiveMapUI();
+
     showPage(
         "dashboardPage"
     );
@@ -4031,6 +4154,7 @@ if (window.matchMedia) {
 
 initializeApp();
 
+
 /* =========================================
    FIX TUTORIAL + SCROLL
 ========================================= */
@@ -4047,9 +4171,22 @@ document.body.style.overflowX = "hidden";
 
 (function fixTutorialUI() {
 
-    const style = document.createElement("style");
+    const oldStyle =
+        document.getElementById(
+            "tutorial-fix-style"
+        );
 
-    style.id = "tutorial-fix-style";
+    if (oldStyle) {
+        return;
+    }
+
+    const style =
+        document.createElement(
+            "style"
+        );
+
+    style.id =
+        "tutorial-fix-style";
 
     style.textContent = `
         .tutorial-overlay {
@@ -4196,6 +4333,7 @@ document.body.style.overflowX = "hidden";
         }
 
         @media (max-width: 480px) {
+
             .tutorial-overlay {
                 padding: 14px !important;
             }
@@ -4205,9 +4343,11 @@ document.body.style.overflowX = "hidden";
                 border-radius: 22px !important;
                 padding: 22px 18px !important;
             }
+
         }
 
         @media (prefers-color-scheme: dark) {
+
             html[data-theme="dark"] .tutorial-modal {
                 background: #151922 !important;
                 color: #ffffff !important;
@@ -4226,10 +4366,13 @@ document.body.style.overflowX = "hidden";
                 background: #252b36 !important;
                 color: #ffffff !important;
             }
+
         }
     `;
 
-    document.head.appendChild(style);
+    document.head.appendChild(
+        style
+    );
 
 })();
 
@@ -4261,9 +4404,13 @@ function unlockPageScroll() {
 const originalCloseTutorial =
     closeTutorial;
 
-closeTutorial = function(markAsSeen = true) {
+closeTutorial = function(
+    markAsSeen = true
+) {
 
-    originalCloseTutorial(markAsSeen);
+    originalCloseTutorial(
+        markAsSeen
+    );
 
     unlockPageScroll();
 
@@ -4277,12 +4424,13 @@ closeTutorial = function(markAsSeen = true) {
 const originalOpenTutorial =
     openTutorial;
 
-openTutorial = function(fromFirstStep = true) {
+openTutorial = function(
+    fromFirstStep = true
+) {
 
-    originalOpenTutorial(fromFirstStep);
-
-    /* Tutorial boleh scroll sendiri,
-       tetapi halaman utama tetap terkendali. */
+    originalOpenTutorial(
+        fromFirstStep
+    );
 
     if (tutorialOverlay) {
 
