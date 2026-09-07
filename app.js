@@ -2,10 +2,6 @@
    JARAK KESEKOLAH
    MAIN JAVASCRIPT
    COMPLETE VERSION
-   SISTEM PILIH LOKASI LANGSUNG DI PETA
-   + TUTORIAL PENGGUNAAN
-   + INDIKATOR JENIS PETA
-   + MARKER RUMAH/SEKOLAH LEBIH BESAR
 ========================================= */
 
 
@@ -13,37 +9,276 @@
    ELEMENT
 ========================================= */
 
-const pages = document.querySelectorAll(".page");
-const navItems = document.querySelectorAll(".nav-item");
-const navigationButtons = document.querySelectorAll("[data-target]");
+const pages = {
+    dashboard: document.getElementById("dashboardPage"),
+    map: document.getElementById("mapPage"),
+    location: document.getElementById("locationPage"),
+    schedule: document.getElementById("schedulePage"),
+    settings: document.getElementById("settingsPage")
+};
 
-const settingsButton = document.getElementById("settingsButton");
+const navItems = document.querySelectorAll(".bottom-nav-item");
 
-const toast = document.getElementById("toast");
-const toastMessage = document.getElementById("toastMessage");
+const loadingScreen =
+    document.getElementById("loadingScreen");
 
-const loadingOverlay = document.getElementById("loadingOverlay");
-const loadingText = document.getElementById("loadingText");
+const toastContainer =
+    document.getElementById("toastContainer");
 
-const confirmModal = document.getElementById("confirmModal");
-const confirmModalTitle = document.getElementById("confirmModalTitle");
-const confirmModalMessage = document.getElementById("confirmModalMessage");
-const confirmCancelButton = document.getElementById("confirmCancelButton");
-const confirmActionButton = document.getElementById("confirmActionButton");
+const confirmOverlay =
+    document.getElementById("confirmOverlay");
+
+const confirmTitle =
+    document.getElementById("confirmTitle");
+
+const confirmMessage =
+    document.getElementById("confirmMessage");
+
+const confirmCancel =
+    document.getElementById("confirmCancel");
+
+const confirmOk =
+    document.getElementById("confirmOk");
 
 
 /* =========================================
-   TUTORIAL ELEMENT
+   DASHBOARD
+========================================= */
+
+const dashboardHome =
+    document.getElementById("dashboardHome");
+
+const dashboardSchool =
+    document.getElementById("dashboardSchool");
+
+const dashboardDistance =
+    document.getElementById("dashboardDistance");
+
+const dashboardTime =
+    document.getElementById("dashboardTime");
+
+const dashboardTransport =
+    document.getElementById("dashboardTransport");
+
+const dashboardMapType =
+    document.getElementById("dashboardMapType");
+
+
+/* =========================================
+   MAP
+========================================= */
+
+const mapContainer =
+    document.getElementById("map");
+
+const mapTypeSelect =
+    document.getElementById("mapTypeSelect");
+
+const petaJalan =
+    document.getElementById("petaJalan");
+
+const petaSatelit =
+    document.getElementById("petaSatelit");
+
+const petaTerrain =
+    document.getElementById("petaTerrain");
+
+const petaDark =
+    document.getElementById("petaDark");
+
+const locateButton =
+    document.getElementById("locateButton");
+
+const resetMapButton =
+    document.getElementById("resetMapButton");
+
+const calculateRouteButton =
+    document.getElementById("calculateRouteButton");
+
+const googleMapsButton =
+    document.getElementById("googleMapsButton");
+
+const distanceResult =
+    document.getElementById("distanceResult");
+
+const timeResult =
+    document.getElementById("timeResult");
+
+const homeStatus =
+    document.getElementById("homeStatus");
+
+const schoolStatus =
+    document.getElementById("schoolStatus");
+
+const activeMapLabel =
+    document.getElementById("activeMapLabel");
+
+
+/* =========================================
+   LOCATION
+========================================= */
+
+const homeLocationButton =
+    document.getElementById("homeLocationButton");
+
+const schoolLocationButton =
+    document.getElementById("schoolLocationButton");
+
+const homeSearchInput =
+    document.getElementById("homeSearchInput");
+
+const schoolSearchInput =
+    document.getElementById("schoolSearchInput");
+
+const searchHomeButton =
+    document.getElementById("searchHomeButton");
+
+const searchSchoolButton =
+    document.getElementById("searchSchoolButton");
+
+const manualHomeLat =
+    document.getElementById("manualHomeLat");
+
+const manualHomeLng =
+    document.getElementById("manualHomeLng");
+
+const manualSchoolLat =
+    document.getElementById("manualSchoolLat");
+
+const manualSchoolLng =
+    document.getElementById("manualSchoolLng");
+
+const saveManualHome =
+    document.getElementById("saveManualHome");
+
+const saveManualSchool =
+    document.getElementById("saveManualSchool");
+
+const locationInstruction =
+    document.getElementById("locationInstruction");
+
+const locationHomeName =
+    document.getElementById("locationHomeName");
+
+const locationSchoolName =
+    document.getElementById("locationSchoolName");
+
+
+/* =========================================
+   TRANSPORT
+========================================= */
+
+const walkBtn =
+    document.getElementById("walkBtn");
+
+const motorBtn =
+    document.getElementById("motorBtn");
+
+const carBtn =
+    document.getElementById("carBtn");
+
+
+/* =========================================
+   SETTINGS
+========================================= */
+
+const walkingSpeedInput =
+    document.getElementById("walkingSpeed");
+
+const motorSpeedInput =
+    document.getElementById("motorSpeed");
+
+const carSpeedInput =
+    document.getElementById("carSpeed");
+
+const defaultBufferSelect =
+    document.getElementById("defaultBuffer");
+
+const defaultMapSelect =
+    document.getElementById("defaultMap");
+
+const themeSelect =
+    document.getElementById("themeSelect");
+
+const saveSettingsButton =
+    document.getElementById("saveSettingsButton");
+
+const resetSettingsButton =
+    document.getElementById("resetSettingsButton");
+
+
+/* =========================================
+   SCHEDULE
+========================================= */
+
+const scheduleDay =
+    document.getElementById("scheduleDay");
+
+const scheduleDate =
+    document.getElementById("scheduleDate");
+
+const scheduleEntryTime =
+    document.getElementById("scheduleEntryTime");
+
+const scheduleDepartureTime =
+    document.getElementById("scheduleDepartureTime");
+
+const scheduleBuffer =
+    document.getElementById("scheduleBuffer");
+
+const saveScheduleButton =
+    document.getElementById("saveScheduleButton");
+
+const scheduleResult =
+    document.getElementById("scheduleResult");
+
+const recommendedDeparture =
+    document.getElementById("recommendedDeparture");
+
+const scheduleStatus =
+    document.getElementById("scheduleStatus");
+
+
+/* =========================================
+   REMINDER
+========================================= */
+
+const departureReminderToggle =
+    document.getElementById("departureReminderToggle");
+
+const reminderSoundSelect =
+    document.getElementById("reminderSoundSelect");
+
+const testReminderSoundButton =
+    document.getElementById("testReminderSoundButton");
+
+const reminderStatusTitle =
+    document.getElementById("reminderStatusTitle");
+
+const reminderStatusText =
+    document.getElementById("reminderStatusText");
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+const historyList =
+    document.getElementById("historyList");
+
+const clearHistoryButton =
+    document.getElementById("clearHistoryButton");
+
+
+/* =========================================
+   TUTORIAL
 ========================================= */
 
 const tutorialOverlay =
     document.getElementById("tutorialOverlay");
 
-const tutorialCloseButton =
-    document.getElementById("tutorialCloseButton");
-
-const tutorialIcon =
-    document.getElementById("tutorialIcon");
+const tutorialClose =
+    document.getElementById("tutorialClose");
 
 const tutorialStepLabel =
     document.getElementById("tutorialStepLabel");
@@ -57,32 +292,44 @@ const tutorialTitle =
 const tutorialDescription =
     document.getElementById("tutorialDescription");
 
-const tutorialSkipButton =
-    document.getElementById("tutorialSkipButton");
+const tutorialSkip =
+    document.getElementById("tutorialSkip");
 
-const tutorialBackButton =
-    document.getElementById("tutorialBackButton");
+const tutorialBack =
+    document.getElementById("tutorialBack");
 
-const tutorialNextButton =
-    document.getElementById("tutorialNextButton");
+const tutorialNext =
+    document.getElementById("tutorialNext");
 
 const openTutorialButton =
     document.getElementById("openTutorialButton");
 
 
 /* =========================================
-   STORAGE KEYS
+   STORAGE
 ========================================= */
 
-const STORAGE_KEY = "jarak_ke_sekolah_data";
-const SETTINGS_KEY = "jarak_ke_sekolah_settings";
-const HISTORY_KEY = "jarak_ke_sekolah_history";
-const SCHEDULE_KEY = "jarak_ke_sekolah_schedule";
-const TUTORIAL_KEY = "jarak_ke_sekolah_tutorial_seen_v3";
+const STORAGE_KEY =
+    "jarak_ke_sekolah_data";
+
+const SETTINGS_KEY =
+    "jarak_ke_sekolah_settings";
+
+const HISTORY_KEY =
+    "jarak_ke_sekolah_history";
+
+const SCHEDULE_KEY =
+    "jarak_ke_sekolah_schedule";
+
+const TUTORIAL_KEY =
+    "jarak_ke_sekolah_tutorial_seen_v3";
+
+const REMINDER_KEY =
+    "jarak_ke_sekolah_departure_reminder";
 
 
 /* =========================================
-   DEFAULT DATA
+   DEFAULT SETTINGS
 ========================================= */
 
 const DEFAULT_SETTINGS = {
@@ -94,17 +341,19 @@ const DEFAULT_SETTINGS = {
     theme: "system"
 };
 
-let settings = loadSettings();
+
+/* =========================================
+   APP DATA
+========================================= */
 
 let appData = {
     home: null,
     school: null
 };
 
-let scheduleData = loadStorage(
-    SCHEDULE_KEY,
-    null
-);
+let settings = {
+    ...DEFAULT_SETTINGS
+};
 
 
 /* =========================================
@@ -112,48 +361,53 @@ let scheduleData = loadStorage(
 ========================================= */
 
 let map = null;
+
 let mapInitialized = false;
 
 let markerRumah = null;
+
 let markerSekolah = null;
+
 let garisRute = null;
 
 let latLngRumah = null;
+
 let latLngSekolah = null;
 
-let jarakKmGlobal = 0;
+let jarakKmGlobal = null;
 
 let profilRouting = "driving";
-let kecepatanAktif = settings.motorSpeed;
+
+let kecepatanAktif =
+    settings.motorSpeed;
 
 let transportAktif = "motor";
 
-let currentMapType = settings.defaultMap;
-
-
-/* =========================================
-   MODE PILIH LOKASI DI PETA
-========================================= */
+let currentMapType =
+    settings.defaultMap;
 
 let modePilihLokasi = null;
-
-
-/*
-   null     = tidak sedang memilih
-   home     = klik berikutnya menjadi rumah
-   school   = klik berikutnya menjadi sekolah
-*/
-
-
-/* =========================================
-   MAP LAYERS
-========================================= */
 
 let mapLayers = {};
 
 
 /* =========================================
-   NAMA PETA
+   OTHER VARIABLES
+========================================= */
+
+let confirmCallback = null;
+
+let tutorialCurrentStep = 0;
+
+let tutorialIsOpen = false;
+
+let reminderTimer = null;
+
+let audioContext = null;
+
+
+/* =========================================
+   MAP TYPE NAMES
 ========================================= */
 
 const MAP_TYPE_NAMES = {
@@ -165,327 +419,651 @@ const MAP_TYPE_NAMES = {
 
 
 /* =========================================
-   GENERAL HELPERS
+   TUTORIAL DATA
 ========================================= */
 
-function loadStorage(key, fallback) {
+const tutorialSteps = [
+    {
+        title: "Pilih lokasi rumah",
+        description:
+            "Klik pilih lokasi rumah. Kamu bisa mencari lokasi secara manual atau menggunakan GPS. Jika memilih manual, cari lokasi rumah lalu klik titik di peta.",
+        icon: `
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 11.5 12 4l9 7.5"/>
+                <path d="M5.5 10.5V20h13v-9.5"/>
+                <path d="M9.5 20v-5h5v5"/>
+            </svg>
+        `
+    },
+    {
+        title: "Pilih lokasi sekolah",
+        description:
+            "Kembali ke Dashboard lalu pilih sekolah. Caranya sama seperti memilih rumah: gunakan pencarian, GPS, atau klik langsung lokasi sekolah pada peta.",
+        icon: `
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 21V6l8-3 8 3v15"/>
+                <path d="M8 21v-5h8v5"/>
+                <path d="M8 9h.01M12 9h.01M16 9h.01"/>
+            </svg>
+        `
+    },
+    {
+        title: "Hasilkan perjalanan",
+        description:
+            "Setelah rumah dan sekolah dipilih, scroll ke bawah. Pilih motor, mobil, atau jalan kaki, lalu klik HASILKAN PERJALANAN. Jarak dan waktu perjalanan akan muncul.",
+        icon: `
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 19h14"/>
+                <path d="M7 16V8h10v8"/>
+                <path d="m9 8 3-4 3 4"/>
+            </svg>
+        `
+    },
+    {
+        title: "Atur kecepatan",
+        description:
+            "Untuk mengubah kecepatan motor, mobil, atau jalan kaki, buka Pengaturan. Atur kecepatannya lalu klik Simpan. Pengaturan akan tersimpan otomatis.",
+        icon: `
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5v.1h-2.5v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.5-1H6.4v-2.5h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5v-.1h2.5v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1V14h-.1a1.7 1.7 0 0 0-1.5 1Z"/>
+            </svg>
+        `
+    },
+    {
+        title: "Buka Google Maps",
+        description:
+            "Untuk mengecek perjalanan langsung melalui Google Maps, klik tombol Buka di Google Maps setelah rute berhasil dibuat.",
+        icon: `
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z"/>
+                <circle cx="12" cy="10" r="2.5"/>
+            </svg>
+        `
+    },
+    {
+        title: "Reset perjalanan",
+        description:
+            "Jika ingin mulai dari awal, klik Reset perjalanan. Lokasi rumah, sekolah, dan rute saat ini akan dihapus.",
+        icon: `
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12a8 8 0 0 1 13.7-5.7L20 8"/>
+                <path d="M20 4v4h-4"/>
+                <path d="M20 12a8 8 0 0 1-13.7 5.7L4 16"/>
+                <path d="M4 20v-4h4"/>
+            </svg>
+        `
+    }
+];
+
+
+/* =========================================
+   UTILITIES
+========================================= */
+
+function showToast(
+    message,
+    type = "info",
+    duration = 3000
+) {
+
+    if (!toastContainer) return;
+
+    const toast =
+        document.createElement("div");
+
+    toast.className =
+        `toast toast-${type}`;
+
+    toast.innerHTML = `
+        <div class="toast-content">
+            <span class="toast-message">
+                ${escapeHtml(message)}
+            </span>
+        </div>
+    `;
+
+    toastContainer.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.add("show");
+    });
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+
+    }, duration);
+}
+
+
+function escapeHtml(value) {
+
+    if (value === null ||
+        value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatDistance(km) {
+
+    if (
+        km === null ||
+        km === undefined ||
+        Number.isNaN(Number(km))
+    ) {
+        return "--";
+    }
+
+    const value = Number(km);
+
+    if (value < 1) {
+        return `${Math.round(value * 1000)} m`;
+    }
+
+    return `${value.toFixed(2)} km`;
+}
+
+
+function formatTime(minutes) {
+
+    if (
+        minutes === null ||
+        minutes === undefined ||
+        Number.isNaN(Number(minutes))
+    ) {
+        return "--";
+    }
+
+    const totalMinutes =
+        Math.max(1, Math.round(Number(minutes)));
+
+    if (totalMinutes < 60) {
+        return `${totalMinutes} menit`;
+    }
+
+    const hours =
+        Math.floor(totalMinutes / 60);
+
+    const mins =
+        totalMinutes % 60;
+
+    if (mins === 0) {
+        return `${hours} jam`;
+    }
+
+    return `${hours} jam ${mins} menit`;
+}
+
+
+function formatTimeClock(date) {
+
+    if (!(date instanceof Date)) {
+        return "--:--";
+    }
+
+    return date.toLocaleTimeString(
+        "id-ID",
+        {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        }
+    );
+}
+
+
+/* =========================================
+   STORAGE
+========================================= */
+
+function loadAppData() {
 
     try {
 
         const saved =
-            localStorage.getItem(key);
+            localStorage.getItem(STORAGE_KEY);
 
-        if (!saved) {
-            return fallback;
+        if (saved) {
+
+            const parsed =
+                JSON.parse(saved);
+
+            if (
+                parsed &&
+                typeof parsed === "object"
+            ) {
+                appData = {
+                    ...appData,
+                    ...parsed
+                };
+            }
         }
-
-        return JSON.parse(saved);
 
     } catch (error) {
 
         console.error(
-            "Gagal membaca storage:",
+            "Gagal membaca data:",
             error
         );
-
-        return fallback;
     }
 }
 
 
-function saveStorage(key, value) {
+function saveAppData() {
 
     try {
 
         localStorage.setItem(
-            key,
-            JSON.stringify(value)
+            STORAGE_KEY,
+            JSON.stringify(appData)
         );
-
-        return true;
 
     } catch (error) {
 
         console.error(
-            "Gagal menyimpan storage:",
+            "Gagal menyimpan data:",
             error
         );
-
-        return false;
     }
 }
 
 
 function loadSettings() {
 
-    const saved =
-        loadStorage(
+    try {
+
+        const saved =
+            localStorage.getItem(SETTINGS_KEY);
+
+        if (saved) {
+
+            const parsed =
+                JSON.parse(saved);
+
+            if (
+                parsed &&
+                typeof parsed === "object"
+            ) {
+                settings = {
+                    ...DEFAULT_SETTINGS,
+                    ...parsed
+                };
+            }
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Gagal membaca pengaturan:",
+            error
+        );
+
+        settings = {
+            ...DEFAULT_SETTINGS
+        };
+    }
+}
+
+
+function saveSettingsToStorage() {
+
+    try {
+
+        localStorage.setItem(
             SETTINGS_KEY,
-            DEFAULT_SETTINGS
+            JSON.stringify(settings)
         );
 
-    return {
-        ...DEFAULT_SETTINGS,
-        ...saved
-    };
+    } catch (error) {
+
+        console.error(
+            "Gagal menyimpan pengaturan:",
+            error
+        );
+    }
 }
 
 
 /* =========================================
-   TOAST
+   HISTORY
 ========================================= */
 
-let toastTimer = null;
+function loadHistory() {
 
-function showToast(message) {
+    try {
 
-    if (!toast || !toastMessage) {
-        return;
-    }
+        const saved =
+            localStorage.getItem(HISTORY_KEY);
 
-    toastMessage.textContent =
-        message;
+        if (!saved) {
+            return [];
+        }
 
-    toast.classList.add("show");
+        const parsed =
+            JSON.parse(saved);
 
-    clearTimeout(toastTimer);
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
 
-    toastTimer = setTimeout(() => {
+    } catch (error) {
 
-        toast.classList.remove("show");
-
-    }, 3000);
-}
-
-
-/* =========================================
-   LOADING
-========================================= */
-
-function showLoading(
-    message = "Memproses..."
-) {
-
-    if (!loadingOverlay) {
-        return;
-    }
-
-    if (loadingText) {
-        loadingText.textContent =
-            message;
-    }
-
-    loadingOverlay.classList.add(
-        "show"
-    );
-}
-
-
-function hideLoading() {
-
-    if (!loadingOverlay) {
-        return;
-    }
-
-    loadingOverlay.classList.remove(
-        "show"
-    );
-}
-
-
-/* =========================================
-   PAGE NAVIGATION
-========================================= */
-
-function showPage(pageId) {
-
-    if (!pageId) {
-        return;
-    }
-
-    pages.forEach((page) => {
-
-        page.classList.remove(
-            "active"
+        console.error(
+            "Gagal membaca riwayat:",
+            error
         );
 
-    });
+        return [];
+    }
+}
 
-    const targetPage =
-        document.getElementById(
-            pageId
+
+function saveHistory(item) {
+
+    try {
+
+        const history =
+            loadHistory();
+
+        history.unshift(item);
+
+        const limitedHistory =
+            history.slice(0, 20);
+
+        localStorage.setItem(
+            HISTORY_KEY,
+            JSON.stringify(limitedHistory)
         );
 
-    if (!targetPage) {
+        renderHistory();
+
+    } catch (error) {
+
+        console.error(
+            "Gagal menyimpan riwayat:",
+            error
+        );
+    }
+}
+
+
+function clearHistory() {
+
+    localStorage.removeItem(
+        HISTORY_KEY
+    );
+
+    renderHistory();
+
+    showToast(
+        "Riwayat berhasil dihapus.",
+        "success"
+    );
+}
+
+
+function renderHistory() {
+
+    if (!historyList) {
         return;
     }
 
-    targetPage.classList.add(
-        "active"
-    );
+    const history =
+        loadHistory();
 
-    navItems.forEach((item) => {
+    if (!history.length) {
 
-        item.classList.toggle(
-            "active",
-            item.dataset.page === pageId
-        );
+        historyList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-title">
+                    Belum ada riwayat
+                </div>
+                <div class="empty-state-text">
+                    Perjalanan yang sudah dihitung
+                    akan muncul di sini.
+                </div>
+            </div>
+        `;
 
-    });
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-    if (pageId === "mapPage") {
-
-        setTimeout(() => {
-
-            initializeMap();
-
-            if (map) {
-                map.invalidateSize();
-            }
-
-        }, 150);
-
+        return;
     }
 
+    historyList.innerHTML =
+        history.map(item => {
+
+            const date =
+                item.date
+                    ? new Date(item.date)
+                    : null;
+
+            const dateText =
+                date
+                    ? date.toLocaleString(
+                        "id-ID",
+                        {
+                            dateStyle: "medium",
+                            timeStyle: "short"
+                        }
+                    )
+                    : "";
+
+            return `
+                <div class="history-item">
+                    <div class="history-main">
+                        <strong>
+                            ${escapeHtml(
+                                item.transportName || "Perjalanan"
+                            )}
+                        </strong>
+
+                        <span>
+                            ${formatDistance(item.distance)}
+                            ·
+                            ${formatTime(item.time)}
+                        </span>
+                    </div>
+
+                    <div class="history-date">
+                        ${escapeHtml(dateText)}
+                    </div>
+                </div>
+            `;
+
+        }).join("");
 }
 
 
 /* =========================================
-   BOTTOM NAVIGATION
+   THEME
 ========================================= */
 
-navItems.forEach((item) => {
+function applyTheme(theme) {
 
-    item.addEventListener(
-        "click",
-        () => {
+    const root =
+        document.documentElement;
 
-            const pageId =
-                item.dataset.page;
+    if (theme === "dark") {
 
-            showPage(pageId);
+        root.setAttribute(
+            "data-theme",
+            "dark"
+        );
 
-        }
-    );
+        return;
+    }
 
-});
+    if (theme === "light") {
 
+        root.setAttribute(
+            "data-theme",
+            "light"
+        );
 
-/* =========================================
-   INTERNAL NAVIGATION
-========================================= */
+        return;
+    }
 
-navigationButtons.forEach((button) => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            const target =
-                button.dataset.target;
-
-            if (target) {
-                showPage(target);
-            }
-
-        }
-    );
-
-});
+    root.removeAttribute("data-theme");
+}
 
 
-/* =========================================
-   SETTINGS BUTTON
-========================================= */
+function initializeTheme() {
 
-if (settingsButton) {
+    applyTheme(settings.theme);
 
-    settingsButton.addEventListener(
-        "click",
-        () => {
-
-            showPage(
-                "settingsPage"
-            );
-
-        }
-    );
-
+    if (themeSelect) {
+        themeSelect.value =
+            settings.theme;
+    }
 }
 
 
 /* =========================================
-   MAP ACTIVE INDICATOR
+   MAP ICONS
 ========================================= */
 
-function updateActiveMapUI() {
+function createHomeIcon() {
 
-    const mapName =
-        MAP_TYPE_NAMES[currentMapType] ||
-        "Peta Jalan";
+    return L.divIcon({
 
-    /*
-       Mendukung beberapa kemungkinan ID
-       agar indikator tetap bekerja tanpa
-       mengganggu HTML yang sudah ada.
-    */
+        className: "custom-map-marker home-marker",
 
-    const possibleElements = [
+        html: `
+            <div style="
+                width:60px;
+                height:68px;
+                display:flex;
+                align-items:flex-start;
+                justify-content:center;
+                transform:scale(1.25);
+                transform-origin:center bottom;
+                filter:drop-shadow(0 4px 7px rgba(0,0,0,.22));
+            ">
+                <svg
+                    width="34"
+                    height="34"
+                    viewBox="0 0 34 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M17 32C17 32 28 21.6 28 13.2C28 7.01 23.075 2 17 2C10.925 2 6 7.01 6 13.2C6 21.6 17 32 17 32Z"
+                        fill="#2563EB"
+                    />
+                    <path
+                        d="M10.5 14.1L17 8.7L23.5 14.1V22.8H10.5V14.1Z"
+                        fill="white"
+                    />
+                    <path
+                        d="M14.1 22.8V17.3H19.9V22.8"
+                        fill="#2563EB"
+                    />
+                    <path
+                        d="M13.2 14.3H13.21M17 14.3H17.01M20.8 14.3H20.81"
+                        stroke="#2563EB"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </div>
+        `,
 
-        document.getElementById(
-            "activeMapName"
-        ),
+        iconSize: [60, 68],
 
-        document.getElementById(
-            "activeMapType"
-        ),
+        iconAnchor: [30, 68],
 
-        document.getElementById(
-            "activeMapLabel"
-        ),
-
-        document.getElementById(
-            "activeMapText"
-        ),
-
-        document.querySelector(
-            ".active-map-name"
-        ),
-
-        document.querySelector(
-            ".active-map-type"
-        ),
-
-        document.querySelector(
-            ".active-map-label"
-        )
-
-    ];
-
-    const updated =
-        new Set();
-
-    possibleElements.forEach((element) => {
-
-        if (
-            element &&
-            !updated.has(element)
-        ) {
-
-            element.textContent =
-                mapName;
-
-            updated.add(element);
-
-        }
-
+        popupAnchor: [0, -68]
     });
+}
 
+
+function createSchoolIcon() {
+
+    return L.divIcon({
+
+        className: "custom-map-marker school-marker",
+
+        html: `
+            <div style="
+                width:60px;
+                height:68px;
+                display:flex;
+                align-items:flex-start;
+                justify-content:center;
+                transform:scale(1.25);
+                transform-origin:center bottom;
+                filter:drop-shadow(0 4px 7px rgba(0,0,0,.22));
+            ">
+                <svg
+                    width="34"
+                    height="34"
+                    viewBox="0 0 34 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M17 32C17 32 28 21.6 28 13.2C28 7.01 23.075 2 17 2C10.925 2 6 7.01 6 13.2C6 21.6 17 32 17 32Z"
+                        fill="#DC2626"
+                    />
+                    <path
+                        d="M9.5 14.1L17 8.8L24.5 14.1V23H9.5V14.1Z"
+                        fill="white"
+                    />
+                    <path
+                        d="M12.5 14H21.5"
+                        stroke="#DC2626"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                    />
+                    <path
+                        d="M13.2 17.2H20.8V23H13.2V17.2Z"
+                        fill="#DC2626"
+                    />
+                    <path
+                        d="M16 17.2V23"
+                        stroke="white"
+                        stroke-width="1.3"
+                    />
+                    <path
+                        d="M17 6.2V9"
+                        stroke="#DC2626"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </div>
+        `,
+
+        iconSize: [60, 68],
+
+        iconAnchor: [30, 68],
+
+        popupAnchor: [0, -68]
+    });
 }
 
 
@@ -495,19 +1073,16 @@ function updateActiveMapUI() {
 
 function initializeMap() {
 
-    if (mapInitialized) {
-        return;
-    }
-
-    const mapElement =
-        document.getElementById("map");
-
-    if (!mapElement) {
+    if (
+        mapInitialized ||
+        !mapContainer ||
+        typeof L === "undefined"
+    ) {
         return;
     }
 
     map = L.map(
-        "map",
+        mapContainer,
         {
             zoomControl: true,
             attributionControl: true
@@ -516,13 +1091,8 @@ function initializeMap() {
 
     map.setView(
         [-6.5891, 110.6677],
-        13
+        15
     );
-
-
-    /* =====================================
-       STREET
-    ===================================== */
 
     mapLayers.street =
         L.tileLayer(
@@ -530,14 +1100,9 @@ function initializeMap() {
             {
                 maxZoom: 19,
                 attribution:
-                    "&copy; OpenStreetMap contributors"
+                    '&copy; OpenStreetMap contributors'
             }
         );
-
-
-    /* =====================================
-       SATELLITE
-    ===================================== */
 
     mapLayers.satellite =
         L.tileLayer(
@@ -549,36 +1114,25 @@ function initializeMap() {
             }
         );
 
-
-    /* =====================================
-       TERRAIN
-    ===================================== */
-
     mapLayers.terrain =
         L.tileLayer(
             "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
             {
                 maxZoom: 17,
                 attribution:
-                    "Map data &copy; OpenStreetMap contributors, SRTM | Map style &copy; OpenTopoMap"
+                    '&copy; OpenTopoMap'
             }
         );
-
-
-    /* =====================================
-       DARK
-    ===================================== */
 
     mapLayers.dark =
         L.tileLayer(
             "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
             {
-                maxZoom: 20,
+                maxZoom: 19,
                 attribution:
-                    "&copy; OpenStreetMap &copy; CARTO"
+                    '&copy; CARTO'
             }
         );
-
 
     const selectedLayer =
         mapLayers[currentMapType] ||
@@ -588,209 +1142,14 @@ function initializeMap() {
 
     mapInitialized = true;
 
-
-    /* =====================================
-       KLIK PETA
-    ===================================== */
-
     map.on(
         "click",
         handleMapClick
     );
 
-
-    setTimeout(() => {
-
-        map.invalidateSize();
-
-    }, 200);
-
-    updateMapSelect();
-
     updateActiveMapUI();
 
     restoreMapLocations();
-
-    console.log(
-        "Leaflet map berhasil dibuat."
-    );
-
-}
-
-
-/* =========================================
-   HANDLE KLIK PETA
-========================================= */
-
-function handleMapClick(event) {
-
-    if (!modePilihLokasi) {
-        return;
-    }
-
-    const latitude =
-        event.latlng.lat;
-
-    const longitude =
-        event.latlng.lng;
-
-
-    /* =====================================
-       PILIH RUMAH
-    ===================================== */
-
-    if (modePilihLokasi === "home") {
-
-        setHomeLocation(
-            latitude,
-            longitude,
-            "Lokasi rumah dari peta"
-        );
-
-        modePilihLokasi = null;
-
-        map.setView(
-            [latitude, longitude],
-            16,
-            {
-                animate: true
-            }
-        );
-
-        showToast(
-            "Rumah berhasil dipilih. Sekarang pilih lokasi sekolah di peta."
-        );
-
-        setTimeout(() => {
-
-            startMapLocationSelection(
-                "school"
-            );
-
-        }, 700);
-
-        return;
-    }
-
-
-    /* =====================================
-       PILIH SEKOLAH
-    ===================================== */
-
-    if (modePilihLokasi === "school") {
-
-        setSchoolLocation(
-            latitude,
-            longitude,
-            "Lokasi sekolah dari peta"
-        );
-
-        modePilihLokasi = null;
-
-        map.setView(
-            [latitude, longitude],
-            15,
-            {
-                animate: true
-            }
-        );
-
-        showToast(
-            "Sekolah berhasil dipilih. Menghitung perjalanan..."
-        );
-
-        if (
-            latLngRumah &&
-            latLngSekolah
-        ) {
-
-            setTimeout(() => {
-
-                calculateRoute();
-
-            }, 400);
-
-        }
-
-    }
-
-}
-
-
-/* =========================================
-   OPEN MAP PAGE
-========================================= */
-
-function openMapPage() {
-
-    showPage(
-        "mapPage"
-    );
-
-    setTimeout(() => {
-
-        initializeMap();
-
-        if (map) {
-            map.invalidateSize();
-        }
-
-    }, 100);
-
-}
-
-
-/* =========================================
-   MULAI PILIH LOKASI DI PETA
-========================================= */
-
-function startMapLocationSelection(
-    target
-) {
-
-    if (
-        target !== "home" &&
-        target !== "school"
-    ) {
-        return;
-    }
-
-    showPage(
-        "mapPage"
-    );
-
-    setTimeout(() => {
-
-        initializeMap();
-
-        if (!map) {
-
-            showToast(
-                "Peta belum siap."
-            );
-
-            return;
-        }
-
-        modePilihLokasi =
-            target;
-
-        if (target === "home") {
-
-            showToast(
-                "Silakan ketuk peta untuk menentukan lokasi RUMAH."
-            );
-
-        } else {
-
-            showToast(
-                "Silakan ketuk peta untuk menentukan lokasi SEKOLAH."
-            );
-
-        }
-
-    }, 180);
-
 }
 
 
@@ -798,32 +1157,7 @@ function startMapLocationSelection(
    MAP TYPE
 ========================================= */
 
-const mapTypeSelect =
-    document.getElementById(
-        "mapTypeSelect"
-    );
-
-if (mapTypeSelect) {
-
-    mapTypeSelect.addEventListener(
-        "change",
-        () => {
-
-            changeMapType(
-                mapTypeSelect.value
-            );
-
-        }
-    );
-
-}
-
-
 function changeMapType(type) {
-
-    if (!map) {
-        initializeMap();
-    }
 
     if (
         !map ||
@@ -832,372 +1166,508 @@ function changeMapType(type) {
         return;
     }
 
-    Object.values(
-        mapLayers
-    ).forEach((layer) => {
+    Object.values(mapLayers)
+        .forEach(layer => {
 
-        if (map.hasLayer(layer)) {
+            if (map.hasLayer(layer)) {
+                map.removeLayer(layer);
+            }
 
-            map.removeLayer(
-                layer
-            );
-
-        }
-
-    });
+        });
 
     mapLayers[type].addTo(map);
 
-    currentMapType =
-        type;
-
-    settings.defaultMap =
-        type;
-
-    saveStorage(
-        SETTINGS_KEY,
-        settings
-    );
+    currentMapType = type;
 
     updateActiveMapUI();
-
-    showToast(
-        `${MAP_TYPE_NAMES[type] || "Jenis peta"} aktif.`
-    );
-
-}
-
-
-function updateMapSelect() {
 
     if (mapTypeSelect) {
-
-        mapTypeSelect.value =
-            currentMapType;
-
+        mapTypeSelect.value = type;
     }
 
-    updateActiveMapUI();
+    settings.defaultMap = type;
 
+    saveSettingsToStorage();
+
+    showToast(
+        `${MAP_TYPE_NAMES[type] || "Peta"} aktif.`,
+        "success",
+        1800
+    );
 }
 
 
-/* =========================================
-   CUSTOM MAP MARKER
-   UKURAN DIPERBESAR
-========================================= */
+function updateActiveMapUI() {
 
-function createHomeIcon() {
+    const label =
+        MAP_TYPE_NAMES[currentMapType] ||
+        "Peta Jalan";
 
-    return L.divIcon({
+    if (activeMapLabel) {
+        activeMapLabel.textContent =
+            label;
+    }
 
-        className:
-            "custom-marker",
+    const candidates = [
+        petaJalan,
+        petaSatelit,
+        petaTerrain,
+        petaDark
+    ];
 
-        html: `
-            <div
-                class="marker-pin marker-home"
-                style="
-                    width:60px;
-                    height:60px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    transform:scale(1.25);
-                    transform-origin:center bottom;
-                "
-            >
-                <svg
-                    viewBox="0 0 24 24"
-                    width="34"
-                    height="34"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path d="M3 10.5 12 3l9 7.5"></path>
-                    <path d="M5 9.5V21h14V9.5"></path>
-                    <path d="M9 21v-6h6v6"></path>
-                </svg>
-            </div>
-        `,
+    candidates.forEach(button => {
 
-        iconSize: [
-            60,
-            68
-        ],
+        if (!button) return;
 
-        iconAnchor: [
-            30,
-            68
-        ],
+        const type =
+            button.dataset.map ||
+            button.dataset.mapType;
 
-        popupAnchor: [
-            0,
-            -62
-        ]
-
-    });
-
-}
-
-
-function createSchoolIcon() {
-
-    return L.divIcon({
-
-        className:
-            "custom-marker",
-
-        html: `
-            <div
-                class="marker-pin marker-school"
-                style="
-                    width:60px;
-                    height:60px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    transform:scale(1.25);
-                    transform-origin:center bottom;
-                "
-            >
-                <svg
-                    viewBox="0 0 24 24"
-                    width="34"
-                    height="34"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path d="M3 21h18"></path>
-                    <path d="M5 21V8l7-5 7 5v13"></path>
-                    <path d="M9 21v-4h6v4"></path>
-                    <path d="M9 10h.01"></path>
-                    <path d="M15 10h.01"></path>
-                </svg>
-            </div>
-        `,
-
-        iconSize: [
-            60,
-            68
-        ],
-
-        iconAnchor: [
-            30,
-            68
-        ],
-
-        popupAnchor: [
-            0,
-            -62
-        ]
-
-    });
-
-}
-
-
-/* =========================================
-   SET HOME MARKER
-========================================= */
-
-function setHomeLocation(
-    latitude,
-    longitude,
-    label = "Lokasi rumah"
-) {
-
-    latLngRumah =
-        L.latLng(
-            latitude,
-            longitude
+        button.classList.toggle(
+            "active",
+            type === currentMapType
         );
 
-    appData.home = {
-        latitude,
-        longitude,
-        label
-    };
+    });
 
-    saveStorage(
-        STORAGE_KEY,
-        appData
-    );
+    document
+        .querySelectorAll(
+            "[data-map-type]"
+        )
+        .forEach(button => {
 
-    if (!map) {
-        initializeMap();
-    }
+            button.classList.toggle(
+                "active",
+                button.dataset.mapType ===
+                currentMapType
+            );
 
-    if (!map) {
+        });
+
+    document
+        .querySelectorAll(
+            "[data-map]"
+        )
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.map ===
+                currentMapType
+            );
+
+        });
+
+}
+
+
+/* =========================================
+   MAP CLICK LOCATION SELECTION
+========================================= */
+
+function handleMapClick(event) {
+
+    if (!modePilihLokasi) {
         return;
     }
 
-    if (markerRumah) {
+    const latlng =
+        event.latlng;
 
-        map.removeLayer(
-            markerRumah
+    if (
+        !latlng ||
+        typeof latlng.lat !== "number" ||
+        typeof latlng.lng !== "number"
+    ) {
+        return;
+    }
+
+    if (modePilihLokasi === "home") {
+
+        setHomeLocation(
+            latlng.lat,
+            latlng.lng,
+            "Lokasi rumah dipilih dari peta"
         );
 
+        modePilihLokasi = null;
+
+        updateLocationInstruction();
+
+        showToast(
+            "Lokasi rumah berhasil dipilih.",
+            "success"
+        );
+
+        setTimeout(() => {
+
+            modePilihLokasi = "school";
+
+            updateLocationInstruction();
+
+            showToast(
+                "Sekarang pilih lokasi sekolah di peta.",
+                "info",
+                3000
+            );
+
+        }, 700);
+
+        return;
+    }
+
+    if (modePilihLokasi === "school") {
+
+        setSchoolLocation(
+            latlng.lat,
+            latlng.lng,
+            "Lokasi sekolah dipilih dari peta"
+        );
+
+        modePilihLokasi = null;
+
+        updateLocationInstruction();
+
+        showToast(
+            "Lokasi sekolah berhasil dipilih.",
+            "success"
+        );
+
+        setTimeout(() => {
+
+            if (
+                latLngRumah &&
+                latLngSekolah
+            ) {
+                calculateRoute();
+            }
+
+        }, 400);
+    }
+}
+
+
+function startSelectHome() {
+
+    initializeMap();
+
+    modePilihLokasi = "home";
+
+    updateLocationInstruction();
+
+    showToast(
+        "Klik lokasi rumah kamu pada peta.",
+        "info",
+        3000
+    );
+
+    navigateTo("map");
+}
+
+
+function startSelectSchool() {
+
+    initializeMap();
+
+    modePilihLokasi = "school";
+
+    updateLocationInstruction();
+
+    showToast(
+        "Klik lokasi sekolah pada peta.",
+        "info",
+        3000
+    );
+
+    navigateTo("map");
+}
+
+
+function updateLocationInstruction() {
+
+    if (!locationInstruction) {
+        return;
+    }
+
+    if (modePilihLokasi === "home") {
+
+        locationInstruction.textContent =
+            "Klik titik lokasi rumah kamu pada peta.";
+
+        locationInstruction.classList.add(
+            "active"
+        );
+
+        return;
+    }
+
+    if (modePilihLokasi === "school") {
+
+        locationInstruction.textContent =
+            "Klik titik lokasi sekolah pada peta.";
+
+        locationInstruction.classList.add(
+            "active"
+        );
+
+        return;
+    }
+
+    locationInstruction.textContent =
+        "Pilih rumah atau sekolah untuk menentukan lokasi.";
+
+    locationInstruction.classList.remove(
+        "active"
+    );
+}
+
+
+/* =========================================
+   SET HOME LOCATION
+========================================= */
+
+function setHomeLocation(
+    lat,
+    lng,
+    name = "Rumah"
+) {
+
+    const latitude =
+        Number(lat);
+
+    const longitude =
+        Number(lng);
+
+    if (
+        Number.isNaN(latitude) ||
+        Number.isNaN(longitude)
+    ) {
+        showToast(
+            "Koordinat rumah tidak valid.",
+            "error"
+        );
+
+        return;
+    }
+
+    latLngRumah = [
+        latitude,
+        longitude
+    ];
+
+    appData.home = {
+        lat: latitude,
+        lng: longitude,
+        name
+    };
+
+    saveAppData();
+
+    initializeMap();
+
+    if (markerRumah) {
+        markerRumah.remove();
     }
 
     markerRumah =
         L.marker(
             latLngRumah,
             {
-                icon:
-                    createHomeIcon(),
-                draggable: false
+                icon: createHomeIcon(),
+                zIndexOffset: 1000
             }
         )
         .addTo(map)
         .bindPopup(
-            `<strong>Rumah</strong><br>${escapeHtml(label)}`
+            `<strong>Rumah</strong><br>${escapeHtml(name)}`
         );
 
-    updateLocationUI();
+    updateHomeUI();
 
+    map.setView(
+        latLngRumah,
+        Math.max(map.getZoom(), 15)
+    );
+
+    recalculateIfLocationsReady();
 }
 
 
 /* =========================================
-   SET SCHOOL MARKER
+   SET SCHOOL LOCATION
 ========================================= */
 
 function setSchoolLocation(
-    latitude,
-    longitude,
-    label = "Lokasi sekolah"
+    lat,
+    lng,
+    name = "Sekolah"
 ) {
 
-    latLngSekolah =
-        L.latLng(
-            latitude,
-            longitude
+    const latitude =
+        Number(lat);
+
+    const longitude =
+        Number(lng);
+
+    if (
+        Number.isNaN(latitude) ||
+        Number.isNaN(longitude)
+    ) {
+        showToast(
+            "Koordinat sekolah tidak valid.",
+            "error"
         );
 
-    appData.school = {
-        latitude,
-        longitude,
-        label
-    };
-
-    saveStorage(
-        STORAGE_KEY,
-        appData
-    );
-
-    if (!map) {
-        initializeMap();
-    }
-
-    if (!map) {
         return;
     }
 
+    latLngSekolah = [
+        latitude,
+        longitude
+    ];
+
+    appData.school = {
+        lat: latitude,
+        lng: longitude,
+        name
+    };
+
+    saveAppData();
+
+    initializeMap();
+
     if (markerSekolah) {
-
-        map.removeLayer(
-            markerSekolah
-        );
-
+        markerSekolah.remove();
     }
 
     markerSekolah =
         L.marker(
             latLngSekolah,
             {
-                icon:
-                    createSchoolIcon(),
-                draggable: false
+                icon: createSchoolIcon(),
+                zIndexOffset: 900
             }
         )
         .addTo(map)
         .bindPopup(
-            `<strong>Sekolah</strong><br>${escapeHtml(label)}`
+            `<strong>Sekolah</strong><br>${escapeHtml(name)}`
         );
 
-    updateLocationUI();
+    updateSchoolUI();
 
+    map.setView(
+        latLngSekolah,
+        Math.max(map.getZoom(), 15)
+    );
+
+    recalculateIfLocationsReady();
 }
 
 
 /* =========================================
-   RESTORE LOCATIONS
+   RESTORE MAP LOCATIONS
 ========================================= */
 
 function restoreMapLocations() {
 
-    const saved =
-        loadStorage(
-            STORAGE_KEY,
-            {
-                home: null,
-                school: null
-            }
-        );
+    if (!map) {
+        return;
+    }
 
-    appData =
-        saved || {
-            home: null,
-            school: null
-        };
+    if (
+        appData.home &&
+        typeof appData.home.lat === "number" &&
+        typeof appData.home.lng === "number"
+    ) {
 
-    if (appData.home) {
-
-        latLngRumah =
-            L.latLng(
-                appData.home.latitude,
-                appData.home.longitude
-            );
+        latLngRumah = [
+            appData.home.lat,
+            appData.home.lng
+        ];
 
         markerRumah =
             L.marker(
                 latLngRumah,
                 {
-                    icon:
-                        createHomeIcon(),
-                    draggable: false
+                    icon: createHomeIcon(),
+                    zIndexOffset: 1000
                 }
             )
             .addTo(map)
             .bindPopup(
-                `<strong>Rumah</strong><br>${escapeHtml(appData.home.label || "Lokasi rumah")}`
+                `<strong>Rumah</strong><br>${escapeHtml(
+                    appData.home.name || "Rumah"
+                )}`
             );
-
     }
 
-    if (appData.school) {
+    if (
+        appData.school &&
+        typeof appData.school.lat === "number" &&
+        typeof appData.school.lng === "number"
+    ) {
 
-        latLngSekolah =
-            L.latLng(
-                appData.school.latitude,
-                appData.school.longitude
-            );
+        latLngSekolah = [
+            appData.school.lat,
+            appData.school.lng
+        ];
 
         markerSekolah =
             L.marker(
                 latLngSekolah,
                 {
-                    icon:
-                        createSchoolIcon(),
-                    draggable: false
+                    icon: createSchoolIcon(),
+                    zIndexOffset: 900
                 }
             )
             .addTo(map)
             .bindPopup(
-                `<strong>Sekolah</strong><br>${escapeHtml(appData.school.label || "Lokasi sekolah")}`
+                `<strong>Sekolah</strong><br>${escapeHtml(
+                    appData.school.name || "Sekolah"
+                )}`
             );
-
     }
 
-    updateLocationUI();
+    updateHomeUI();
 
+    updateSchoolUI();
+
+    if (
+        latLngRumah &&
+        latLngSekolah
+    ) {
+        fitMapToLocations();
+    }
+}
+
+
+/* =========================================
+   FIT MAP TO LOCATIONS
+========================================= */
+
+function fitMapToLocations() {
+
+    if (
+        !map ||
+        !latLngRumah ||
+        !latLngSekolah
+    ) {
+        return;
+    }
+
+    const bounds =
+        L.latLngBounds([
+            latLngRumah,
+            latLngSekolah
+        ]);
+
+    map.fitBounds(
+        bounds,
+        {
+            padding: [50, 50],
+            maxZoom: 16
+        }
+    );
 }
 
 
@@ -1205,321 +1675,173 @@ function restoreMapLocations() {
    LOCATION UI
 ========================================= */
 
-function updateLocationUI() {
+function updateHomeUI() {
 
-    const homeValue =
-        document.getElementById(
-            "homeLocationValue"
-        );
-
-    const schoolValue =
-        document.getElementById(
-            "schoolLocationValue"
-        );
-
-    const homeStatus =
-        document.getElementById(
-            "homeStatus"
-        );
-
-    const schoolStatus =
-        document.getElementById(
-            "schoolStatus"
-        );
-
-    if (homeValue) {
-
-        homeValue.textContent =
-            appData.home
-                ? appData.home.label ||
-                  "Lokasi rumah tersimpan"
-                : "Belum ditentukan";
-
-    }
-
-    if (schoolValue) {
-
-        schoolValue.textContent =
-            appData.school
-                ? appData.school.label ||
-                  "Lokasi sekolah tersimpan"
-                : "Belum ditentukan";
-
-    }
+    const hasHome =
+        !!latLngRumah;
 
     if (homeStatus) {
 
         homeStatus.textContent =
-            appData.home
-                ? "Tersimpan"
-                : "Belum tersedia";
+            hasHome
+                ? (
+                    appData.home?.name ||
+                    "Lokasi rumah sudah dipilih"
+                )
+                : "Lokasi rumah belum dipilih";
 
+        homeStatus.classList.toggle(
+            "success",
+            hasHome
+        );
     }
+
+    if (locationHomeName) {
+
+        locationHomeName.textContent =
+            hasHome
+                ? (
+                    appData.home?.name ||
+                    "Lokasi rumah"
+                )
+                : "Belum dipilih";
+    }
+
+    if (dashboardHome) {
+
+        dashboardHome.textContent =
+            hasHome
+                ? (
+                    appData.home?.name ||
+                    "Lokasi rumah"
+                )
+                : "Belum dipilih";
+    }
+}
+
+
+function updateSchoolUI() {
+
+    const hasSchool =
+        !!latLngSekolah;
 
     if (schoolStatus) {
 
         schoolStatus.textContent =
-            appData.school
-                ? "Tersimpan"
-                : "Belum tersedia";
+            hasSchool
+                ? (
+                    appData.school?.name ||
+                    "Lokasi sekolah sudah dipilih"
+                )
+                : "Lokasi sekolah belum dipilih";
 
-    }
-
-}
-
-
-/* =========================================
-   LOCATION BUTTONS
-========================================= */
-
-const homeLocationButton =
-    document.getElementById(
-        "homeLocationButton"
-    );
-
-const schoolLocationButton =
-    document.getElementById(
-        "schoolLocationButton"
-    );
-
-
-if (homeLocationButton) {
-
-    homeLocationButton.addEventListener(
-        "click",
-        () => {
-
-            startMapLocationSelection(
-                "home"
-            );
-
-        }
-    );
-
-}
-
-
-if (schoolLocationButton) {
-
-    schoolLocationButton.addEventListener(
-        "click",
-        () => {
-
-            startMapLocationSelection(
-                "school"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   LOCATION PAGE
-========================================= */
-
-function openLocationPage(
-    target
-) {
-
-    const targetSelect =
-        document.getElementById(
-            "locationTarget"
+        schoolStatus.classList.toggle(
+            "success",
+            hasSchool
         );
-
-    if (targetSelect) {
-
-        targetSelect.value =
-            target;
-
     }
 
-    updateLocationTargetStatus();
+    if (locationSchoolName) {
 
-    showPage(
-        "locationPage"
-    );
+        locationSchoolName.textContent =
+            hasSchool
+                ? (
+                    appData.school?.name ||
+                    "Lokasi sekolah"
+                )
+                : "Belum dipilih";
+    }
 
+    if (dashboardSchool) {
+
+        dashboardSchool.textContent =
+            hasSchool
+                ? (
+                    appData.school?.name ||
+                    "Belum dipilih"
+                )
+                : "Belum dipilih";
+    }
 }
 
 
 /* =========================================
-   LOCATION TARGET
+   GPS
 ========================================= */
 
-const locationTarget =
-    document.getElementById(
-        "locationTarget"
-    );
-
-if (locationTarget) {
-
-    locationTarget.addEventListener(
-        "change",
-        updateLocationTargetStatus
-    );
-
-}
-
-
-function updateLocationTargetStatus() {
-
-    const target =
-        locationTarget
-            ? locationTarget.value
-            : "home";
-
-    const status =
-        document.getElementById(
-            "locationTargetStatus"
-        );
-
-    if (!status) {
-        return;
-    }
-
-    if (target === "home") {
-
-        status.textContent =
-            "Mode lokasi rumah aktif. Kamu juga bisa langsung memilih titik rumah di peta.";
-
-    } else {
-
-        status.textContent =
-            "Mode lokasi sekolah aktif. Kamu juga bisa langsung memilih titik sekolah di peta.";
-
-    }
-
-}
-
-
-/* =========================================
-   GPS BUTTON
-========================================= */
-
-const gpsButton =
-    document.getElementById(
-        "gpsButton"
-    );
-
-if (gpsButton) {
-
-    gpsButton.addEventListener(
-        "click",
-        getCurrentLocation
-    );
-
-}
-
-
-function getCurrentLocation() {
+function useGPSForHome() {
 
     if (!navigator.geolocation) {
 
         showToast(
-            "GPS tidak tersedia di perangkat ini."
+            "GPS tidak didukung oleh perangkat ini.",
+            "error"
         );
 
         return;
     }
 
-    showLoading(
-        "Mencari lokasi perangkat..."
-    );
+    showLoading(true);
 
     navigator.geolocation.getCurrentPosition(
+        position => {
 
-        (position) => {
+            const {
+                latitude,
+                longitude
+            } = position.coords;
 
-            const latitude =
-                position.coords.latitude;
+            setHomeLocation(
+                latitude,
+                longitude,
+                "Lokasi GPS"
+            );
 
-            const longitude =
-                position.coords.longitude;
+            modePilihLokasi = null;
 
-            const target =
-                locationTarget
-                    ? locationTarget.value
-                    : "home";
+            updateLocationInstruction();
 
-            if (target === "home") {
-
-                setHomeLocation(
-                    latitude,
-                    longitude,
-                    "Lokasi rumah dari GPS"
-                );
-
-            } else {
-
-                setSchoolLocation(
-                    latitude,
-                    longitude,
-                    "Lokasi sekolah dari GPS"
-                );
-
-            }
-
-            initializeMap();
-
-            if (map) {
-
-                map.setView(
-                    [
-                        latitude,
-                        longitude
-                    ],
-                    16,
-                    {
-                        animate: true
-                    }
-                );
-
-            }
-
-            hideLoading();
+            showLoading(false);
 
             showToast(
-                "Lokasi berhasil ditemukan."
+                "Lokasi GPS berhasil digunakan sebagai rumah.",
+                "success"
             );
 
         },
 
-        (error) => {
+        error => {
 
-            hideLoading();
+            showLoading(false);
 
             console.error(
-                "GPS Error:",
+                "GPS error:",
                 error
             );
 
             let message =
-                "Lokasi tidak dapat ditemukan.";
+                "Gagal mendapatkan lokasi GPS.";
 
-            if (
-                error.code ===
-                error.PERMISSION_DENIED
-            ) {
-
+            if (error.code === 1) {
                 message =
-                    "Izin lokasi ditolak. Izinkan akses lokasi untuk menggunakan GPS.";
+                    "Izin lokasi ditolak. Aktifkan izin lokasi di browser.";
+            }
 
-            } else if (
-                error.code ===
-                error.TIMEOUT
-            ) {
-
+            if (error.code === 2) {
                 message =
-                    "GPS terlalu lama merespons. Coba lagi.";
+                    "Lokasi tidak tersedia.";
+            }
 
+            if (error.code === 3) {
+                message =
+                    "GPS terlalu lama merespons.";
             }
 
             showToast(
-                message
+                message,
+                "error",
+                4000
             );
-
         },
 
         {
@@ -1527,39 +1849,212 @@ function getCurrentLocation() {
             timeout: 15000,
             maximumAge: 0
         }
-
     );
+}
 
+
+function locateUserOnMap() {
+
+    if (!navigator.geolocation) {
+
+        showToast(
+            "GPS tidak didukung.",
+            "error"
+        );
+
+        return;
+    }
+
+    showLoading(true);
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+
+            const {
+                latitude,
+                longitude
+            } = position.coords;
+
+            initializeMap();
+
+            map.setView(
+                [latitude, longitude],
+                17
+            );
+
+            showLoading(false);
+
+            showToast(
+                "Lokasi kamu ditemukan.",
+                "success"
+            );
+
+        },
+
+        error => {
+
+            showLoading(false);
+
+            console.error(
+                "GPS error:",
+                error
+            );
+
+            showToast(
+                "Tidak dapat mendapatkan lokasi kamu.",
+                "error"
+            );
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+    );
 }
 
 
 /* =========================================
-   SELECT ON MAP BUTTON
+   NOMINATIM SEARCH
 ========================================= */
 
-const selectOnMapButton =
-    document.getElementById(
-        "selectOnMapButton"
-    );
+async function searchLocation(
+    query,
+    type
+) {
 
-if (selectOnMapButton) {
+    const cleanQuery =
+        String(query || "").trim();
 
-    selectOnMapButton.addEventListener(
-        "click",
-        () => {
+    if (!cleanQuery) {
 
-            const target =
-                locationTarget
-                    ? locationTarget.value
-                    : "home";
+        showToast(
+            "Masukkan nama atau alamat terlebih dahulu.",
+            "warning"
+        );
 
-            startMapLocationSelection(
-                target
+        return;
+    }
+
+    showLoading(true);
+
+    try {
+
+        const url =
+            "https://nominatim.openstreetmap.org/search" +
+            `?format=jsonv2&limit=1&q=${encodeURIComponent(cleanQuery)}`;
+
+        const response =
+            await fetch(
+                url,
+                {
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
             );
 
+        if (!response.ok) {
+            throw new Error(
+                "Gagal menghubungi pencarian lokasi."
+            );
         }
-    );
 
+        const results =
+            await response.json();
+
+        if (
+            !Array.isArray(results) ||
+            !results.length
+        ) {
+
+            showToast(
+                "Lokasi tidak ditemukan.",
+                "warning"
+            );
+
+            return;
+        }
+
+        const result =
+            results[0];
+
+        const lat =
+            Number(result.lat);
+
+        const lng =
+            Number(result.lon);
+
+        const name =
+            result.display_name ||
+            cleanQuery;
+
+        if (
+            Number.isNaN(lat) ||
+            Number.isNaN(lng)
+        ) {
+
+            showToast(
+                "Koordinat hasil pencarian tidak valid.",
+                "error"
+            );
+
+            return;
+        }
+
+        if (type === "home") {
+
+            setHomeLocation(
+                lat,
+                lng,
+                name
+            );
+
+            modePilihLokasi = null;
+
+        } else if (type === "school") {
+
+            setSchoolLocation(
+                lat,
+                lng,
+                name
+            );
+
+            modePilihLokasi = null;
+        }
+
+        updateLocationInstruction();
+
+        initializeMap();
+
+        map.setView(
+            [lat, lng],
+            16
+        );
+
+        showToast(
+            "Lokasi berhasil ditemukan.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Search error:",
+            error
+        );
+
+        showToast(
+            "Gagal mencari lokasi. Coba lagi.",
+            "error"
+        );
+
+    } finally {
+
+        showLoading(false);
+    }
 }
 
 
@@ -1567,584 +2062,231 @@ if (selectOnMapButton) {
    MANUAL COORDINATES
 ========================================= */
 
-const saveManualLocationButton =
-    document.getElementById(
-        "saveManualLocationButton"
-    );
+function saveManualLocation(type) {
 
-if (saveManualLocationButton) {
+    const latInput =
+        type === "home"
+            ? manualHomeLat
+            : manualSchoolLat;
 
-    saveManualLocationButton.addEventListener(
-        "click",
-        saveManualLocation
-    );
+    const lngInput =
+        type === "home"
+            ? manualHomeLng
+            : manualSchoolLng;
 
-}
+    if (!latInput || !lngInput) {
+        return;
+    }
 
+    const lat =
+        Number(latInput.value);
 
-function saveManualLocation() {
-
-    const latitudeInput =
-        document.getElementById(
-            "manualLatitude"
-        );
-
-    const longitudeInput =
-        document.getElementById(
-            "manualLongitude"
-        );
-
-    const latitude =
-        parseFloat(
-            latitudeInput?.value
-        );
-
-    const longitude =
-        parseFloat(
-            longitudeInput?.value
-        );
+    const lng =
+        Number(lngInput.value);
 
     if (
-        !Number.isFinite(latitude) ||
-        !Number.isFinite(longitude)
+        Number.isNaN(lat) ||
+        Number.isNaN(lng) ||
+        lat < -90 ||
+        lat > 90 ||
+        lng < -180 ||
+        lng > 180
     ) {
 
         showToast(
-            "Masukkan latitude dan longitude yang valid."
+            "Koordinat tidak valid.",
+            "warning"
         );
 
         return;
     }
 
-    if (
-        latitude < -90 ||
-        latitude > 90 ||
-        longitude < -180 ||
-        longitude > 180
-    ) {
-
-        showToast(
-            "Koordinat berada di luar batas."
-        );
-
-        return;
-    }
-
-    const target =
-        locationTarget
-            ? locationTarget.value
-            : "home";
-
-    if (target === "home") {
+    if (type === "home") {
 
         setHomeLocation(
-            latitude,
-            longitude,
-            "Lokasi rumah manual"
+            lat,
+            lng,
+            "Lokasi manual"
         );
 
     } else {
 
         setSchoolLocation(
-            latitude,
-            longitude,
-            "Lokasi sekolah manual"
+            lat,
+            lng,
+            "Lokasi manual"
         );
-
     }
+
+    modePilihLokasi = null;
+
+    updateLocationInstruction();
 
     initializeMap();
 
-    if (map) {
-
-        map.setView(
-            [
-                latitude,
-                longitude
-            ],
-            16,
-            {
-                animate: true
-            }
-        );
-
-    }
+    map.setView(
+        [lat, lng],
+        16
+    );
 
     showToast(
-        "Lokasi berhasil disimpan."
+        type === "home"
+            ? "Lokasi rumah disimpan."
+            : "Lokasi sekolah disimpan.",
+        "success"
     );
-
 }
 
 
 /* =========================================
-   LOCATION SEARCH
+   TRANSPORT
 ========================================= */
 
-const searchLocationButton =
-    document.getElementById(
-        "searchLocationButton"
-    );
-
-if (searchLocationButton) {
-
-    searchLocationButton.addEventListener(
-        "click",
-        searchLocation
-    );
-
-}
-
-
-async function searchLocation() {
-
-    const input =
-        document.getElementById(
-            "locationSearchInput"
-        );
-
-    const results =
-        document.getElementById(
-            "locationSearchResults"
-        );
-
-    const query =
-        input?.value.trim();
-
-    if (!query) {
-
-        showToast(
-            "Masukkan nama lokasi terlebih dahulu."
-        );
-
-        return;
-    }
-
-    showLoading(
-        "Mencari lokasi..."
-    );
-
-    try {
-
-        const url =
-            "https://nominatim.openstreetmap.org/search" +
-            "?format=jsonv2" +
-            "&limit=5" +
-            "&accept-language=id" +
-            "&q=" +
-            encodeURIComponent(query);
-
-        const response =
-            await fetch(url);
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Pencarian lokasi gagal."
-            );
-
-        }
-
-        const data =
-            await response.json();
-
-        if (!results) {
-
-            hideLoading();
-
-            return;
-        }
-
-        results.innerHTML = "";
-
-        if (!data.length) {
-
-            results.innerHTML = `
-                <div class="history-empty">
-                    Lokasi tidak ditemukan.
-                </div>
-            `;
-
-            hideLoading();
-
-            return;
-        }
-
-        data.forEach((place) => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-            button.type =
-                "button";
-
-            button.className =
-                "search-result-item";
-
-            button.textContent =
-                place.display_name;
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const latitude =
-                        parseFloat(
-                            place.lat
-                        );
-
-                    const longitude =
-                        parseFloat(
-                            place.lon
-                        );
-
-                    const target =
-                        locationTarget
-                            ? locationTarget.value
-                            : "home";
-
-                    if (
-                        target ===
-                        "home"
-                    ) {
-
-                        setHomeLocation(
-                            latitude,
-                            longitude,
-                            place.display_name
-                        );
-
-                    } else {
-
-                        setSchoolLocation(
-                            latitude,
-                            longitude,
-                            place.display_name
-                        );
-
-                    }
-
-                    initializeMap();
-
-                    if (map) {
-
-                        map.setView(
-                            [
-                                latitude,
-                                longitude
-                            ],
-                            16,
-                            {
-                                animate: true
-                            }
-                        );
-
-                    }
-
-                    showToast(
-                        "Lokasi berhasil dipilih."
-                    );
-
-                }
-            );
-
-            results.appendChild(
-                button
-            );
-
-        });
-
-        hideLoading();
-
-    } catch (error) {
-
-        console.error(
-            error
-        );
-
-        hideLoading();
-
-        showToast(
-            "Pencarian lokasi gagal. Periksa koneksi internet."
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   TRANSPORT BUTTONS
-========================================= */
-
-const walkBtn =
-    document.getElementById(
-        "walkBtn"
-    );
-
-const motorBtn =
-    document.getElementById(
-        "motorBtn"
-    );
-
-const carBtn =
-    document.getElementById(
-        "carBtn"
-    );
-
-
-if (walkBtn) {
-
-    walkBtn.addEventListener(
-        "click",
-        () => {
-
-            selectTransport(
-                "walking"
-            );
-
-        }
-    );
-
-}
-
-
-if (motorBtn) {
-
-    motorBtn.addEventListener(
-        "click",
-        () => {
-
-            selectTransport(
-                "motor"
-            );
-
-        }
-    );
-
-}
-
-
-if (carBtn) {
-
-    carBtn.addEventListener(
-        "click",
-        () => {
-
-            selectTransport(
-                "car"
-            );
-
-        }
-    );
-
-}
-
-
-function selectTransport(
-    type
+function setTransport(
+    transport
 ) {
 
     transportAktif =
-        type;
+        transport;
 
-    if (type === "walking") {
+    if (transport === "walking") {
 
-        profilRouting =
-            "foot";
-
-        kecepatanAktif =
-            Number(
-                settings.walkingSpeed
-            );
-
-    } else if (
-        type === "motor"
-    ) {
-
-        profilRouting =
-            "driving";
+        profilRouting = "foot";
 
         kecepatanAktif =
-            Number(
-                settings.motorSpeed
-            );
+            Number(settings.walkingSpeed) ||
+            4.5;
+
+    } else if (transport === "car") {
+
+        profilRouting = "driving";
+
+        kecepatanAktif =
+            Number(settings.carSpeed) ||
+            45;
 
     } else {
 
-        profilRouting =
-            "driving";
+        profilRouting = "driving";
 
         kecepatanAktif =
-            Number(
-                settings.carSpeed
-            );
+            Number(settings.motorSpeed) ||
+            30;
 
+        transportAktif = "motor";
     }
 
-    walkBtn?.classList.toggle(
-        "active",
-        type === "walking"
-    );
-
-    motorBtn?.classList.toggle(
-        "active",
-        type === "motor"
-    );
-
-    carBtn?.classList.toggle(
-        "active",
-        type === "car"
-    );
-
-    updateSpeedLabels();
+    updateTransportUI();
 
     if (
         latLngRumah &&
         latLngSekolah
     ) {
-
         calculateRoute();
-
     }
+}
 
+
+function updateTransportUI() {
+
+    const buttons = [
+        {
+            element: walkBtn,
+            value: "walking"
+        },
+        {
+            element: motorBtn,
+            value: "motor"
+        },
+        {
+            element: carBtn,
+            value: "car"
+        }
+    ];
+
+    buttons.forEach(item => {
+
+        if (!item.element) {
+            return;
+        }
+
+        item.element.classList.toggle(
+            "active",
+            item.value === transportAktif
+        );
+
+    });
+
+    if (dashboardTransport) {
+
+        const names = {
+            walking: "Jalan kaki",
+            motor: "Motor",
+            car: "Mobil"
+        };
+
+        dashboardTransport.textContent =
+            names[transportAktif] ||
+            "Motor";
+    }
 }
 
 
 /* =========================================
-   SPEED LABELS
+   ROUTING
 ========================================= */
-
-function updateSpeedLabels() {
-
-    const walkingSpeedLabel =
-        document.getElementById(
-            "walkingSpeedLabel"
-        );
-
-    const motorSpeedLabel =
-        document.getElementById(
-            "motorSpeedLabel"
-        );
-
-    const carSpeedLabel =
-        document.getElementById(
-            "carSpeedLabel"
-        );
-
-    const activeSpeed =
-        document.getElementById(
-            "activeSpeed"
-        );
-
-    if (walkingSpeedLabel) {
-
-        walkingSpeedLabel.textContent =
-            `${Number(settings.walkingSpeed).toFixed(1)} km/jam`;
-
-    }
-
-    if (motorSpeedLabel) {
-
-        motorSpeedLabel.textContent =
-            `${Number(settings.motorSpeed).toFixed(1)} km/jam`;
-
-    }
-
-    if (carSpeedLabel) {
-
-        carSpeedLabel.textContent =
-            `${Number(settings.carSpeed).toFixed(1)} km/jam`;
-
-    }
-
-    if (activeSpeed) {
-
-        activeSpeed.textContent =
-            `${Number(kecepatanAktif).toFixed(1)} km/jam`;
-
-    }
-
-}
-
-
-/* =========================================
-   CALCULATE ROUTE
-========================================= */
-
-const calculateRouteButton =
-    document.getElementById(
-        "calculateRouteButton"
-    );
-
-if (calculateRouteButton) {
-
-    calculateRouteButton.addEventListener(
-        "click",
-        calculateRoute
-    );
-
-}
-
 
 async function calculateRoute() {
 
-    if (!latLngRumah) {
+    if (
+        !latLngRumah ||
+        !latLngSekolah
+    ) {
 
         showToast(
-            "Lokasi rumah belum ditentukan."
+            "Pilih lokasi rumah dan sekolah terlebih dahulu.",
+            "warning"
         );
 
         return;
     }
 
-    if (!latLngSekolah) {
+    initializeMap();
 
-        showToast(
-            "Lokasi sekolah belum ditentukan."
-        );
+    showLoading(true);
 
-        return;
+    if (garisRute) {
+
+        garisRute.remove();
+
+        garisRute = null;
     }
-
-    if (!map) {
-        initializeMap();
-    }
-
-    if (!map) {
-
-        showToast(
-            "Peta belum siap."
-        );
-
-        return;
-    }
-
-    showLoading(
-        "Menghitung perjalanan..."
-    );
 
     try {
 
-        const coordinates =
-            `${latLngRumah.lng},${latLngRumah.lat};` +
-            `${latLngSekolah.lng},${latLngSekolah.lat}`;
+        const [homeLat, homeLng] =
+            latLngRumah;
+
+        const [schoolLat, schoolLng] =
+            latLngSekolah;
+
+        const profile =
+            profilRouting === "foot"
+                ? "foot"
+                : "driving";
 
         const url =
-            `https://router.project-osrm.org/route/v1/${profilRouting}/${coordinates}` +
-            "?overview=full&geometries=geojson&steps=false";
+            `https://router.project-osrm.org/route/v1/${profile}/` +
+            `${homeLng},${homeLat};${schoolLng},${schoolLat}` +
+            "?overview=full&geometries=geojson";
 
         const response =
             await fetch(url);
 
         if (!response.ok) {
-
             throw new Error(
-                "Routing server tidak dapat diakses."
+                "Routing server error"
             );
-
         }
 
         const data =
@@ -2155,343 +2297,197 @@ async function calculateRoute() {
             !data.routes ||
             !data.routes.length
         ) {
-
             throw new Error(
-                "Rute tidak ditemukan."
+                "Rute tidak ditemukan"
             );
-
         }
 
         const route =
             data.routes[0];
 
-        const distanceKm =
-            route.distance / 1000;
-
         jarakKmGlobal =
-            distanceKm;
+            Number(route.distance) / 1000;
 
-        const timeHours =
-            distanceKm /
-            Number(
-                kecepatanAktif
-            );
+        const routeCoordinates =
+            route.geometry.coordinates
+                .map(coord => [
+                    coord[1],
+                    coord[0]
+                ]);
 
-        const timeMinutes =
+        garisRute =
+            L.polyline(
+                routeCoordinates,
+                {
+                    weight: 5,
+                    opacity: 0.85
+                }
+            ).addTo(map);
+
+        const distanceMeters =
+            Number(route.distance);
+
+        const estimatedMinutes =
+            (
+                distanceMeters / 1000
+            ) /
             Math.max(
-                1,
-                Math.round(
-                    timeHours * 60
-                )
-            );
-
-        drawRoute(
-            route.geometry
-        );
+                Number(kecepatanAktif) || 1,
+                0.1
+            ) *
+            60;
 
         updateRouteResult(
-            distanceKm,
-            timeMinutes
+            jarakKmGlobal,
+            estimatedMinutes
         );
 
-        saveHistory(
-            distanceKm,
-            timeMinutes
+        fitMapToRoute(
+            routeCoordinates
         );
 
-        if (route.geometry) {
+        saveHistory({
+            date:
+                new Date().toISOString(),
+            transport:
+                transportAktif,
+            transportName:
+                getTransportName(
+                    transportAktif
+                ),
+            distance:
+                jarakKmGlobal,
+            time:
+                estimatedMinutes
+        });
 
-            const bounds =
-                L.geoJSON(
-                    route.geometry
-                ).getBounds();
-
-            map.fitBounds(
-                bounds,
-                {
-                    padding: [
-                        35,
-                        35
-                    ]
-                }
-            );
-
-        }
-
-        hideLoading();
+        updateDashboard();
 
         showToast(
-            "Rute berhasil ditemukan."
+            "Rute berhasil dibuat.",
+            "success"
         );
-
-        updateScheduleRecommendation();
 
     } catch (error) {
 
         console.error(
-            "Route Error:",
+            "Routing error:",
             error
         );
 
-        hideLoading();
-
         showToast(
-            "Rute tidak dapat dihitung. Pastikan koneksi internet tersedia."
+            "Rute gagal dibuat. Pastikan kedua lokasi sudah benar dan coba lagi.",
+            "error",
+            4000
         );
 
-    }
+    } finally {
 
+        showLoading(false);
+    }
 }
 
 
-/* =========================================
-   DRAW ROUTE
-========================================= */
+function recalculateIfLocationsReady() {
 
-function drawRoute(
-    geometry
+    if (
+        latLngRumah &&
+        latLngSekolah
+    ) {
+        setTimeout(() => {
+            calculateRoute();
+        }, 300);
+    }
+}
+
+
+function fitMapToRoute(
+    coordinates
 ) {
 
     if (
         !map ||
-        !geometry
+        !Array.isArray(coordinates) ||
+        !coordinates.length
     ) {
         return;
     }
 
-    if (garisRute) {
-
-        map.removeLayer(
-            garisRute
+    const bounds =
+        L.latLngBounds(
+            coordinates
         );
 
-    }
-
-    garisRute =
-        L.geoJSON(
-            geometry,
-            {
-                style: {
-                    weight: 6,
-                    opacity: 0.85
-                }
-            }
-        ).addTo(map);
-
+    map.fitBounds(
+        bounds,
+        {
+            padding: [60, 60]
+        }
+    );
 }
 
 
 /* =========================================
-   ROUTE RESULT UI
+   ROUTE RESULT
 ========================================= */
 
 function updateRouteResult(
-    distanceKm,
-    timeMinutes
+    distance,
+    minutes
 ) {
 
-    const routeDistance =
-        document.getElementById(
-            "routeDistance"
-        );
+    if (distanceResult) {
 
-    const routeTime =
-        document.getElementById(
-            "routeTime"
-        );
-
-    const dashboardDistance =
-        document.getElementById(
-            "dashboardDistance"
-        );
-
-    const dashboardTime =
-        document.getElementById(
-            "dashboardTime"
-        );
-
-    if (routeDistance) {
-
-        routeDistance.textContent =
-            formatDistance(
-                distanceKm
-            );
-
+        distanceResult.textContent =
+            formatDistance(distance);
     }
 
-    if (routeTime) {
+    if (timeResult) {
 
-        routeTime.textContent =
-            formatDuration(
-                timeMinutes
-            );
-
+        timeResult.textContent =
+            formatTime(minutes);
     }
 
     if (dashboardDistance) {
 
         dashboardDistance.textContent =
-            formatDistance(
-                distanceKm
-            );
-
+            formatDistance(distance);
     }
 
     if (dashboardTime) {
 
         dashboardTime.textContent =
-            formatDuration(
-                timeMinutes
-            );
-
+            formatTime(minutes);
     }
 
+    if (dashboardTransport) {
+
+        dashboardTransport.textContent =
+            getTransportName(
+                transportAktif
+            );
+    }
 }
 
 
-/* =========================================
-   FORMAT DISTANCE
-========================================= */
-
-function formatDistance(
-    km
+function getTransportName(
+    transport
 ) {
 
-    if (!Number.isFinite(km)) {
-        return "--";
-    }
+    const names = {
+        walking: "Jalan kaki",
+        motor: "Motor",
+        car: "Mobil"
+    };
 
-    if (km < 1) {
-
-        return `${Math.round(km * 1000)} m`;
-
-    }
-
-    return `${km.toFixed(2)} km`;
-}
-
-
-/* =========================================
-   FORMAT DURATION
-========================================= */
-
-function formatDuration(
-    minutes
-) {
-
-    if (!Number.isFinite(minutes)) {
-        return "--";
-    }
-
-    const rounded =
-        Math.max(
-            1,
-            Math.round(minutes)
-        );
-
-    if (rounded < 60) {
-
-        return `${rounded} menit`;
-
-    }
-
-    const hours =
-        Math.floor(
-            rounded / 60
-        );
-
-    const mins =
-        rounded % 60;
-
-    if (mins === 0) {
-
-        return `${hours} jam`;
-
-    }
-
-    return `${hours} jam ${mins} menit`;
-}
-
-
-/* =========================================
-   MAP LOCATE BUTTON
-========================================= */
-
-const locateMapButton =
-    document.getElementById(
-        "locateMapButton"
-    );
-
-if (locateMapButton) {
-
-    locateMapButton.addEventListener(
-        "click",
-        () => {
-
-            if (!map) {
-                initializeMap();
-            }
-
-            if (!map) {
-                return;
-            }
-
-            if (latLngRumah) {
-
-                map.setView(
-                    latLngRumah,
-                    16,
-                    {
-                        animate: true
-                    }
-                );
-
-                showToast(
-                    "Peta dipusatkan ke lokasi rumah."
-                );
-
-                return;
-            }
-
-            map.setView(
-                [
-                    -6.5891,
-                    110.6677
-                ],
-                15,
-                {
-                    animate: true
-                }
-            );
-
-            showToast(
-                "Peta dipusatkan."
-            );
-
-        }
-    );
-
+    return names[transport] ||
+        "Motor";
 }
 
 
 /* =========================================
    GOOGLE MAPS
 ========================================= */
-
-const googleMapsButton =
-    document.getElementById(
-        "googleMapsButton"
-    );
-
-if (googleMapsButton) {
-
-    googleMapsButton.addEventListener(
-        "click",
-        openGoogleMaps
-    );
-
-}
-
 
 function openGoogleMaps() {
 
@@ -2501,23 +2497,106 @@ function openGoogleMaps() {
     ) {
 
         showToast(
-            "Tentukan lokasi rumah dan sekolah terlebih dahulu."
+            "Buat rute terlebih dahulu.",
+            "warning"
         );
 
         return;
     }
 
+    const [
+        homeLat,
+        homeLng
+    ] = latLngRumah;
+
+    const [
+        schoolLat,
+        schoolLng
+    ] = latLngSekolah;
+
     const url =
         "https://www.google.com/maps/dir/?api=1" +
-        `&origin=${latLngRumah.lat},${latLngRumah.lng}` +
-        `&destination=${latLngSekolah.lat},${latLngSekolah.lng}` +
+        `&origin=${homeLat},${homeLng}` +
+        `&destination=${schoolLat},${schoolLng}` +
         "&travelmode=driving";
 
     window.open(
         url,
-        "_blank"
+        "_blank",
+        "noopener,noreferrer"
     );
+}
 
+
+/* =========================================
+   RESET MAP ONLY
+========================================= */
+
+function resetMap() {
+
+    if (markerRumah) {
+
+        markerRumah.remove();
+
+        markerRumah = null;
+    }
+
+    if (markerSekolah) {
+
+        markerSekolah.remove();
+
+        markerSekolah = null;
+    }
+
+    if (garisRute) {
+
+        garisRute.remove();
+
+        garisRute = null;
+    }
+
+    latLngRumah = null;
+
+    latLngSekolah = null;
+
+    jarakKmGlobal = null;
+
+    modePilihLokasi = null;
+
+    appData.home = null;
+
+    appData.school = null;
+
+    saveAppData();
+
+    if (distanceResult) {
+        distanceResult.textContent = "--";
+    }
+
+    if (timeResult) {
+        timeResult.textContent = "--";
+    }
+
+    updateHomeUI();
+
+    updateSchoolUI();
+
+    updateLocationInstruction();
+
+    updateDashboard();
+
+    if (map) {
+
+        map.setView(
+            [-6.5891, 110.6677],
+            15
+        );
+    }
+
+    showToast(
+        "Peta berhasil direset.",
+        "success"
+    );
 }
 
 
@@ -2525,12 +2604,16 @@ function openGoogleMaps() {
    RESET JOURNEY
 ========================================= */
 
-const resetJourneyButton =
-    document.getElementById(
-        "resetJourneyButton"
-    );
+function initializeResetJourneyButton() {
 
-if (resetJourneyButton) {
+    const resetJourneyButton =
+        document.getElementById(
+            "resetJourneyButton"
+        );
+
+    if (!resetJourneyButton) {
+        return;
+    }
 
     resetJourneyButton.addEventListener(
         "click",
@@ -2543,12 +2626,7 @@ if (resetJourneyButton) {
             );
 
         }
-    );
-
-}
-
-
-function resetJourney() {
+    );function resetJourney() {
 
     appData = {
         home: null,
@@ -2801,119 +2879,702 @@ if (clearHistoryButton) {
 
 
 /* =========================================
-   SCHEDULE
+   PENGINGAT BERANGKAT - ELEMENTS
 ========================================= */
 
-const calculateScheduleButton =
+const departureReminderToggle =
     document.getElementById(
-        "calculateScheduleButton"
+        "departureReminderToggle"
     );
 
-if (calculateScheduleButton) {
+const reminderSoundSelect =
+    document.getElementById(
+        "reminderSoundSelect"
+    );
 
-    calculateScheduleButton.addEventListener(
-        "click",
-        calculateSchedule
+const testReminderSoundButton =
+    document.getElementById(
+        "testReminderSoundButton"
+    );
+
+const reminderStatusTitle =
+    document.getElementById(
+        "reminderStatusTitle"
+    );
+
+const reminderStatusText =
+    document.getElementById(
+        "reminderStatusText"
+    );
+
+const departureReminderCard =
+    document.querySelector(
+        ".departure-reminder-card"
+    );
+
+let reminderData = loadStorage(
+    REMINDER_KEY,
+    {
+        enabled: false,
+        sound: "classic"
+    }
+);
+
+let reminderTimer = null;
+let reminderAudioContext = null;
+let reminderTriggeredKey = null;
+
+
+/* =========================================
+   PENGINGAT BERANGKAT - AUDIO
+========================================= */
+
+function getReminderAudioContext() {
+
+    if (!reminderAudioContext) {
+
+        const AudioContextClass =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        if (!AudioContextClass) {
+            return null;
+        }
+
+        reminderAudioContext =
+            new AudioContextClass();
+
+    }
+
+    if (
+        reminderAudioContext.state ===
+        "suspended"
+    ) {
+
+        reminderAudioContext
+            .resume()
+            .catch(() => {});
+
+    }
+
+    return reminderAudioContext;
+}
+
+
+function playReminderSound(
+    sound = "classic"
+) {
+
+    const audioContext =
+        getReminderAudioContext();
+
+    if (!audioContext) {
+
+        showToast(
+            "Perangkat tidak mendukung suara pengingat."
+        );
+
+        return;
+    }
+
+    const now =
+        audioContext.currentTime;
+
+    const patterns = {
+
+        classic: [
+            {
+                frequency: 880,
+                start: 0,
+                duration: 0.18
+            },
+            {
+                frequency: 1175,
+                start: 0.22,
+                duration: 0.22
+            }
+        ],
+
+        soft: [
+            {
+                frequency: 659,
+                start: 0,
+                duration: 0.28
+            },
+            {
+                frequency: 784,
+                start: 0.32,
+                duration: 0.32
+            }
+        ],
+
+        double: [
+            {
+                frequency: 988,
+                start: 0,
+                duration: 0.14
+            },
+            {
+                frequency: 988,
+                start: 0.20,
+                duration: 0.14
+            },
+            {
+                frequency: 1319,
+                start: 0.40,
+                duration: 0.22
+            }
+        ]
+
+    };
+
+    const pattern =
+        patterns[sound] ||
+        patterns.classic;
+
+    pattern.forEach(
+        (tone) => {
+
+            const oscillator =
+                audioContext.createOscillator();
+
+            const gain =
+                audioContext.createGain();
+
+            oscillator.type =
+                "sine";
+
+            oscillator.frequency.setValueAtTime(
+                tone.frequency,
+                now + tone.start
+            );
+
+            gain.gain.setValueAtTime(
+                0.0001,
+                now + tone.start
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+                0.18,
+                now +
+                    tone.start +
+                    0.025
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+                0.0001,
+                now +
+                    tone.start +
+                    tone.duration
+            );
+
+            oscillator.connect(
+                gain
+            );
+
+            gain.connect(
+                audioContext.destination
+            );
+
+            oscillator.start(
+                now + tone.start
+            );
+
+            oscillator.stop(
+                now +
+                    tone.start +
+                    tone.duration +
+                    0.02
+            );
+
+        }
     );
 
 }
 
 
-function calculateSchedule() {
+/* =========================================
+   PENGINGAT BERANGKAT - NOTIFICATION
+========================================= */
 
-    const dateInput =
-        document.getElementById(
-            "scheduleDate"
-        );
-
-    const schoolTimeInput =
-        document.getElementById(
-            "schoolStartTime"
-        );
-
-    const bufferSelect =
-        document.getElementById(
-            "bufferSelect"
-        );
+async function requestReminderNotificationPermission() {
 
     if (
-        !schoolTimeInput ||
-        !schoolTimeInput.value
+        !("Notification" in window)
     ) {
+        return false;
+    }
 
-        showToast(
-            "Masukkan jam masuk sekolah."
+    if (
+        Notification.permission ===
+        "granted"
+    ) {
+        return true;
+    }
+
+    if (
+        Notification.permission ===
+        "denied"
+    ) {
+        return false;
+    }
+
+    try {
+
+        const permission =
+            await Notification.requestPermission();
+
+        return (
+            permission ===
+            "granted"
         );
 
+    } catch (error) {
+
+        console.error(
+            "Izin notifikasi gagal:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+function showDepartureNotification() {
+
+    if (
+        !("Notification" in window)
+    ) {
         return;
     }
 
-    if (!jarakKmGlobal) {
+    if (
+        Notification.permission !==
+        "granted"
+    ) {
+        return;
+    }
 
-        showToast(
-            "Hitung rute terlebih dahulu."
+    try {
+
+        const notification =
+            new Notification(
+                "Waktunya berangkat",
+                {
+                    body:
+                        `Berangkat sekarang agar tiba di sekolah sekitar ${scheduleData?.schoolTime || "waktu yang ditentukan"}.`,
+
+                    icon:
+                        "./icon-192.png",
+
+                    badge:
+                        "./icon-192.png",
+
+                    tag:
+                        "jarak-ke-sekolah-departure"
+                }
+            );
+
+        notification.onclick =
+            () => {
+
+                window.focus();
+
+                notification.close();
+
+                showPage(
+                    "schedulePage"
+                );
+
+            };
+
+    } catch (error) {
+
+        console.error(
+            "Notifikasi pengingat gagal:",
+            error
         );
 
+    }
+
+}
+
+
+/* =========================================
+   PENGINGAT BERANGKAT - STATUS
+========================================= */
+
+function updateDepartureReminderUI() {
+
+    const enabled =
+        Boolean(
+            reminderData?.enabled
+        );
+
+    if (departureReminderToggle) {
+
+        departureReminderToggle.checked =
+            enabled;
+
+    }
+
+    if (reminderSoundSelect) {
+
+        reminderSoundSelect.value =
+            reminderData?.sound ||
+            "classic";
+
+    }
+
+    if (departureReminderCard) {
+
+        departureReminderCard.classList.toggle(
+            "reminder-active",
+            enabled
+        );
+
+    }
+
+    if (
+        reminderStatusTitle &&
+        reminderStatusText
+    ) {
+
+        if (enabled) {
+
+            reminderStatusTitle.textContent =
+                "Pengingat aktif";
+
+            reminderStatusText.textContent =
+                "Pengingat akan berbunyi sesuai waktu berangkat yang tersimpan.";
+
+        } else {
+
+            reminderStatusTitle.textContent =
+                "Pengingat belum aktif";
+
+            reminderStatusText.textContent =
+                "Aktifkan pengingat setelah menyimpan jadwal berangkat.";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   PENGINGAT BERANGKAT - SAVE
+========================================= */
+
+function saveReminderData() {
+
+    saveStorage(
+        REMINDER_KEY,
+        reminderData
+    );
+
+    updateDepartureReminderUI();
+
+}
+
+
+/* =========================================
+   PENGINGAT BERANGKAT - TRIGGER
+========================================= */
+
+function triggerDepartureReminder() {
+
+    const todayKey =
+        new Date()
+            .toISOString()
+            .slice(0, 10);
+
+    const triggerKey =
+        `${todayKey}_${scheduleData?.departureTime || ""}`;
+
+    if (
+        reminderTriggeredKey ===
+        triggerKey
+    ) {
+        return;
+    }
+
+    reminderTriggeredKey =
+        triggerKey;
+
+    playReminderSound(
+        reminderData?.sound ||
+        "classic"
+    );
+
+    showDepartureNotification();
+
+    showToast(
+        "Waktunya berangkat!",
+        "success",
+        5000
+    );
+
+}
+
+
+/* =========================================
+   PENGINGAT BERANGKAT - TIMER
+========================================= */
+
+function stopDepartureReminderTimer() {
+
+    if (reminderTimer) {
+
+        clearInterval(
+            reminderTimer
+        );
+
+        reminderTimer = null;
+
+    }
+
+}
+
+
+function startDepartureReminderTimer() {
+
+    stopDepartureReminderTimer();
+
+    if (
+        !reminderData?.enabled
+    ) {
+        return;
+    }
+
+    reminderTimer =
+        setInterval(
+            checkDepartureReminder,
+            1000
+        );
+
+    checkDepartureReminder();
+
+}
+
+
+function checkDepartureReminder() {
+
+    if (
+        !reminderData?.enabled
+    ) {
+        return;
+    }
+
+    if (
+        !scheduleData ||
+        !scheduleData.departureTime
+    ) {
+        return;
+    }
+
+    const now =
+        new Date();
+
+    const [hour, minute] =
+        String(
+            scheduleData.departureTime
+        )
+        .split(":")
+        .map(Number);
+
+    if (
+        Number.isNaN(hour) ||
+        Number.isNaN(minute)
+    ) {
+        return;
+    }
+
+    const target =
+        new Date();
+
+    target.setHours(
+        hour,
+        minute,
+        0,
+        0
+    );
+
+    if (
+        now.getHours() === hour &&
+        now.getMinutes() === minute
+    ) {
+
+        triggerDepartureReminder();
+
+    }
+
+}
+
+
+/* =========================================
+   PENGINGAT BERANGKAT - EVENTS
+========================================= */
+
+if (departureReminderToggle) {
+
+    departureReminderToggle.addEventListener(
+        "change",
+        async () => {
+
+            if (
+                departureReminderToggle.checked
+            ) {
+
+                reminderData.enabled =
+                    true;
+
+                await requestReminderNotificationPermission();
+
+                showToast(
+                    "Pengingat berangkat diaktifkan.",
+                    "success"
+                );
+
+                startDepartureReminderTimer();
+
+            } else {
+
+                reminderData.enabled =
+                    false;
+
+                stopDepartureReminderTimer();
+
+                showToast(
+                    "Pengingat berangkat dimatikan."
+                );
+
+            }
+
+            saveReminderData();
+
+        }
+    );
+
+}
+
+
+if (reminderSoundSelect) {
+
+    reminderSoundSelect.addEventListener(
+        "change",
+        () => {
+
+            reminderData.sound =
+                reminderSoundSelect.value;
+
+            saveReminderData();
+
+        }
+    );
+
+}
+
+
+if (testReminderSoundButton) {
+
+    testReminderSoundButton.addEventListener(
+        "click",
+        () => {
+
+            const sound =
+                reminderSoundSelect?.value ||
+                "classic";
+
+            playReminderSound(
+                sound
+            );
+
+            showToast(
+                "Tes suara pengingat.",
+                "success"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   SCHEDULE
+========================================= */
+
+let scheduleData =
+    loadStorage(
+        SCHEDULE_KEY,
+        {
+            day: "",
+            date: "",
+            schoolTime: "",
+            departureTime: "",
+            buffer: 10
+        }
+    );
+
+
+function saveSchedule() {
+
+    if (
+        !scheduleEntryTime ||
+        !scheduleDepartureTime
+    ) {
         return;
     }
 
     const schoolTime =
-        schoolTimeInput.value;
+        scheduleEntryTime.value;
 
-    const buffer =
-        Number(
-            bufferSelect?.value ||
-            settings.defaultBuffer
+    const departureTime =
+        scheduleDepartureTime.value;
+
+    if (!schoolTime) {
+
+        showToast(
+            "Masukkan jam masuk sekolah.",
+            "warning"
         );
 
-    const routeMinutes =
-        Math.ceil(
-            (
-                jarakKmGlobal /
-                Number(
-                    kecepatanAktif
-                )
-            ) * 60
+        return;
+    }
+
+    if (!departureTime) {
+
+        showToast(
+            "Masukkan waktu berangkat.",
+            "warning"
         );
 
-    const totalMinutes =
-        routeMinutes +
-        buffer;
-
-    const departure =
-        subtractMinutes(
-            schoolTime,
-            totalMinutes
-        );
-
-    const recommendedDeparture =
-        document.getElementById(
-            "recommendedDeparture"
-        );
-
-    if (recommendedDeparture) {
-
-        recommendedDeparture.textContent =
-            departure;
-
+        return;
     }
 
     scheduleData = {
 
+        day:
+            scheduleDay?.value ||
+            "",
+
         date:
-            dateInput?.value ||
+            scheduleDate?.value ||
             "",
 
         schoolTime,
 
-        buffer,
+        departureTime,
 
-        routeMinutes,
-
-        departure,
-
-        createdAt:
-            Date.now()
+        buffer:
+            Number(
+                scheduleBuffer?.value ||
+                settings.defaultBuffer ||
+                10
+            )
 
     };
 
@@ -2924,56 +3585,17 @@ function calculateSchedule() {
 
     updateScheduleUI();
 
+    if (
+        reminderData?.enabled
+    ) {
+
+        startDepartureReminderTimer();
+
+    }
+
     showToast(
-        "Waktu keberangkatan berhasil dihitung."
-    );
-
-}
-
-
-function subtractMinutes(
-    time,
-    minutes
-) {
-
-    const parts =
-        time.split(":");
-
-    let hour =
-        Number(
-            parts[0]
-        );
-
-    let minute =
-        Number(
-            parts[1]
-        );
-
-    minute -= minutes;
-
-    while (minute < 0) {
-
-        minute += 60;
-        hour--;
-
-    }
-
-    while (hour < 0) {
-
-        hour += 24;
-
-    }
-
-    return (
-        String(hour).padStart(
-            2,
-            "0"
-        ) +
-        ":" +
-        String(minute).padStart(
-            2,
-            "0"
-        )
+        "Jadwal berhasil disimpan.",
+        "success"
     );
 
 }
@@ -2985,123 +3607,237 @@ function updateScheduleUI() {
         return;
     }
 
-    const recommendedDeparture =
-        document.getElementById(
-            "recommendedDeparture"
-        );
+    if (scheduleDay) {
 
-    if (recommendedDeparture) {
+        scheduleDay.value =
+            scheduleData.day ||
+            "";
+
+    }
+
+    if (scheduleDate) {
+
+        scheduleDate.value =
+            scheduleData.date ||
+            "";
+
+    }
+
+    if (scheduleEntryTime) {
+
+        scheduleEntryTime.value =
+            scheduleData.schoolTime ||
+            "";
+
+    }
+
+    if (scheduleDepartureTime) {
+
+        scheduleDepartureTime.value =
+            scheduleData.departureTime ||
+            "";
+
+    }
+
+    if (scheduleBuffer) {
+
+        scheduleBuffer.value =
+            String(
+                scheduleData.buffer ??
+                settings.defaultBuffer ??
+                10
+            );
+
+    }
+
+    if (
+        recommendedDeparture
+    ) {
 
         recommendedDeparture.textContent =
-            scheduleData.departure ||
+            scheduleData.departureTime ||
             "--:--";
 
     }
 
-}
-
-
-function updateScheduleRecommendation() {
-
     if (
-        scheduleData &&
-        jarakKmGlobal
+        scheduleStatus
     ) {
 
-        calculateSchedule();
+        scheduleStatus.textContent =
+            scheduleData.departureTime
+                ? "Jadwal berangkat tersimpan."
+                : "Belum ada jadwal berangkat.";
+
+    }
+
+    if (
+        scheduleResult
+    ) {
+
+        scheduleResult.classList.toggle(
+            "has-result",
+            Boolean(
+                scheduleData.departureTime
+            )
+        );
 
     }
 
 }
 
 
-/* =========================================
-   SAVE SCHEDULE
-========================================= */
+function calculateSchedule() {
 
-const saveScheduleButton =
-    document.getElementById(
-        "saveScheduleButton"
+    if (!scheduleEntryTime) {
+        return;
+    }
+
+    const schoolTime =
+        scheduleEntryTime.value;
+
+    if (!schoolTime) {
+
+        showToast(
+            "Masukkan jam masuk sekolah terlebih dahulu.",
+            "warning"
+        );
+
+        return;
+    }
+
+    let travelMinutes = 0;
+
+    if (
+        jarakKmGlobal &&
+        Number(jarakKmGlobal) > 0
+    ) {
+
+        travelMinutes =
+            (
+                Number(jarakKmGlobal) /
+                Math.max(
+                    Number(kecepatanAktif) || 1,
+                    0.1
+                )
+            ) *
+            60;
+
+    }
+
+    const buffer =
+        Number(
+            scheduleBuffer?.value ||
+            settings.defaultBuffer ||
+            10
+        );
+
+    const totalMinutes =
+        Math.ceil(
+            travelMinutes +
+            buffer
+        );
+
+    const [
+        hour,
+        minute
+    ] =
+        schoolTime
+            .split(":")
+            .map(Number);
+
+    if (
+        Number.isNaN(hour) ||
+        Number.isNaN(minute)
+    ) {
+
+        showToast(
+            "Jam masuk sekolah tidak valid.",
+            "error"
+        );
+
+        return;
+    }
+
+    const schoolDate =
+        new Date();
+
+    schoolDate.setHours(
+        hour,
+        minute,
+        0,
+        0
     );
 
-if (saveScheduleButton) {
+    schoolDate.setMinutes(
+        schoolDate.getMinutes() -
+        totalMinutes
+    );
 
-    saveScheduleButton.addEventListener(
-        "click",
-        () => {
+    const departure =
+        formatTimeClock(
+            schoolDate
+        );
 
-            if (!scheduleData) {
+    if (scheduleDepartureTime) {
 
-                showToast(
-                    "Hitung jadwal terlebih dahulu."
-                );
+        scheduleDepartureTime.value =
+            departure;
 
-                return;
+    }
 
-            }
+    if (recommendedDeparture) {
 
-            saveStorage(
-                SCHEDULE_KEY,
-                scheduleData
-            );
+        recommendedDeparture.textContent =
+            departure;
 
-            showToast(
-                "Jadwal berhasil disimpan."
-            );
+    }
 
-        }
+    scheduleData = {
+
+        day:
+            scheduleDay?.value ||
+            "",
+
+        date:
+            scheduleDate?.value ||
+            "",
+
+        schoolTime,
+
+        departureTime:
+            departure,
+
+        buffer
+
+    };
+
+    saveStorage(
+        SCHEDULE_KEY,
+        scheduleData
+    );
+
+    updateScheduleUI();
+
+    if (
+        reminderData?.enabled
+    ) {
+
+        startDepartureReminderTimer();
+
+    }
+
+    showToast(
+        `Disarankan berangkat pukul ${departure}.`,
+        "success",
+        4000
     );
 
 }
 
 
 /* =========================================
-   SETTINGS ELEMENTS
-========================================= */
-
-const walkingSpeedInput =
-    document.getElementById(
-        "walkingSpeed"
-    );
-
-const motorSpeedInput =
-    document.getElementById(
-        "motorSpeed"
-    );
-
-const carSpeedInput =
-    document.getElementById(
-        "carSpeed"
-    );
-
-const defaultBufferInput =
-    document.getElementById(
-        "defaultBuffer"
-    );
-
-const defaultMapInput =
-    document.getElementById(
-        "defaultMap"
-    );
-
-const themeSelect =
-    document.getElementById(
-        "themeSelect"
-    );
-
-const saveSettingsButton =
-    document.getElementById(
-        "saveSettingsButton"
-    );
-
-const resetSettingsButton =
-    document.getElementById(
-        "resetSettingsButton"
-    );
-
-
-/* =========================================
-   LOAD SETTINGS UI
+   SETTINGS UI
 ========================================= */
 
 function populateSettingsUI() {
@@ -3127,16 +3863,18 @@ function populateSettingsUI() {
 
     }
 
-    if (defaultBufferInput) {
+    if (defaultBufferSelect) {
 
-        defaultBufferInput.value =
-            settings.defaultBuffer;
+        defaultBufferSelect.value =
+            String(
+                settings.defaultBuffer
+            );
 
     }
 
-    if (defaultMapInput) {
+    if (defaultMapSelect) {
 
-        defaultMapInput.value =
+        defaultMapSelect.value =
             settings.defaultMap;
 
     }
@@ -3155,16 +3893,6 @@ function populateSettingsUI() {
    SAVE SETTINGS
 ========================================= */
 
-if (saveSettingsButton) {
-
-    saveSettingsButton.addEventListener(
-        "click",
-        saveSettings
-    );
-
-}
-
-
 function saveSettings() {
 
     const walking =
@@ -3182,157 +3910,115 @@ function saveSettings() {
             carSpeedInput?.value
         );
 
-    const buffer =
-        Number(
-            defaultBufferInput?.value
-        );
-
     if (
-        !Number.isFinite(walking) ||
-        walking <= 0
-    ) {
-
-        showToast(
-            "Kecepatan jalan kaki tidak valid."
-        );
-
-        return;
-    }
-
-    if (
-        !Number.isFinite(motor) ||
-        motor <= 0
-    ) {
-
-        showToast(
-            "Kecepatan motor tidak valid."
-        );
-
-        return;
-    }
-
-    if (
-        !Number.isFinite(car) ||
+        !walking ||
+        walking <= 0 ||
+        !motor ||
+        motor <= 0 ||
+        !car ||
         car <= 0
     ) {
 
         showToast(
-            "Kecepatan mobil tidak valid."
+            "Kecepatan harus lebih dari 0.",
+            "warning"
         );
 
         return;
     }
 
-    if (
-        !Number.isFinite(buffer) ||
-        buffer < 0
-    ) {
+    settings.walkingSpeed =
+        walking;
 
-        showToast(
-            "Waktu cadangan tidak valid."
+    settings.motorSpeed =
+        motor;
+
+    settings.carSpeed =
+        car;
+
+    settings.defaultBuffer =
+        Number(
+            defaultBufferSelect?.value ||
+            10
         );
 
-        return;
-    }
+    settings.defaultMap =
+        defaultMapSelect?.value ||
+        "street";
 
-    settings = {
-
-        walkingSpeed:
-            walking,
-
-        motorSpeed:
-            motor,
-
-        carSpeed:
-            car,
-
-        defaultBuffer:
-            buffer,
-
-        defaultMap:
-            defaultMapInput?.value ||
-            "street",
-
-        theme:
-            themeSelect?.value ||
-            "system"
-
-    };
+    settings.theme =
+        themeSelect?.value ||
+        "system";
 
     saveStorage(
         SETTINGS_KEY,
         settings
     );
 
-    currentMapType =
-        settings.defaultMap;
-
     applyTheme(
         settings.theme
     );
 
-
     if (
-        transportAktif ===
-        "walking"
-    ) {
-
-        kecepatanAktif =
-            settings.walkingSpeed;
-
-    } else if (
-        transportAktif ===
-        "motor"
-    ) {
-
-        kecepatanAktif =
-            settings.motorSpeed;
-
-    } else {
-
-        kecepatanAktif =
-            settings.carSpeed;
-
-    }
-
-    updateSpeedLabels();
-
-    if (
-        map &&
-        mapLayers[currentMapType]
+        currentMapType !==
+        settings.defaultMap
     ) {
 
         changeMapType(
-            currentMapType
+            settings.defaultMap
         );
-
-    } else {
-
-        updateActiveMapUI();
 
     }
 
+    selectTransport(
+        transportAktif
+    );
+
+    updateSpeedLabels();
+
     showToast(
-        "Pengaturan berhasil disimpan."
+        "Pengaturan berhasil disimpan.",
+        "success"
     );
 
 }
 
 
-/* =========================================
-   RESET SETTINGS
-========================================= */
+function resetSettings() {
 
-if (resetSettingsButton) {
-
-    resetSettingsButton.addEventListener(
-        "click",
+    openConfirmModal(
+        "Reset pengaturan?",
+        "Semua pengaturan kecepatan, peta, dan tema akan dikembalikan ke bawaan.",
         () => {
 
-            openConfirmModal(
-                "Reset pengaturan?",
-                "Semua pengaturan kecepatan dan tampilan akan kembali ke nilai awal.",
-                resetSettings
+            settings = {
+                ...DEFAULT_SETTINGS
+            };
+
+            saveStorage(
+                SETTINGS_KEY,
+                settings
+            );
+
+            populateSettingsUI();
+
+            applyTheme(
+                settings.theme
+            );
+
+            changeMapType(
+                settings.defaultMap
+            );
+
+            selectTransport(
+                "motor"
+            );
+
+            updateSpeedLabels();
+
+            showToast(
+                "Pengaturan dikembalikan.",
+                "success"
             );
 
         }
@@ -3341,97 +4027,378 @@ if (resetSettingsButton) {
 }
 
 
-function resetSettings() {
+/* =========================================
+   SPEED LABELS
+========================================= */
 
-    settings = {
-        ...DEFAULT_SETTINGS
-    };
+function updateSpeedLabels() {
 
-    saveStorage(
-        SETTINGS_KEY,
-        settings
-    );
+    document
+        .querySelectorAll(
+            "[data-speed-value]"
+        )
+        .forEach(element => {
 
-    currentMapType =
-        settings.defaultMap;
+            const type =
+                element.dataset.speedValue;
 
-    populateSettingsUI();
+            if (
+                type === "walking"
+            ) {
 
-    applyTheme(
-        settings.theme
-    );
+                element.textContent =
+                    `${settings.walkingSpeed} km/jam`;
 
-    selectTransport(
-        "motor"
-    );
+            } else if (
+                type === "motor"
+            ) {
 
-    updateSpeedLabels();
+                element.textContent =
+                    `${settings.motorSpeed} km/jam`;
 
-    if (map) {
+            } else if (
+                type === "car"
+            ) {
 
-        changeMapType(
-            currentMapType
-        );
+                element.textContent =
+                    `${settings.carSpeed} km/jam`;
+
+            }
+
+        });
+
+}
+
+
+/* =========================================
+   SELECT TRANSPORT
+========================================= */
+
+function selectTransport(
+    transport
+) {
+
+    transportAktif =
+        transport;
+
+    if (
+        transport ===
+        "walking"
+    ) {
+
+        profilRouting =
+            "foot";
+
+        kecepatanAktif =
+            Number(
+                settings.walkingSpeed
+            ) ||
+            4.5;
+
+    } else if (
+        transport ===
+        "car"
+    ) {
+
+        profilRouting =
+            "driving";
+
+        kecepatanAktif =
+            Number(
+                settings.carSpeed
+            ) ||
+            45;
 
     } else {
 
-        updateActiveMapUI();
+        transportAktif =
+            "motor";
+
+        profilRouting =
+            "driving";
+
+        kecepatanAktif =
+            Number(
+                settings.motorSpeed
+            ) ||
+            30;
 
     }
 
-    showToast(
-        "Pengaturan berhasil direset."
+    updateTransportUI();
+
+}
+
+
+/* =========================================
+   LOCATION UI
+========================================= */
+
+function updateLocationUI() {
+
+    const homeText =
+        appData?.home?.name ||
+        "Belum dipilih";
+
+    const schoolText =
+        appData?.school?.name ||
+        "Belum dipilih";
+
+    if (dashboardHome) {
+
+        dashboardHome.textContent =
+            homeText;
+
+    }
+
+    if (dashboardSchool) {
+
+        dashboardSchool.textContent =
+            schoolText;
+
+    }
+
+    if (locationHomeName) {
+
+        locationHomeName.textContent =
+            homeText;
+
+    }
+
+    if (locationSchoolName) {
+
+        locationSchoolName.textContent =
+            schoolText;
+
+    }
+
+    if (homeStatus) {
+
+        homeStatus.textContent =
+            appData?.home
+                ? "Lokasi rumah sudah dipilih."
+                : "Lokasi rumah belum dipilih.";
+
+    }
+
+    if (schoolStatus) {
+
+        schoolStatus.textContent =
+            appData?.school
+                ? "Lokasi sekolah sudah dipilih."
+                : "Lokasi sekolah belum dipilih.";
+
+    }
+
+}
+
+
+/* =========================================
+   LOCATION TARGET STATUS
+========================================= */
+
+function updateLocationTargetStatus() {
+
+    if (!locationInstruction) {
+        return;
+    }
+
+    if (
+        modePilihLokasi ===
+        "home"
+    ) {
+
+        locationInstruction.textContent =
+            "Klik lokasi rumah kamu pada peta.";
+
+        return;
+    }
+
+    if (
+        modePilihLokasi ===
+        "school"
+    ) {
+
+        locationInstruction.textContent =
+            "Klik lokasi sekolah pada peta.";
+
+        return;
+    }
+
+    locationInstruction.textContent =
+        "Pilih rumah atau sekolah untuk menentukan lokasi.";
+
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+function updateDashboard() {
+
+    updateLocationUI();
+
+    if (dashboardDistance) {
+
+        dashboardDistance.textContent =
+            jarakKmGlobal > 0
+                ? formatDistance(
+                    jarakKmGlobal
+                )
+                : "--";
+
+    }
+
+    if (dashboardTime) {
+
+        if (
+            jarakKmGlobal > 0
+        ) {
+
+            const minutes =
+                (
+                    jarakKmGlobal /
+                    Math.max(
+                        Number(
+                            kecepatanAktif
+                        ) || 1,
+                        0.1
+                    )
+                ) *
+                60;
+
+            dashboardTime.textContent =
+                formatDuration(
+                    minutes
+                );
+
+        } else {
+
+            dashboardTime.textContent =
+                "--";
+
+        }
+
+    }
+
+    if (dashboardTransport) {
+
+        dashboardTransport.textContent =
+            getTransportName(
+                transportAktif
+            );
+
+    }
+
+    if (dashboardMapType) {
+
+        dashboardMapType.textContent =
+            MAP_TYPE_NAMES[
+                currentMapType
+            ] ||
+            "Peta Jalan";
+
+    }
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function showPage(
+    pageId
+) {
+
+    Object.values(pages)
+        .forEach(page => {
+
+            if (!page) {
+                return;
+            }
+
+            page.classList.toggle(
+                "active",
+                page.id === pageId
+            );
+
+        });
+
+    navItems.forEach(item => {
+
+        const target =
+            item.dataset.page ||
+            item.dataset.target;
+
+        item.classList.toggle(
+            "active",
+            target === pageId
+        );
+
+    });
+
+    if (
+        pageId ===
+        "mapPage"
+    ) {
+
+        setTimeout(() => {
+
+            initializeMap();
+
+            if (map) {
+                map.invalidateSize();
+            }
+
+        }, 100);
+
+    }
+
+}
+
+
+function navigateTo(
+    page
+) {
+
+    const pageId =
+        page === "dashboard"
+            ? "dashboardPage"
+            : page === "map"
+                ? "mapPage"
+                : page === "location"
+                    ? "locationPage"
+                    : page === "schedule"
+                        ? "schedulePage"
+                        : page === "settings"
+                            ? "settingsPage"
+                            : page;
+
+    showPage(
+        pageId
     );
 
 }
 
 
 /* =========================================
-   THEME
+   LOADING
 ========================================= */
 
-function applyTheme(
-    theme
+function showLoading(
+    show
 ) {
 
-    if (theme === "system") {
-
-        document.body.setAttribute(
-            "data-theme",
-            "system"
-        );
-
-        if (
-            window.matchMedia &&
-            window.matchMedia(
-                "(prefers-color-scheme: dark)"
-            ).matches
-        ) {
-
-            document.documentElement
-                .setAttribute(
-                    "data-theme",
-                    "dark"
-                );
-
-        } else {
-
-            document.documentElement
-                .setAttribute(
-                    "data-theme",
-                    "light"
-                );
-
-        }
-
+    if (!loadingScreen) {
         return;
     }
 
-    document.documentElement
-        .setAttribute(
-            "data-theme",
-            theme
-        );
+    loadingScreen.classList.toggle(
+        "show",
+        Boolean(show)
+    );
 
 }
 
@@ -3440,38 +4407,41 @@ function applyTheme(
    CONFIRM MODAL
 ========================================= */
 
-let confirmCallback =
-    null;
-
-
 function openConfirmModal(
     title,
     message,
     callback
 ) {
 
-    if (!confirmModal) {
+    if (
+        !confirmOverlay
+    ) {
+
+        if (typeof callback === "function") {
+            callback();
+        }
+
         return;
-    }
-
-    if (confirmModalTitle) {
-
-        confirmModalTitle.textContent =
-            title;
-
-    }
-
-    if (confirmModalMessage) {
-
-        confirmModalMessage.textContent =
-            message;
-
     }
 
     confirmCallback =
         callback;
 
-    confirmModal.classList.add(
+    if (confirmTitle) {
+
+        confirmTitle.textContent =
+            title;
+
+    }
+
+    if (confirmMessage) {
+
+        confirmMessage.textContent =
+            message;
+
+    }
+
+    confirmOverlay.classList.add(
         "show"
     );
 
@@ -3480,13 +4450,13 @@ function openConfirmModal(
 
 function closeConfirmModal() {
 
-    if (!confirmModal) {
-        return;
-    }
+    if (confirmOverlay) {
 
-    confirmModal.classList.remove(
-        "show"
-    );
+        confirmOverlay.classList.remove(
+            "show"
+        );
+
+    }
 
     confirmCallback =
         null;
@@ -3494,201 +4464,35 @@ function closeConfirmModal() {
 }
 
 
-if (confirmCancelButton) {
+function runConfirmCallback() {
 
-    confirmCancelButton.addEventListener(
-        "click",
-        closeConfirmModal
-    );
+    const callback =
+        confirmCallback;
 
-}
+    closeConfirmModal();
 
+    if (
+        typeof callback ===
+        "function"
+    ) {
 
-if (confirmActionButton) {
+        callback();
 
-    confirmActionButton.addEventListener(
-        "click",
-        () => {
-
-            const callback =
-                confirmCallback;
-
-            closeConfirmModal();
-
-            if (callback) {
-                callback();
-            }
-
-        }
-    );
-
-}
-
-
-if (confirmModal) {
-
-    confirmModal.addEventListener(
-        "click",
-        (event) => {
-
-            if (
-                event.target ===
-                confirmModal
-            ) {
-
-                closeConfirmModal();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   TUTORIAL DATA
-========================================= */
-
-const tutorialSteps = [
-
-    {
-        title:
-            "Pilih lokasi rumah",
-
-        description:
-            "Klik <strong>Pilih lokasi</strong> pada bagian Rumah. Kamu dapat menggunakan GPS atau mencari lokasi secara manual. Jika memilih secara manual, cari lokasi rumah lalu ketuk titiknya pada peta.",
-
-        icon: `
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <path d="M3 10.5 12 3l9 7.5"></path>
-                <path d="M5 9.5V21h14V9.5"></path>
-                <path d="M9 21v-6h6v6"></path>
-            </svg>
-        `
-    },
-
-    {
-        title:
-            "Pilih lokasi sekolah",
-
-        description:
-            "Setelah lokasi rumah dipilih, kembali ke Dashboard lalu pilih lokasi <strong>Sekolah</strong>. Caranya sama: gunakan GPS, pencarian manual, atau langsung ketuk titik sekolah pada peta.",
-
-        icon: `
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <path d="M3 21h18"></path>
-                <path d="M5 21V8l7-5 7 5v13"></path>
-                <path d="M9 21v-4h6v4"></path>
-                <path d="M9 10h.01"></path>
-                <path d="M15 10h.01"></path>
-            </svg>
-        `
-    },
-
-    {
-        title:
-            "Hasilkan perjalanan",
-
-        description:
-            "Setelah lokasi rumah dan sekolah tersedia, scroll ke bawah. Pilih <strong>Motor</strong>, <strong>Mobil</strong>, atau <strong>Jalan kaki</strong>, lalu tekan <strong>Hasilkan Perjalanan</strong>. Jarak dan perkiraan waktu akan muncul.",
-
-        icon: `
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <circle cx="6" cy="17" r="3"></circle>
-                <circle cx="18" cy="17" r="3"></circle>
-                <path d="M6 17h3l3-8h3l3 8"></path>
-                <path d="M9 17h6"></path>
-            </svg>
-        `
-    },
-
-    {
-        title:
-            "Atur kecepatan",
-
-        description:
-            "Untuk mengubah kecepatan Motor, Mobil, atau Jalan kaki, buka <strong>Pengaturan</strong>. Atur kecepatannya sesuai kebutuhan, lalu tekan <strong>Simpan Pengaturan</strong>. Pengaturan akan tersimpan otomatis.",
-
-        icon: `
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.1h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.6-1H6v-2.6h.4A1.7 1.7 0 0 0 8 10a1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.1h2.6V5a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1V14h-.1a1.7 1.7 0 0 0-1.6 1z"></path>
-            </svg>
-        `
-    },
-
-    {
-        title:
-            "Gunakan Google Maps",
-
-        description:
-            "Untuk melihat perjalanan langsung melalui Google Maps, buka halaman Peta lalu tekan tombol <strong>Buka di Google Maps</strong>. Untuk memulai dari awal, tekan <strong>Reset perjalanan</strong>.",
-
-        icon: `
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"></path>
-                <circle cx="12" cy="9" r="2.5"></circle>
-            </svg>
-        `
     }
 
-];
+}
 
 
 /* =========================================
-   TUTORIAL STATE
-========================================= */
-
-let tutorialCurrentStep =
-    0;
-
-let tutorialIsOpen =
-    false;
-
-
-/* =========================================
-   RENDER TUTORIAL
+   TUTORIAL
 ========================================= */
 
 function renderTutorialStep() {
 
-    if (!tutorialSteps.length) {
+    if (
+        !tutorialOverlay ||
+        !tutorialSteps.length
+    ) {
         return;
     }
 
@@ -3697,20 +4501,26 @@ function renderTutorialStep() {
             tutorialCurrentStep
         ];
 
-    const total =
-        tutorialSteps.length;
+    const icon =
+        tutorialOverlay.querySelector(
+            ".tutorial-icon"
+        );
 
-    const current =
-        tutorialCurrentStep + 1;
-
+    if (icon) {
+        icon.innerHTML =
+            step.icon;
+    }
 
     if (tutorialStepLabel) {
 
         tutorialStepLabel.textContent =
-            `LANGKAH ${current} DARI ${total}`;
+            `LANGKAH ${
+                tutorialCurrentStep + 1
+            } DARI ${
+                tutorialSteps.length
+            }`;
 
     }
-
 
     if (tutorialTitle) {
 
@@ -3719,63 +4529,42 @@ function renderTutorialStep() {
 
     }
 
-
     if (tutorialDescription) {
 
-        tutorialDescription.innerHTML =
+        tutorialDescription.textContent =
             step.description;
 
     }
 
-
-    if (tutorialIcon) {
-
-        tutorialIcon.innerHTML =
-            step.icon;
-
-    }
-
-
     if (tutorialDots) {
 
-        const dots =
-            tutorialDots.querySelectorAll(
-                ".tutorial-dot"
-            );
-
-        dots.forEach(
-            (dot, index) => {
-
-                dot.classList.toggle(
-                    "active",
-                    index ===
-                    tutorialCurrentStep
-                );
-
-            }
-        );
+        tutorialDots.innerHTML =
+            tutorialSteps
+                .map(
+                    (_, index) =>
+                        `<span class="tutorial-dot ${
+                            index ===
+                            tutorialCurrentStep
+                                ? "active"
+                                : ""
+                        }"></span>`
+                )
+                .join("");
 
     }
 
+    if (tutorialBack) {
 
-    if (tutorialBackButton) {
-
-        tutorialBackButton.disabled =
+        tutorialBack.disabled =
             tutorialCurrentStep === 0;
 
-        tutorialBackButton.style.visibility =
-            tutorialCurrentStep === 0
-                ? "hidden"
-                : "visible";
-
     }
 
+    if (tutorialNext) {
 
-    if (tutorialNextButton) {
-
-        tutorialNextButton.textContent =
+        tutorialNext.textContent =
             tutorialCurrentStep ===
-            total - 1
+            tutorialSteps.length - 1
                 ? "Selesai"
                 : "Lanjut";
 
@@ -3793,6 +4582,11 @@ function openTutorial(
 ) {
 
     if (!tutorialOverlay) {
+
+        console.warn(
+            "Tutorial overlay tidak ditemukan."
+        );
+
         return;
     }
 
@@ -3812,9 +4606,6 @@ function openTutorial(
         "show"
     );
 
-    document.body.style.overflow =
-        "hidden";
-
 }
 
 
@@ -3826,19 +4617,16 @@ function closeTutorial(
     markAsSeen = true
 ) {
 
-    if (!tutorialOverlay) {
-        return;
+    if (tutorialOverlay) {
+
+        tutorialOverlay.classList.remove(
+            "show"
+        );
+
     }
 
     tutorialIsOpen =
         false;
-
-    tutorialOverlay.classList.remove(
-        "show"
-    );
-
-    document.body.style.overflow =
-        "";
 
     if (markAsSeen) {
 
@@ -3853,123 +4641,46 @@ function closeTutorial(
 
 
 /* =========================================
-   NEXT TUTORIAL STEP
+   TUTORIAL EVENTS
 ========================================= */
 
-function nextTutorialStep() {
+if (tutorialClose) {
 
-    if (
-        tutorialCurrentStep <
-        tutorialSteps.length - 1
-    ) {
-
-        tutorialCurrentStep++;
-
-        renderTutorialStep();
-
-        return;
-    }
-
-    closeTutorial(
-        true
-    );
-
-}
-
-
-/* =========================================
-   PREVIOUS TUTORIAL STEP
-========================================= */
-
-function previousTutorialStep() {
-
-    if (
-        tutorialCurrentStep <= 0
-    ) {
-        return;
-    }
-
-    tutorialCurrentStep--;
-
-    renderTutorialStep();
-
-}
-
-
-/* =========================================
-   TUTORIAL BUTTON EVENTS
-========================================= */
-
-if (tutorialNextButton) {
-
-    tutorialNextButton.addEventListener(
-        "click",
-        nextTutorialStep
-    );
-
-}
-
-
-if (tutorialBackButton) {
-
-    tutorialBackButton.addEventListener(
-        "click",
-        previousTutorialStep
-    );
-
-}
-
-
-if (tutorialCloseButton) {
-
-    tutorialCloseButton.addEventListener(
+    tutorialClose.addEventListener(
         "click",
         () => {
-
-            closeTutorial(
-                true
-            );
-
+            closeTutorial();
         }
     );
 
 }
 
 
-if (tutorialSkipButton) {
+if (tutorialSkip) {
 
-    tutorialSkipButton.addEventListener(
+    tutorialSkip.addEventListener(
         "click",
         () => {
-
-            closeTutorial(
-                true
-            );
-
+            closeTutorial();
         }
     );
 
 }
 
 
-/* =========================================
-   CLICK OVERLAY TUTORIAL
-========================================= */
+if (tutorialBack) {
 
-if (tutorialOverlay) {
-
-    tutorialOverlay.addEventListener(
+    tutorialBack.addEventListener(
         "click",
-        (event) => {
+        () => {
 
             if (
-                event.target ===
-                tutorialOverlay
+                tutorialCurrentStep > 0
             ) {
 
-                closeTutorial(
-                    true
-                );
+                tutorialCurrentStep--;
+
+                renderTutorialStep();
 
             }
 
@@ -3979,9 +4690,32 @@ if (tutorialOverlay) {
 }
 
 
-/* =========================================
-   TUTORIAL OPEN FROM SETTINGS
-========================================= */
+if (tutorialNext) {
+
+    tutorialNext.addEventListener(
+        "click",
+        () => {
+
+            if (
+                tutorialCurrentStep <
+                tutorialSteps.length - 1
+            ) {
+
+                tutorialCurrentStep++;
+
+                renderTutorialStep();
+
+            } else {
+
+                closeTutorial();
+
+            }
+
+        }
+    );
+
+}
+
 
 if (openTutorialButton) {
 
@@ -3999,22 +4733,42 @@ if (openTutorialButton) {
 }
 
 
+if (tutorialOverlay) {
+
+    tutorialOverlay.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                tutorialOverlay
+            ) {
+
+                closeTutorial();
+
+            }
+
+        }
+    );
+
+}
+
+
 /* =========================================
-   KEYBOARD ESCAPE
+   KEYBOARD ESC
 ========================================= */
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    event => {
 
         if (
-            event.key === "Escape" &&
+            event.key ===
+            "Escape" &&
             tutorialIsOpen
         ) {
 
-            closeTutorial(
-                true
-            );
+            closeTutorial();
 
         }
 
@@ -4023,34 +4777,475 @@ document.addEventListener(
 
 
 /* =========================================
-   ESCAPE HTML
+   EVENT LISTENERS
 ========================================= */
 
-function escapeHtml(
+navItems.forEach(item => {
+
+    item.addEventListener(
+        "click",
+        () => {
+
+            const target =
+                item.dataset.page ||
+                item.dataset.target;
+
+            if (target) {
+
+                showPage(
+                    target
+                );
+
+            }
+
+        }
+    );
+
+});
+
+
+if (homeLocationButton) {
+
+    homeLocationButton.addEventListener(
+        "click",
+        startSelectHome
+    );
+
+}
+
+
+if (schoolLocationButton) {
+
+    schoolLocationButton.addEventListener(
+        "click",
+        startSelectSchool
+    );
+
+}
+
+
+if (locateButton) {
+
+    locateButton.addEventListener(
+        "click",
+        locateUserOnMap
+    );
+
+}
+
+
+if (resetMapButton) {
+
+    resetMapButton.addEventListener(
+        "click",
+        () => {
+
+            openConfirmModal(
+                "Reset peta?",
+                "Semua lokasi dan rute pada peta akan dihapus.",
+                resetMap
+            );
+
+        }
+    );
+
+}
+
+
+if (calculateRouteButton) {
+
+    calculateRouteButton.addEventListener(
+        "click",
+        calculateRoute
+    );
+
+}
+
+
+if (googleMapsButton) {
+
+    googleMapsButton.addEventListener(
+        "click",
+        openGoogleMaps
+    );
+
+}
+
+
+if (walkBtn) {
+
+    walkBtn.addEventListener(
+        "click",
+        () => {
+            selectTransport(
+                "walking"
+            );
+        }
+    );
+
+}
+
+
+if (motorBtn) {
+
+    motorBtn.addEventListener(
+        "click",
+        () => {
+            selectTransport(
+                "motor"
+            );
+        }
+    );
+
+}
+
+
+if (carBtn) {
+
+    carBtn.addEventListener(
+        "click",
+        () => {
+            selectTransport(
+                "car"
+            );
+        }
+    );
+
+}
+
+
+if (mapTypeSelect) {
+
+    mapTypeSelect.addEventListener(
+        "change",
+        event => {
+
+            changeMapType(
+                event.target.value
+            );
+
+        }
+    );
+
+}
+
+
+document
+    .querySelectorAll(
+        "[data-map]"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                changeMapType(
+                    button.dataset.map
+                );
+
+            }
+        );
+
+    });
+
+
+document
+    .querySelectorAll(
+        "[data-map-type]"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                changeMapType(
+                    button.dataset.mapType
+                );
+
+            }
+        );
+
+    });
+
+
+if (searchHomeButton) {
+
+    searchHomeButton.addEventListener(
+        "click",
+        () => {
+
+            searchLocation(
+                homeSearchInput?.value,
+                "home"
+            );
+
+        }
+    );
+
+}
+
+
+if (searchSchoolButton) {
+
+    searchSchoolButton.addEventListener(
+        "click",
+        () => {
+
+            searchLocation(
+                schoolSearchInput?.value,
+                "school"
+            );
+
+        }
+    );
+
+}
+
+
+if (homeSearchInput) {
+
+    homeSearchInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                searchLocation(
+                    homeSearchInput.value,
+                    "home"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+if (schoolSearchInput) {
+
+    schoolSearchInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                searchLocation(
+                    schoolSearchInput.value,
+                    "school"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+if (saveManualHome) {
+
+    saveManualHome.addEventListener(
+        "click",
+        () => {
+
+            saveManualLocation(
+                "home"
+            );
+
+        }
+    );
+
+}
+
+
+if (saveManualSchool) {
+
+    saveManualSchool.addEventListener(
+        "click",
+        () => {
+
+            saveManualLocation(
+                "school"
+            );
+
+        }
+    );
+
+}
+
+
+if (saveSettingsButton) {
+
+    saveSettingsButton.addEventListener(
+        "click",
+        saveSettings
+    );
+
+}
+
+
+if (resetSettingsButton) {
+
+    resetSettingsButton.addEventListener(
+        "click",
+        resetSettings
+    );
+
+}
+
+
+if (saveScheduleButton) {
+
+    saveScheduleButton.addEventListener(
+        "click",
+        calculateSchedule
+    );
+
+}
+
+
+if (scheduleEntryTime) {
+
+    scheduleEntryTime.addEventListener(
+        "change",
+        () => {
+
+            if (
+                scheduleDepartureTime &&
+                !scheduleDepartureTime.value
+            ) {
+
+                calculateSchedule();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   STORAGE HELPERS
+========================================= */
+
+function saveStorage(
+    key,
     value
 ) {
 
-    return String(value)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
+    try {
+
+        localStorage.setItem(
+            key,
+            JSON.stringify(value)
         );
+
+    } catch (error) {
+
+        console.error(
+            "Gagal menyimpan storage:",
+            error
+        );
+
+    }
+
+}
+
+
+function loadStorage(
+    key,
+    fallback
+) {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                key
+            );
+
+        if (!saved) {
+            return fallback;
+        }
+
+        return JSON.parse(
+            saved
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Gagal membaca storage:",
+            error
+        );
+
+        return fallback;
+
+    }
+
+}
+
+
+/* =========================================
+   FORMAT DURATION
+========================================= */
+
+function formatDuration(
+    minutes
+) {
+
+    if (
+        minutes === null ||
+        minutes === undefined ||
+        Number.isNaN(
+            Number(minutes)
+        )
+    ) {
+
+        return "--";
+
+    }
+
+    const total =
+        Math.max(
+            1,
+            Math.round(
+                Number(minutes)
+            )
+        );
+
+    if (total < 60) {
+
+        return `${total} menit`;
+
+    }
+
+    const hours =
+        Math.floor(
+            total / 60
+        );
+
+    const mins =
+        total % 60;
+
+    if (!mins) {
+
+        return `${hours} jam`;
+
+    }
+
+    return `${hours} jam ${mins} menit`;
 
 }
 
@@ -4061,11 +5256,21 @@ function escapeHtml(
 
 function initializeApp() {
 
-    populateSettingsUI();
+    loadAppData();
+
+    loadSettings();
 
     applyTheme(
         settings.theme
     );
+
+    populateSettingsUI();
+
+    initializeTheme();
+
+    initializeMap();
+
+    restoreMapLocations();
 
     selectTransport(
         "motor"
@@ -4077,7 +5282,19 @@ function initializeApp() {
 
     updateLocationTargetStatus();
 
+    updateDashboard();
+
     updateScheduleUI();
+
+    updateDepartureReminderUI();
+
+    if (
+        reminderData?.enabled
+    ) {
+
+        startDepartureReminderTimer();
+
+    }
 
     renderHistory();
 
@@ -4091,27 +5308,23 @@ function initializeApp() {
         "JARAK KESEKOLAH berhasil dimuat."
     );
 
+    setTimeout(
+        () => {
 
-    /* =====================================
-       TUTORIAL PERTAMA KALI
-    ===================================== */
+            if (
+                tutorialOverlay &&
+                !tutorialIsOpen
+            ) {
 
-    const tutorialSeen =
-        localStorage.getItem(
-            TUTORIAL_KEY
-        );
+                openTutorial(
+                    false
+                );
 
-    if (!tutorialSeen) {
+            }
 
-        setTimeout(() => {
-
-            openTutorial(
-                true
-            );
-
-        }, 700);
-
-    }
+        },
+        1500
+    );
 
 }
 
@@ -4127,8 +5340,7 @@ if (window.matchMedia) {
             "(prefers-color-scheme: dark)"
         );
 
-    mediaQuery.addEventListener(
-        "change",
+    const handleThemeChange =
         () => {
 
             if (
@@ -4142,8 +5354,28 @@ if (window.matchMedia) {
 
             }
 
-        }
-    );
+        };
+
+    if (
+        typeof mediaQuery.addEventListener ===
+        "function"
+    ) {
+
+        mediaQuery.addEventListener(
+            "change",
+            handleThemeChange
+        );
+
+    } else if (
+        typeof mediaQuery.addListener ===
+        "function"
+    ) {
+
+        mediaQuery.addListener(
+            handleThemeChange
+        );
+
+    }
 
 }
 
@@ -4159,15 +5391,15 @@ initializeApp();
    FIX TUTORIAL + SCROLL
 ========================================= */
 
-/* Pastikan halaman selalu bisa di-scroll */
-document.documentElement.style.overflowY = "auto";
-document.body.style.overflowY = "auto";
-document.body.style.overflowX = "hidden";
+document.documentElement.style.overflowY =
+    "auto";
 
+document.body.style.overflowY =
+    "auto";
 
-/* CSS tutorial dibuat langsung dari JavaScript
-   supaya tetap tampil meskipun style.css belum
-   memiliki class tutorial. */
+document.body.style.overflowX =
+    "hidden";
+
 
 (function fixTutorialUI() {
 
@@ -4197,7 +5429,7 @@ document.body.style.overflowX = "hidden";
             align-items: center !important;
             justify-content: center !important;
             padding: 20px !important;
-            background: rgba(0, 0, 0, 0.55) !important;
+            background: rgba(0,0,0,.55) !important;
             overflow-y: auto !important;
             box-sizing: border-box !important;
         }
@@ -4217,10 +5449,6 @@ document.body.style.overflowX = "hidden";
             box-sizing: border-box !important;
             box-shadow: 0 20px 60px rgba(0,0,0,.25) !important;
             position: relative !important;
-        }
-
-        .tutorial-modal button {
-            cursor: pointer !important;
         }
 
         .tutorial-icon {
@@ -4276,7 +5504,6 @@ document.body.style.overflowX = "hidden";
             height: 7px !important;
             border-radius: 50% !important;
             background: #cbd5e1 !important;
-            transition: .2s !important;
         }
 
         .tutorial-dot.active {
@@ -4285,15 +5512,11 @@ document.body.style.overflowX = "hidden";
             background: #2563eb !important;
         }
 
-        .tutorial-actions,
         .tutorial-navigation {
             display: flex !important;
             align-items: center !important;
-            gap: 10px !important;
-        }
-
-        .tutorial-navigation {
             justify-content: space-between !important;
+            gap: 10px !important;
         }
 
         .tutorial-navigation button {
@@ -4304,20 +5527,13 @@ document.body.style.overflowX = "hidden";
             font-weight: 700 !important;
         }
 
-        .tutorial-skip {
-            background: transparent !important;
-            border: 0 !important;
-            opacity: .65 !important;
-            font-weight: 600 !important;
-        }
-
         #tutorialBackButton {
             background: #eef2f7 !important;
         }
 
         #tutorialNextButton {
             background: #2563eb !important;
-            color: white !important;
+            color: #ffffff !important;
         }
 
         #tutorialCloseButton {
@@ -4329,44 +5545,6 @@ document.body.style.overflowX = "hidden";
             border: 0 !important;
             border-radius: 50% !important;
             background: #f1f5f9 !important;
-            font-size: 20px !important;
-        }
-
-        @media (max-width: 480px) {
-
-            .tutorial-overlay {
-                padding: 14px !important;
-            }
-
-            .tutorial-modal {
-                max-height: calc(100vh - 28px) !important;
-                border-radius: 22px !important;
-                padding: 22px 18px !important;
-            }
-
-        }
-
-        @media (prefers-color-scheme: dark) {
-
-            html[data-theme="dark"] .tutorial-modal {
-                background: #151922 !important;
-                color: #ffffff !important;
-            }
-
-            html[data-theme="dark"] .tutorial-icon {
-                background: #202b43 !important;
-            }
-
-            html[data-theme="dark"] #tutorialBackButton {
-                background: #252b36 !important;
-                color: #ffffff !important;
-            }
-
-            html[data-theme="dark"] #tutorialCloseButton {
-                background: #252b36 !important;
-                color: #ffffff !important;
-            }
-
         }
     `;
 
@@ -4394,6 +5572,7 @@ function unlockPageScroll() {
 
     document.body.style.overflowX =
         "hidden";
+
 }
 
 
@@ -4446,60 +5625,91 @@ openTutorial = function(
    PAKSA SCROLL AKTIF SAAT APP DIMULAI
 ========================================= */
 
-setTimeout(() => {
+setTimeout(
+    () => {
 
-    if (
-        !tutorialIsOpen
-    ) {
+        if (
+            !tutorialIsOpen
+        ) {
 
-        unlockPageScroll();
+            unlockPageScroll();
 
-    }
+        }
 
-}, 1200);
+    },
+    1200
+);
 
 
 /* =========================================
    AUTO OPEN TUTORIAL SETIAP APP DIBUKA
 ========================================= */
 
-window.addEventListener("load", () => {
+window.addEventListener(
+    "load",
+    () => {
 
-    setTimeout(() => {
+        setTimeout(
+            () => {
 
-        if (
-            tutorialOverlay &&
-            !tutorialIsOpen
-        ) {
+                if (
+                    tutorialOverlay &&
+                    !tutorialIsOpen
+                ) {
 
-            openTutorial(false);
+                    openTutorial(
+                        false
+                    );
 
-        }
+                }
 
-    }, 1500);
+            },
+            1500
+        );
 
-});
+    }
+);
+
 
 /* =========================================
    PWA SERVICE WORKER
 ========================================= */
 
-if ("serviceWorker" in navigator) {
+if (
+    "serviceWorker" in navigator
+) {
 
-    window.addEventListener("load", () => {
+    window.addEventListener(
+        "load",
+        () => {
 
-        navigator.serviceWorker
-            .register("./sw.js")
-            .then(() => {
-                console.log("PWA Service Worker aktif");
-            })
-            .catch(error => {
-                console.error(
-                    "Service Worker gagal:",
-                    error
+            navigator.serviceWorker
+                .register(
+                    "./sw.js"
+                )
+                .then(
+                    () => {
+
+                        console.log(
+                            "PWA Service Worker aktif"
+                        );
+
+                    }
+                )
+                .catch(
+                    error => {
+
+                        console.error(
+                            "Service Worker gagal:",
+                            error
+                        );
+
+                    }
                 );
-            });
 
-    });
+        }
+    );
+
+}
 
 }
