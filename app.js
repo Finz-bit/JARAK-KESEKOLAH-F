@@ -4460,31 +4460,22 @@ setTimeout(() => {
 
 
 /* =========================================
-   AUTO OPEN TUTORIAL SAAT PERTAMA KALI
+   AUTO OPEN TUTORIAL SETIAP APP DIBUKA
 ========================================= */
 
 window.addEventListener("load", () => {
 
-    const tutorialSeen =
-        localStorage.getItem(
-            TUTORIAL_KEY
-        );
+    setTimeout(() => {
 
-    if (!tutorialSeen) {
+        if (
+            tutorialOverlay &&
+            !tutorialIsOpen
+        ) {
 
-        setTimeout(() => {
+            openTutorial(false);
 
-            if (
-                tutorialOverlay &&
-                !tutorialIsOpen
-            ) {
+        }
 
-                openTutorial(true);
-
-            }
-
-        }, 1500);
-
-    }
+    }, 1500);
 
 });
