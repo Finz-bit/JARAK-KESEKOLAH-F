@@ -4479,3 +4479,27 @@ window.addEventListener("load", () => {
     }, 1500);
 
 });
+
+/* =========================================
+   PWA SERVICE WORKER
+========================================= */
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker
+            .register("./sw.js")
+            .then(() => {
+                console.log("PWA Service Worker aktif");
+            })
+            .catch(error => {
+                console.error(
+                    "Service Worker gagal:",
+                    error
+                );
+            });
+
+    });
+
+}
