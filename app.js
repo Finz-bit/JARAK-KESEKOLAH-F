@@ -94,6 +94,16 @@ navItems.forEach((item) => {
             const pageId =
                 item.dataset.page;
 
+
+            if (pageId === "mapPage") {
+
+                openMapPage();
+
+                return;
+
+            }
+
+
             showPage(pageId);
 
         }
@@ -114,6 +124,16 @@ navigationButtons.forEach((button) => {
 
             const target =
                 button.dataset.target;
+
+
+            if (target === "mapPage") {
+
+                openMapPage();
+
+                return;
+
+            }
+
 
             showPage(target);
 
@@ -268,6 +288,129 @@ function showToast(message) {
 
 }
 
+/* =========================================
+   LEAFLET MAP
+========================================= */
+
+let map = null;
+
+let mapInitialized = false;
+
+
+/* =========================================
+   INITIALIZE MAP
+========================================= */
+
+function initializeMap() {
+
+    if (mapInitialized) {
+        return;
+    }
+
+
+    const mapElement =
+        document.getElementById("map");
+
+
+    if (!mapElement) {
+        return;
+    }
+
+
+    /*
+     * Koordinat awal.
+     * Untuk sementara menggunakan area
+     * Jepara sebagai posisi awal peta.
+     */
+
+    const defaultLatitude =
+        -6.5891;
+
+    const defaultLongitude =
+        110.6677;
+
+
+    map = L.map(
+        "map",
+        {
+            zoomControl: true,
+
+            attributionControl: true
+        }
+    );
+
+
+    map.setView(
+        [
+            defaultLatitude,
+            defaultLongitude
+        ],
+        13
+    );
+
+
+    /*
+     * OpenStreetMap
+     */
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+
+            attribution:
+                '&copy; OpenStreetMap contributors'
+        }
+    ).addTo(map);
+
+
+    mapInitialized = true;
+
+
+    /*
+     * Leaflet terkadang perlu diberi tahu
+     * ukuran container setelah halaman
+     * ditampilkan.
+     */
+
+    setTimeout(() => {
+
+        map.invalidateSize();
+
+    }, 200);
+
+
+    console.log(
+        "Leaflet map berhasil dibuat."
+    );
+
+}
+
+
+/* =========================================
+   INITIALIZE MAP WHEN MAP PAGE OPENS
+========================================= */
+
+function openMapPage() {
+
+    showPage("mapPage");
+
+
+    setTimeout(() => {
+
+        initializeMap();
+
+
+        if (map) {
+
+            map.invalidateSize();
+
+        }
+
+    }, 100);
+
+}
+
 
 /* =========================================
    INITIALIZATION
@@ -290,3 +433,50 @@ function initializeApp() {
 ========================================= */
 
 initializeApp();
+
+
+/* =========================================
+   CENTER MAP BUTTON
+========================================= */
+
+const locateMapButton =
+    document.getElementById(
+        "locateMapButton"
+    );
+
+if (locateMapButton) {
+
+    locateMapButton.addEventListener(
+        "click",
+        () => {
+
+            if (!map) {
+                initializeMap();
+            }
+
+            if (!map) {
+                showToast(
+                    "Peta belum siap."
+                );
+                return;
+            }
+
+            map.setView(
+                [
+                    -6.5891,
+                    110.6677
+                ],
+                15,
+                {
+                    animate: true
+                }
+            );
+
+            showToast(
+                "Peta dipusatkan."
+            );
+
+        }
+    );
+
+}
