@@ -1,44 +1,437 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+<meta
+    name="description"
+    content="JARAK KESEKOLAH - Aplikasi untuk mengetahui jarak dan perkiraan waktu perjalanan menuju sekolah."
+>
+
+<meta name="theme-color" content="#2563eb">
+
+<title>JARAK KESEKOLAH</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+>
+
+</head><body><div class="app"><!-- HEADER -->
+
+<header class="app-header">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                />
+                <circle
+                    cx="12"
+                    cy="9.5"
+                    r="2.5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                />
+            </svg>
+        </div>
+
+        <div class="brand-text">
+            <span class="brand-title">JARAK</span>
+            <span class="brand-subtitle">KESEKOLAH</span>
+        </div>
+
+    </div>
+
+    <button
+        class="icon-button"
+        id="settingsButton"
+        type="button"
+        aria-label="Pengaturan"
     >
+        <svg viewBox="0 0 24 24" fill="none">
+            <circle
+                cx="12"
+                cy="12"
+                r="3"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <path
+                d="M19.4 15A7.9 7.9 0 0 0 20 12A7.9 7.9 0 0 0 19.4 9L21 7.2L18.8 5L17 6.6A7.9 7.9 0 0 0 14 6L13.8 3.5H10.2L10 6A7.9 7.9 0 0 0 7 6.6L5.2 5L3 7.2L4.6 9A7.9 7.9 0 0 0 4 12A7.9 7.9 0 0 0 4.6 15L3 16.8L5.2 19L7 17.4A7.9 7.9 0 0 0 10 18L10.2 20.5H13.8L14 18A7.9 7.9 0 0 0 17 17.4L18.8 19L21 16.8L19.4 15Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </button>
 
-    <meta
-        name="description"
-        content="JARAK KESEKOLAH - Aplikasi untuk mengetahui jarak dan perkiraan waktu perjalanan menuju sekolah."
-    >
+</header>
 
-    <meta name="theme-color" content="#2563eb">
 
-    <title>JARAK KESEKOLAH</title>
+<!-- MAIN CONTENT -->
 
-    <link rel="stylesheet" href="style.css">
+<main class="main-content">
 
-    <!-- LEAFLET CSS -->
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
-</head>
+    <!-- DASHBOARD -->
 
-<body>
+    <section class="page active" id="dashboardPage">
 
-<div class="app">
+        <div class="page-heading">
 
-    <!-- =========================================
-         HEADER
-    ========================================== -->
+            <span class="eyebrow">
+                DASHBOARD
+            </span>
 
-    <header class="app-header">
+            <h1>
+                Perjalananmu
+            </h1>
 
-        <div class="brand">
+            <p>
+                Tentukan lokasi rumah dan sekolah
+                untuk mengetahui perjalananmu.
+            </p>
 
-            <div class="brand-icon">
+        </div>
+
+
+        <div class="location-grid">
+
+            <!-- RUMAH -->
+
+            <div class="location-card">
+
+                <div class="location-card-top">
+
+                    <div class="location-icon home-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M3 10.5L12 3L21 10.5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M5.5 9.5V20H18.5V9.5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            />
+                            <path
+                                d="M9.5 20V14H14.5V20"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            />
+                        </svg>
+                    </div>
+
+                    <span class="location-label">
+                        RUMAH
+                    </span>
+
+                </div>
+
+                <div
+                    class="location-value"
+                    id="homeLocationValue"
+                >
+                    Belum dipilih
+                </div>
+
+                <button
+                    class="small-button"
+                    id="homeLocationButton"
+                    type="button"
+                >
+                    Pilih lokasi
+                </button>
+
+            </div>
+
+
+            <!-- SEKOLAH -->
+
+            <div class="location-card">
+
+                <div class="location-card-top">
+
+                    <div class="location-icon school-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M4 20V9L12 5L20 9V20"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M8 20V14H16V20"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            />
+                            <path
+                                d="M12 5V2"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M9 11H9.01M12 11H12.01M15 11H15.01"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <span class="location-label">
+                        SEKOLAH
+                    </span>
+
+                </div>
+
+                <div
+                    class="location-value"
+                    id="schoolLocationValue"
+                >
+                    Belum dipilih
+                </div>
+
+                <button
+                    class="small-button"
+                    id="schoolLocationButton"
+                    type="button"
+                >
+                    Pilih sekolah
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-title">
+
+            <div>
+                <span class="eyebrow">
+                    RINGKASAN
+                </span>
+
+                <h2>
+                    Hasil perjalanan
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="result-grid">
+
+            <div class="result-card">
+
+                <div class="result-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M5 19L19 5"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                        <path
+                            d="M7 5H5V7"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <path
+                            d="M17 19H19V17"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+
+                <span>
+                    Jarak
+                </span>
+
+                <strong id="dashboardDistance">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="result-card">
+
+                <div class="result-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="8.5"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        />
+                        <path
+                            d="M12 7V12L15 14"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </div>
+
+                <span>
+                    Perkiraan waktu
+                </span>
+
+                <strong id="dashboardTime">
+                    --
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="primary-button"
+            id="startJourneyButton"
+            type="button"
+        >
+            <span>
+                Mulai perjalanan
+            </span>
+
+            <svg viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M5 12H19"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M13 6L19 12L13 18"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+
+
+        <div class="section-title">
+
+            <div>
+                <span class="eyebrow">
+                    RIWAYAT
+                </span>
+
+                <h2>
+                    Perjalanan terakhir
+                </h2>
+            </div>
+
+            <button
+                class="text-button"
+                id="clearHistoryButton"
+                type="button"
+            >
+                Hapus
+            </button>
+
+        </div>
+
+        <div
+            class="history-list"
+            id="historyList"
+        >
+            <div class="history-empty">
+                Belum ada riwayat perjalanan.
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- MAP PAGE -->
+
+    <section class="page" id="mapPage">
+
+        <div class="page-heading">
+
+            <span class="eyebrow">
+                PETA PERJALANAN
+            </span>
+
+            <h1>
+                Peta
+            </h1>
+
+            <p>
+                Lihat lokasi rumah, sekolah,
+                dan rute perjalananmu.
+            </p>
+
+        </div>
+
+
+        <div class="map-toolbar">
+
+            <div class="field-group">
+
+                <label for="mapTypeSelect">
+                    Jenis peta
+                </label>
+
+                <select id="mapTypeSelect">
+
+                    <option value="street">
+                        Peta Jalan
+                    </option>
+
+                    <option value="satellite">
+                        Satelit
+                    </option>
+
+                    <option value="terrain">
+                        Terrain
+                    </option>
+
+                    <option value="dark">
+                        Dark
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="map-card">
+
+            <div id="map" class="map"></div>
+
+        </div>
+
+
+        <div class="map-info-card">
+
+            <div class="map-info-icon">
                 <svg viewBox="0 0 24 24" fill="none">
                     <path
                         d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
@@ -56,298 +449,423 @@
                 </svg>
             </div>
 
-            <div class="brand-text">
-                <span class="brand-title">JARAK</span>
-                <span class="brand-subtitle">KESEKOLAH</span>
+            <div>
+                <strong>
+                    Peta aktif
+                </strong>
+
+                <span id="mapStatus">
+                    Peta Jalan
+                </span>
             </div>
 
         </div>
 
+
+        <div class="section-title">
+
+            <div>
+                <span class="eyebrow">
+                    TRANSPORTASI
+                </span>
+
+                <h2>
+                    Pilih kendaraan
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="transport-grid">
+
+            <button
+                class="transport-button"
+                id="walkBtn"
+                type="button"
+                data-transport="walking"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+                    <circle
+                        cx="12"
+                        cy="5"
+                        r="2"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+                    <path
+                        d="M10 8L8 13L11 15L13 21"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M10 9L15 11L18 9"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+                </svg>
+
+                <span>
+                    Jalan kaki
+                </span>
+
+                <small>
+                    <span id="walkingSpeedLabel">4.5</span>
+                    km/jam
+                </small>
+
+            </button>
+
+
+            <button
+                class="transport-button active"
+                id="motorBtn"
+                type="button"
+                data-transport="motor"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+                    <circle
+                        cx="7"
+                        cy="17"
+                        r="2.5"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+                    <circle
+                        cx="18"
+                        cy="17"
+                        r="2.5"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+                    <path
+                        d="M7 17L10 11H15L18 17M10 11L8 8H5"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+
+                <span>
+                    Motor
+                </span>
+
+                <small>
+                    <span id="motorSpeedLabel">30</span>
+                    km/jam
+                </small>
+
+            </button>
+
+
+            <button
+                class="transport-button"
+                id="carBtn"
+                type="button"
+                data-transport="car"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M5 16L6.5 10.5C6.8 9.4 7.8 8.5 9 8.5H15C16.2 8.5 17.2 9.4 17.5 10.5L19 16"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M4 16H20V19H4V16Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                    />
+                    <circle
+                        cx="7"
+                        cy="18"
+                        r="1.2"
+                        fill="currentColor"
+                    />
+                    <circle
+                        cx="17"
+                        cy="18"
+                        r="1.2"
+                        fill="currentColor"
+                    />
+                </svg>
+
+                <span>
+                    Mobil
+                </span>
+
+                <small>
+                    <span id="carSpeedLabel">45</span>
+                    km/jam
+                </small>
+
+            </button>
+
+        </div>
+
+
+        <div class="active-speed-card">
+
+            <span>
+                Kecepatan aktif
+            </span>
+
+            <strong>
+                <span id="activeSpeed">
+                    30
+                </span>
+                km/jam
+            </strong>
+
+        </div>
+
+
+        <div class="route-result-card">
+
+            <div class="route-result-item">
+
+                <span>
+                    Jarak
+                </span>
+
+                <strong id="routeDistance">
+                    --
+                </strong>
+
+            </div>
+
+            <div class="route-result-divider"></div>
+
+            <div class="route-result-item">
+
+                <span>
+                    Waktu
+                </span>
+
+                <strong id="routeTime">
+                    --
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="location-status-grid">
+
+            <div class="status-card">
+
+                <span>
+                    Rumah
+                </span>
+
+                <strong id="homeStatus">
+                    Belum dipilih
+                </strong>
+
+            </div>
+
+            <div class="status-card">
+
+                <span>
+                    Sekolah
+                </span>
+
+                <strong id="schoolStatus">
+                    Belum dipilih
+                </strong>
+
+            </div>
+
+        </div>
+
+
         <button
-            class="icon-button"
-            id="settingsButton"
+            class="primary-button"
+            id="calculateRouteButton"
             type="button"
-            aria-label="Pengaturan"
         >
+            <span>
+                HASILKAN PERJALANAN
+            </span>
+
             <svg viewBox="0 0 24 24" fill="none">
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="3"
+                <path
+                    d="M5 12H19"
                     stroke="currentColor"
                     stroke-width="1.8"
+                    stroke-linecap="round"
                 />
                 <path
-                    d="M19.4 15A7.9 7.9 0 0 0 20 12A7.9 7.9 0 0 0 19.4 9L21 7.2L18.8 5L17 6.6A7.9 7.9 0 0 0 14 6L13.8 3.5H10.2L10 6A7.9 7.9 0 0 0 7 6.6L5.2 5L3 7.2L4.6 9A7.9 7.9 0 0 0 4 12A7.9 7.9 0 0 0 4.6 15L3 16.8L5.2 19L7 17.4A7.9 7.9 0 0 0 10 18L10.2 20.5H13.8L14 18A7.9 7.9 0 0 0 17 17.4L18.8 19L21 16.8L19.4 15Z"
+                    d="M13 6L19 12L13 18"
                     stroke="currentColor"
-                    stroke-width="1.5"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
                     stroke-linejoin="round"
                 />
             </svg>
         </button>
 
-    </header>
 
-
-    <!-- =========================================
-         MAIN CONTENT
-    ========================================== -->
-
-    <main class="main-content">
-
-
-        <!-- =====================================
-             DASHBOARD
-        ====================================== -->
-
-        <section
-            class="page active"
-            id="dashboardPage"
+        <button
+            class="secondary-button"
+            id="locateMapButton"
+            type="button"
         >
+            <span>
+                Pusatkan peta
+            </span>
+        </button>
 
-            <div class="page-heading">
 
-                <span class="eyebrow">
-                    DASHBOARD
-                </span>
+        <button
+            class="secondary-button"
+            id="googleMapsButton"
+            type="button"
+        >
+            <span>
+                Buka di Google Maps
+            </span>
+        </button>
 
-                <h1>
-                    Perjalananmu
-                </h1>
 
-                <p>
-                    Tentukan lokasi rumah dan sekolah
-                    untuk mengetahui perjalananmu.
-                </p>
+        <button
+            class="danger-button"
+            id="resetJourneyButton"
+            type="button"
+        >
+            Reset perjalanan
+        </button>
 
+
+        <div class="map-legend">
+
+            <div>
+                <span class="legend-dot home-dot"></span>
+                Rumah
             </div>
 
-
-            <!-- LOCATION CARDS -->
-
-            <div class="location-grid">
-
-                <!-- RUMAH -->
-
-                <div class="location-card">
-
-                    <div class="location-card-top">
-
-                        <div class="location-icon home-icon">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <path
-                                    d="M3 10.5L12 3L21 10.5"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M5.5 9.5V20H18.5V9.5"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                />
-                                <path
-                                    d="M9.5 20V14H14.5V20"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                />
-                            </svg>
-                        </div>
-
-                        <span class="location-label">
-                            RUMAH
-                        </span>
-
-                    </div>
-
-                    <div
-                        class="location-value"
-                        id="homeLocationValue"
-                    >
-                        Belum dipilih
-                    </div>
-
-                    <button
-                        class="small-button"
-                        id="homeLocationButton"
-                        type="button"
-                    >
-                        Pilih lokasi
-                    </button>
-
-                </div>
-
-
-                <!-- SEKOLAH -->
-
-                <div class="location-card">
-
-                    <div class="location-card-top">
-
-                        <div class="location-icon school-icon">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <path
-                                    d="M4 20V9L12 5L20 9V20"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M8 20V14H16V20"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                />
-                                <path
-                                    d="M12 5V2"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                    stroke-linecap="round"
-                                />
-                                <path
-                                    d="M9 11H9.01M12 11H12.01M15 11H15.01"
-                                    stroke="currentColor"
-                                    stroke-width="2.2"
-                                    stroke-linecap="round"
-                                />
-                            </svg>
-                        </div>
-
-                        <span class="location-label">
-                            SEKOLAH
-                        </span>
-
-                    </div>
-
-                    <div
-                        class="location-value"
-                        id="schoolLocationValue"
-                    >
-                        Belum dipilih
-                    </div>
-
-                    <button
-                        class="small-button"
-                        id="schoolLocationButton"
-                        type="button"
-                    >
-                        Pilih sekolah
-                    </button>
-
-                </div>
-
+            <div>
+                <span class="legend-dot school-dot"></span>
+                Sekolah
             </div>
 
-
-            <!-- RESULT -->
-
-            <div class="section-title">
-
-                <div>
-                    <span class="eyebrow">
-                        RINGKASAN
-                    </span>
-
-                    <h2>
-                        Hasil perjalanan
-                    </h2>
-                </div>
-
+            <div>
+                <span class="legend-line"></span>
+                Rute
             </div>
 
+        </div>
 
-            <div class="result-grid">
-
-                <div class="result-card">
-
-                    <div class="result-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path
-                                d="M5 19L19 5"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                                stroke-linecap="round"
-                            />
-                            <path
-                                d="M7 5H5V7"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                            <path
-                                d="M17 19H19V17"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <span>
-                        Jarak
-                    </span>
-
-                    <strong id="dashboardDistance">
-                        --
-                    </strong>
-
-                </div>
+    </section>
 
 
-                <div class="result-card">
+    <!-- LOCATION PAGE -->
 
-                    <div class="result-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="8.5"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            />
-                            <path
-                                d="M12 7V12L15 14"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                                stroke-linecap="round"
-                            />
-                        </svg>
-                    </div>
+    <section class="page" id="locationPage">
 
-                    <span>
-                        Perkiraan waktu
-                    </span>
+        <div class="page-heading">
 
-                    <strong id="dashboardTime">
-                        --
-                    </strong>
+            <span class="eyebrow">
+                LOKASI
+            </span>
 
-                </div>
+            <h1>
+                Tentukan lokasi
+            </h1>
 
-            </div>
+            <p>
+                Pilih lokasi rumah atau sekolah
+                yang ingin digunakan.
+            </p>
 
+        </div>
+
+
+        <div class="field-group">
+
+            <label for="locationTarget">
+                Lokasi yang sedang diatur
+            </label>
+
+            <select id="locationTarget">
+
+                <option value="home">
+                    Rumah
+                </option>
+
+                <option value="school">
+                    Sekolah
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div
+            class="target-status-card"
+            id="locationTargetStatus"
+        >
+            Belum ada lokasi yang dipilih.
+        </div>
+
+
+        <div class="action-list">
 
             <button
-                class="primary-button"
-                id="startJourneyButton"
+                class="action-card"
+                id="gpsButton"
                 type="button"
             >
 
-                <span>
-                    Mulai perjalanan
-                </span>
+                <div class="action-icon">
 
-                <svg viewBox="0 0 24 24" fill="none">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        />
+                        <path
+                            d="M12 2V5M12 19V22M2 12H5M19 12H22"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+
+                </div>
+
+                <div class="action-content">
+
+                    <strong>
+                        Gunakan lokasi saya
+                    </strong>
+
+                    <span>
+                        Gunakan GPS perangkat
+                    </span>
+
+                </div>
+
+                <svg
+                    class="action-arrow"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
                     <path
-                        d="M5 12H19"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                    />
-                    <path
-                        d="M13 6L19 12L13 18"
+                        d="M9 18L15 12L9 6"
                         stroke="currentColor"
                         stroke-width="1.8"
                         stroke-linecap="round"
@@ -358,121 +876,14 @@
             </button>
 
 
-            <!-- HISTORY -->
-
-            <div class="section-title">
-
-                <div>
-                    <span class="eyebrow">
-                        RIWAYAT
-                    </span>
-
-                    <h2>
-                        Perjalanan terakhir
-                    </h2>
-                </div>
-
-                <button
-                    class="text-button"
-                    id="clearHistoryButton"
-                    type="button"
-                >
-                    Hapus
-                </button>
-
-            </div>
-
-            <div
-                class="history-list"
-                id="historyList"
+            <button
+                class="action-card"
+                id="selectOnMapButton"
+                type="button"
             >
-                <div class="history-empty">
-                    Belum ada riwayat perjalanan.
-                </div>
-            </div>
 
-        </section>
+                <div class="action-icon">
 
-
-        <!-- =====================================
-             MAP PAGE
-        ====================================== -->
-
-        <section
-            class="page"
-            id="mapPage"
-        >
-
-            <div class="page-heading">
-
-                <span class="eyebrow">
-                    PETA PERJALANAN
-                </span>
-
-                <h1>
-                    Peta
-                </h1>
-
-                <p>
-                    Lihat lokasi rumah, sekolah,
-                    dan rute perjalananmu.
-                </p>
-
-            </div>
-
-
-            <!-- MAP TYPE -->
-
-            <div class="map-toolbar">
-
-                <div class="field-group">
-
-                    <label for="mapTypeSelect">
-                        Jenis peta
-                    </label>
-
-                    <select id="mapTypeSelect">
-
-                        <option value="street">
-                            Peta Jalan
-                        </option>
-
-                        <option value="satellite">
-                            Satelit
-                        </option>
-
-                        <option value="terrain">
-                            Terrain
-                        </option>
-
-                        <option value="dark">
-                            Dark
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <!-- MAP -->
-
-            <div class="map-card">
-
-                <div
-                    id="map"
-                    class="map"
-                ></div>
-
-            </div>
-
-
-            <!-- MAP INFO -->
-
-            <div class="map-info-card">
-
-                <div class="map-info-icon">
                     <svg viewBox="0 0 24 24" fill="none">
                         <path
                             d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
@@ -488,378 +899,241 @@
                             stroke-width="1.8"
                         />
                     </svg>
+
                 </div>
 
-                <div>
+                <div class="action-content">
 
                     <strong>
-                        Peta aktif
+                        Pilih pada peta
                     </strong>
 
-                    <span id="mapStatus">
-                        Peta Jalan
+                    <span>
+                        Tentukan lokasi secara manual
                     </span>
 
                 </div>
 
-            </div>
-
-
-            <!-- TRANSPORT -->
-
-            <div class="section-title">
-
-                <div>
-                    <span class="eyebrow">
-                        TRANSPORTASI
-                    </span>
-
-                    <h2>
-                        Pilih kendaraan
-                    </h2>
-                </div>
-
-            </div>
-
-
-            <div class="transport-grid">
-
-                <button
-                    class="transport-button"
-                    id="walkBtn"
-                    type="button"
-                    data-transport="walking"
+                <svg
+                    class="action-arrow"
+                    viewBox="0 0 24 24"
+                    fill="none"
                 >
-
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <circle
-                            cx="12"
-                            cy="5"
-                            r="2"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                        />
-                        <path
-                            d="M10 8L8 13L11 15L13 21"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                        <path
-                            d="M10 9L15 11L18 9"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                        />
-                    </svg>
-
-                    <span>
-                        Jalan kaki
-                    </span>
-
-                    <small>
-                        <span id="walkingSpeedLabel">4.5</span>
-                        km/jam
-                    </small>
-
-                </button>
-
-
-                <button
-                    class="transport-button active"
-                    id="motorBtn"
-                    type="button"
-                    data-transport="motor"
-                >
-
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <circle
-                            cx="7"
-                            cy="17"
-                            r="2.5"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                        />
-                        <circle
-                            cx="18"
-                            cy="17"
-                            r="2.5"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                        />
-                        <path
-                            d="M7 17L10 11H15L18 17M10 11L8 8H5"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-
-                    <span>
-                        Motor
-                    </span>
-
-                    <small>
-                        <span id="motorSpeedLabel">30</span>
-                        km/jam
-                    </small>
-
-                </button>
-
-
-                <button
-                    class="transport-button"
-                    id="carBtn"
-                    type="button"
-                    data-transport="car"
-                >
-
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M5 16L6.5 10.5C6.8 9.4 7.8 8.5 9 8.5H15C16.2 8.5 17.2 9.4 17.5 10.5L19 16"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linejoin="round"
-                        />
-                        <path
-                            d="M4 16H20V19H4V16Z"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linejoin="round"
-                        />
-                        <circle
-                            cx="7"
-                            cy="18"
-                            r="1.2"
-                            fill="currentColor"
-                        />
-                        <circle
-                            cx="17"
-                            cy="18"
-                            r="1.2"
-                            fill="currentColor"
-                        />
-                    </svg>
-
-                    <span>
-                        Mobil
-                    </span>
-
-                    <small>
-                        <span id="carSpeedLabel">45</span>
-                        km/jam
-                    </small>
-
-                </button>
-
-            </div>
-
-
-            <div class="active-speed-card">
-
-                <span>
-                    Kecepatan aktif
-                </span>
-
-                <strong>
-                    <span id="activeSpeed">
-                        30
-                    </span>
-                    km/jam
-                </strong>
-
-            </div>
-
-
-            <!-- ROUTE RESULT -->
-
-            <div class="route-result-card">
-
-                <div class="route-result-item">
-
-                    <span>
-                        Jarak
-                    </span>
-
-                    <strong id="routeDistance">
-                        --
-                    </strong>
-
-                </div>
-
-                <div class="route-result-divider"></div>
-
-                <div class="route-result-item">
-
-                    <span>
-                        Waktu
-                    </span>
-
-                    <strong id="routeTime">
-                        --
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <div class="location-status-grid">
-
-                <div class="status-card">
-
-                    <span>
-                        Rumah
-                    </span>
-
-                    <strong id="homeStatus">
-                        Belum dipilih
-                    </strong>
-
-                </div>
-
-                <div class="status-card">
-
-                    <span>
-                        Sekolah
-                    </span>
-
-                    <strong id="schoolStatus">
-                        Belum dipilih
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <button
-                class="primary-button"
-                id="calculateRouteButton"
-                type="button"
-            >
-                <span>
-                    HASILKAN PERJALANAN
-                </span>
-
-                <svg viewBox="0 0 24 24" fill="none">
                     <path
-                        d="M5 12H19"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                    />
-                    <path
-                        d="M13 6L19 12L13 18"
+                        d="M9 18L15 12L9 6"
                         stroke="currentColor"
                         stroke-width="1.8"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
                 </svg>
+
             </button>
 
-
-            <button
-                class="secondary-button"
-                id="locateMapButton"
-                type="button"
-            >
-                <span>
-                    Pusatkan peta
-                </span>
-            </button>
+        </div>
 
 
-            <button
-                class="secondary-button"
-                id="googleMapsButton"
-                type="button"
-            >
-                <span>
-                    Buka di Google Maps
-                </span>
-            </button>
-
-
-            <button
-                class="danger-button"
-                id="resetJourneyButton"
-                type="button"
-            >
-                Reset perjalanan
-            </button>
-
-
-            <!-- MAP LEGEND -->
-
-            <div class="map-legend">
-
-                <div>
-                    <span class="legend-dot home-dot"></span>
-                    Rumah
-                </div>
-
-                <div>
-                    <span class="legend-dot school-dot"></span>
-                    Sekolah
-                </div>
-
-                <div>
-                    <span class="legend-line"></span>
-                    Rute
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================
-             LOCATION PAGE
-        ====================================== -->
-
-        <section
-            class="page"
-            id="locationPage"
-        >
-
-            <div class="page-heading">
-
-                <span class="eyebrow">
-                    LOKASI
-                </span>
-
-                <h1>
-                    Tentukan lokasi
-                </h1>
-
-                <p>
-                    Pilih lokasi rumah atau sekolah
-                    yang ingin digunakan.
-                </p>
-
-            </div>
-
-
-            <!-- TARGET LOCATION -->
+        <div class="form-card">
 
             <div class="field-group">
 
-                <label for="locationTarget">
-                    Lokasi yang sedang diatur
+                <label for="locationSearchInput">
+                    Cari alamat/tempat
                 </label>
 
-                <select id="locationTarget">
+                <div class="input-with-button">
 
-                    <option value="home">
-                        Rumah
+                    <input
+                        type="text"
+                        id="locationSearchInput"
+                        placeholder="Contoh: SMA Negeri 1 Jepara"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        id="searchLocationButton"
+                        type="button"
+                    >
+                        Cari
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div
+                class="search-results"
+                id="locationSearchResults"
+            ></div>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <div class="form-card-title">
+                Koordinat manual
+            </div>
+
+            <div class="coordinate-grid">
+
+                <div class="field-group">
+
+                    <label for="manualLatitude">
+                        Latitude
+                    </label>
+
+                    <input
+                        type="number"
+                        id="manualLatitude"
+                        step="any"
+                        placeholder="-6.5891"
+                    >
+
+                </div>
+
+                <div class="field-group">
+
+                    <label for="manualLongitude">
+                        Longitude
+                    </label>
+
+                    <input
+                        type="number"
+                        id="manualLongitude"
+                        step="any"
+                        placeholder="110.6677"
+                    >
+
+                </div>
+
+            </div>
+
+            <button
+                class="primary-button"
+                id="saveManualLocationButton"
+                type="button"
+            >
+                Simpan koordinat
+            </button>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-card-icon">
+
+                <svg viewBox="0 0 24 24" fill="none">
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                    />
+                    <path
+                        d="M12 10V16"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                    />
+                    <circle
+                        cx="12"
+                        cy="7"
+                        r="1"
+                        fill="currentColor"
+                    />
+                </svg>
+
+            </div>
+
+            <p>
+                Kamu dapat memilih rumah dan sekolah
+                menggunakan GPS, pencarian tempat,
+                peta, atau koordinat manual.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- SCHEDULE PAGE -->
+
+    <section class="page" id="schedulePage">
+
+        <div class="page-heading">
+
+            <span class="eyebrow">
+                JADWAL
+            </span>
+
+            <h1>
+                Jadwal perjalanan
+            </h1>
+
+            <p>
+                Hitung waktu berangkat agar tidak
+                terlambat ke sekolah.
+            </p>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <div class="field-group">
+
+                <label for="scheduleDate">
+                    Hari / tanggal sekolah
+                </label>
+
+                <input
+                    type="date"
+                    id="scheduleDate"
+                >
+
+            </div>
+
+
+            <div class="field-group">
+
+                <label for="schoolStartTime">
+                    Jam masuk sekolah
+                </label>
+
+                <input
+                    type="time"
+                    id="schoolStartTime"
+                    value="07:00"
+                >
+
+            </div>
+
+
+            <div class="field-group">
+
+                <label for="bufferSelect">
+                    Waktu cadangan
+                </label>
+
+                <select id="bufferSelect">
+
+                    <option value="5">
+                        5 menit
                     </option>
 
-                    <option value="school">
-                        Sekolah
+                    <option value="10" selected>
+                        10 menit
+                    </option>
+
+                    <option value="15">
+                        15 menit
+                    </option>
+
+                    <option value="20">
+                        20 menit
                     </option>
 
                 </select>
@@ -867,224 +1141,253 @@
             </div>
 
 
-            <div
-                class="target-status-card"
-                id="locationTargetStatus"
+            <button
+                class="primary-button"
+                id="calculateScheduleButton"
+                type="button"
             >
-                Belum ada lokasi yang dipilih.
-            </div>
+                Hitung waktu berangkat
+            </button>
+
+        </div>
 
 
-            <!-- GPS -->
+        <div class="schedule-result-card">
 
-            <div class="action-list">
+            <span>
+                Waktu berangkat yang disarankan
+            </span>
 
-                <button
-                    class="action-card"
-                    id="gpsButton"
-                    type="button"
+            <strong id="recommendedDeparture">
+                --
+            </strong>
+
+            <p id="scheduleStatus">
+                Belum dihitung.
+            </p>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <div class="field-group">
+
+                <label for="departureTime">
+                    Simpan waktu berangkat
+                </label>
+
+                <input
+                    type="time"
+                    id="departureTime"
                 >
 
-                    <div class="action-icon">
+            </div>
 
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="3"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            />
-                            <path
-                                d="M12 2V5M12 19V22M2 12H5M19 12H22"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                                stroke-linecap="round"
-                            />
-                        </svg>
+            <button
+                class="secondary-button"
+                id="saveScheduleButton"
+                type="button"
+            >
+                Simpan jadwal
+            </button>
 
-                    </div>
+        </div>
 
-                    <div class="action-content">
-
-                        <strong>
-                            Gunakan lokasi saya
-                        </strong>
-
-                        <span>
-                            Gunakan GPS perangkat
-                        </span>
-
-                    </div>
-
-                    <svg
-                        class="action-arrow"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-                        <path
-                            d="M9 18L15 12L9 6"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-
-                </button>
+    </section>
 
 
-                <button
-                    class="action-card"
-                    id="selectOnMapButton"
-                    type="button"
+    <!-- SETTINGS PAGE -->
+
+    <section class="page" id="settingsPage">
+
+        <div class="page-heading">
+
+            <span class="eyebrow">
+                PENGATURAN
+            </span>
+
+            <h1>
+                Pengaturan
+            </h1>
+
+            <p>
+                Sesuaikan kecepatan, peta, dan tampilan
+                aplikasi.
+            </p>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <div class="form-card-title">
+                Kecepatan perjalanan
+            </div>
+
+            <div class="field-group">
+
+                <label for="walkingSpeed">
+                    Jalan kaki (km/jam)
+                </label>
+
+                <input
+                    type="number"
+                    id="walkingSpeed"
+                    min="0.1"
+                    step="0.1"
+                    value="4.5"
                 >
 
-                    <div class="action-icon">
-
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path
-                                d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                                stroke-linejoin="round"
-                            />
-                            <circle
-                                cx="12"
-                                cy="9.5"
-                                r="2.5"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            />
-                        </svg>
-
-                    </div>
-
-                    <div class="action-content">
-
-                        <strong>
-                            Pilih pada peta
-                        </strong>
-
-                        <span>
-                            Tentukan lokasi secara manual
-                        </span>
-
-                    </div>
-
-                    <svg
-                        class="action-arrow"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-                        <path
-                            d="M9 18L15 12L9 6"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-
-                </button>
-
             </div>
 
 
-            <!-- SEARCH -->
+            <div class="field-group">
 
-            <div class="form-card">
+                <label for="motorSpeed">
+                    Motor (km/jam)
+                </label>
 
-                <div class="field-group">
-
-                    <label for="locationSearchInput">
-                        Cari alamat/tempat
-                    </label>
-
-                    <div class="input-with-button">
-
-                        <input
-                            type="text"
-                            id="locationSearchInput"
-                            placeholder="Contoh: SMA Negeri 1 Jepara"
-                            autocomplete="off"
-                        >
-
-                        <button
-                            id="searchLocationButton"
-                            type="button"
-                        >
-                            Cari
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <div
-                    class="search-results"
-                    id="locationSearchResults"
-                ></div>
-
-            </div>
-
-
-            <!-- MANUAL -->
-
-            <div class="form-card">
-
-                <div class="form-card-title">
-                    Koordinat manual
-                </div>
-
-                <div class="coordinate-grid">
-
-                    <div class="field-group">
-
-                        <label for="manualLatitude">
-                            Latitude
-                        </label>
-
-                        <input
-                            type="number"
-                            id="manualLatitude"
-                            step="any"
-                            placeholder="-6.5891"
-                        >
-
-                    </div>
-
-                    <div class="field-group">
-
-                        <label for="manualLongitude">
-                            Longitude
-                        </label>
-
-                        <input
-                            type="number"
-                            id="manualLongitude"
-                            step="any"
-                            placeholder="110.6677"
-                        >
-
-                    </div>
-
-                </div>
-
-                <button
-                    class="primary-button"
-                    id="saveManualLocationButton"
-                    type="button"
+                <input
+                    type="number"
+                    id="motorSpeed"
+                    min="1"
+                    step="1"
+                    value="30"
                 >
-                    Simpan koordinat
-                </button>
 
             </div>
 
 
-            <div class="info-card">
+            <div class="field-group">
 
-                <div class="info-card-icon">
+                <label for="carSpeed">
+                    Mobil (km/jam)
+                </label>
+
+                <input
+                    type="number"
+                    id="carSpeed"
+                    min="1"
+                    step="1"
+                    value="45"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <div class="form-card-title">
+                Pengaturan default
+            </div>
+
+            <div class="field-group">
+
+                <label for="defaultBuffer">
+                    Waktu cadangan
+                </label>
+
+                <select id="defaultBuffer">
+
+                    <option value="5">
+                        5 menit
+                    </option>
+
+                    <option value="10" selected>
+                        10 menit
+                    </option>
+
+                    <option value="15">
+                        15 menit
+                    </option>
+
+                    <option value="20">
+                        20 menit
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field-group">
+
+                <label for="defaultMap">
+                    Peta default
+                </label>
+
+                <select id="defaultMap">
+
+                    <option value="street">
+                        Peta Jalan
+                    </option>
+
+                    <option value="satellite">
+                        Satelit
+                    </option>
+
+                    <option value="terrain">
+                        Terrain
+                    </option>
+
+                    <option value="dark">
+                        Dark
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <div class="form-card-title">
+                Tampilan aplikasi
+            </div>
+
+            <div class="field-group">
+
+                <label for="themeSelect">
+                    Tema
+                </label>
+
+                <select id="themeSelect">
+
+                    <option value="system">
+                        Mengikuti perangkat
+                    </option>
+
+                    <option value="light">
+                        Terang
+                    </option>
+
+                    <option value="dark">
+                        Gelap
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- TUTORIAL -->
+
+        <div class="form-card tutorial-settings-card">
+
+            <div class="form-card-title">
+                Panduan aplikasi
+            </div>
+
+            <div class="tutorial-settings-content">
+
+                <div class="tutorial-settings-icon">
 
                     <svg viewBox="0 0 24 24" fill="none">
                         <circle
@@ -1092,17 +1395,17 @@
                             cy="12"
                             r="9"
                             stroke="currentColor"
-                            stroke-width="1.7"
+                            stroke-width="1.8"
                         />
                         <path
-                            d="M12 10V16"
+                            d="M9.8 9A2.3 2.3 0 1 1 14 10.6C12.8 11.2 12 11.8 12 13.2"
                             stroke="currentColor"
-                            stroke-width="1.7"
+                            stroke-width="1.8"
                             stroke-linecap="round"
                         />
                         <circle
                             cx="12"
-                            cy="7"
+                            cy="17"
                             r="1"
                             fill="currentColor"
                         />
@@ -1110,504 +1413,176 @@
 
                 </div>
 
-                <p>
-                    Kamu dapat memilih rumah dan sekolah
-                    menggunakan GPS, pencarian tempat,
-                    peta, atau koordinat manual.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================
-             SCHEDULE PAGE
-        ====================================== -->
-
-        <section
-            class="page"
-            id="schedulePage"
-        >
-
-            <div class="page-heading">
-
-                <span class="eyebrow">
-                    JADWAL
-                </span>
-
-                <h1>
-                    Jadwal perjalanan
-                </h1>
-
-                <p>
-                    Hitung waktu berangkat agar tidak
-                    terlambat ke sekolah.
-                </p>
-
-            </div>
-
-
-            <div class="form-card">
-
-                <div class="field-group">
-
-                    <label for="scheduleDate">
-                        Hari / tanggal sekolah
-                    </label>
-
-                    <input
-                        type="date"
-                        id="scheduleDate"
-                    >
-
-                </div>
-
-
-                <div class="field-group">
-
-                    <label for="schoolStartTime">
-                        Jam masuk sekolah
-                    </label>
-
-                    <input
-                        type="time"
-                        id="schoolStartTime"
-                        value="07:00"
-                    >
-
-                </div>
-
-
-                <div class="field-group">
-
-                    <label for="bufferSelect">
-                        Waktu cadangan
-                    </label>
-
-                    <select id="bufferSelect">
-
-                        <option value="5">
-                            5 menit
-                        </option>
-
-                        <option value="10" selected>
-                            10 menit
-                        </option>
-
-                        <option value="15">
-                            15 menit
-                        </option>
-
-                        <option value="20">
-                            20 menit
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <button
-                    class="primary-button"
-                    id="calculateScheduleButton"
-                    type="button"
-                >
-                    Hitung waktu berangkat
-                </button>
-
-            </div>
-
-
-            <div class="schedule-result-card">
-
-                <span>
-                    Waktu berangkat yang disarankan
-                </span>
-
-                <strong id="recommendedDeparture">
-                    --
-                </strong>
-
-                <p id="scheduleStatus">
-                    Belum dihitung.
-                </p>
-
-            </div>
-
-
-            <div class="form-card">
-
-                <div class="field-group">
-
-                    <label for="departureTime">
-                        Simpan waktu berangkat
-                    </label>
-
-                    <input
-                        type="time"
-                        id="departureTime"
-                    >
-
-                </div>
-
-                <button
-                    class="secondary-button"
-                    id="saveScheduleButton"
-                    type="button"
-                >
-                    Simpan jadwal
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================
-             SETTINGS PAGE
-        ====================================== -->
-
-        <section
-            class="page"
-            id="settingsPage"
-        >
-
-            <div class="page-heading">
-
-                <span class="eyebrow">
-                    PENGATURAN
-                </span>
-
-                <h1>
-                    Pengaturan
-                </h1>
-
-                <p>
-                    Sesuaikan kecepatan, peta, dan tampilan
-                    aplikasi.
-                </p>
-
-            </div>
-
-
-            <!-- SPEED -->
-
-            <div class="form-card">
-
-                <div class="form-card-title">
-                    Kecepatan perjalanan
-                </div>
-
-                <div class="field-group">
-
-                    <label for="walkingSpeed">
-                        Jalan kaki (km/jam)
-                    </label>
-
-                    <input
-                        type="number"
-                        id="walkingSpeed"
-                        min="0.1"
-                        step="0.1"
-                        value="4.5"
-                    >
-
-                </div>
-
-
-                <div class="field-group">
-
-                    <label for="motorSpeed">
-                        Motor (km/jam)
-                    </label>
-
-                    <input
-                        type="number"
-                        id="motorSpeed"
-                        min="1"
-                        step="1"
-                        value="30"
-                    >
-
-                </div>
-
-
-                <div class="field-group">
-
-                    <label for="carSpeed">
-                        Mobil (km/jam)
-                    </label>
-
-                    <input
-                        type="number"
-                        id="carSpeed"
-                        min="1"
-                        step="1"
-                        value="45"
-                    >
+                <div class="tutorial-settings-text">
+
+                    <strong>
+                        Tutorial Penggunaan
+                    </strong>
+
+                    <span>
+                        Baca kembali panduan cara menggunakan
+                        JARAK KESEKOLAH kapan saja.
+                    </span>
 
                 </div>
 
             </div>
-
-
-            <!-- DEFAULT -->
-
-            <div class="form-card">
-
-                <div class="form-card-title">
-                    Pengaturan default
-                </div>
-
-                <div class="field-group">
-
-                    <label for="defaultBuffer">
-                        Waktu cadangan
-                    </label>
-
-                    <select id="defaultBuffer">
-
-                        <option value="5">
-                            5 menit
-                        </option>
-
-                        <option value="10" selected>
-                            10 menit
-                        </option>
-
-                        <option value="15">
-                            15 menit
-                        </option>
-
-                        <option value="20">
-                            20 menit
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="field-group">
-
-                    <label for="defaultMap">
-                        Peta default
-                    </label>
-
-                    <select id="defaultMap">
-
-                        <option value="street">
-                            Peta Jalan
-                        </option>
-
-                        <option value="satellite">
-                            Satelit
-                        </option>
-
-                        <option value="terrain">
-                            Terrain
-                        </option>
-
-                        <option value="dark">
-                            Dark
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <!-- THEME -->
-
-            <div class="form-card">
-
-                <div class="form-card-title">
-                    Tampilan aplikasi
-                </div>
-
-                <div class="field-group">
-
-                    <label for="themeSelect">
-                        Tema
-                    </label>
-
-                    <select id="themeSelect">
-
-                        <option value="system">
-                            Mengikuti perangkat
-                        </option>
-
-                        <option value="light">
-                            Terang
-                        </option>
-
-                        <option value="dark">
-                            Gelap
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
 
             <button
-                class="primary-button"
-                id="saveSettingsButton"
+                class="secondary-button"
+                id="openTutorialButton"
                 type="button"
             >
-                Simpan pengaturan
+                Buka tutorial
             </button>
 
+        </div>
 
-            <button
-                class="danger-button"
-                id="resetSettingsButton"
-                type="button"
-            >
-                Kembalikan pengaturan awal
-            </button>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================================
-         BOTTOM NAVIGATION
-    ========================================== -->
-
-    <nav class="bottom-nav">
 
         <button
-            class="nav-item active"
+            class="primary-button"
+            id="saveSettingsButton"
             type="button"
-            data-page="dashboardPage"
         >
-            <svg viewBox="0 0 24 24" fill="none">
-                <path
-                    d="M4 10.5L12 4L20 10.5V20H4V10.5Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M9 20V14H15V20"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                />
-            </svg>
-            <span>Dashboard</span>
+            Simpan pengaturan
         </button>
 
 
         <button
-            class="nav-item"
+            class="danger-button"
+            id="resetSettingsButton"
             type="button"
-            data-page="mapPage"
         >
-            <svg viewBox="0 0 24 24" fill="none">
-                <path
-                    d="M9 18L3 21V6L9 3L15 6L21 3V18L15 21L9 18Z"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M9 3V18M15 6V21"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                />
-            </svg>
-            <span>Peta</span>
+            Kembalikan pengaturan awal
         </button>
 
+    </section>
 
-        <button
-            class="nav-item"
-            type="button"
-            data-page="locationPage"
-        >
-            <svg viewBox="0 0 24 24" fill="none">
-                <path
-                    d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                />
-                <circle
-                    cx="12"
-                    cy="9.5"
-                    r="2.5"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                />
-            </svg>
-            <span>Lokasi</span>
-        </button>
+</main>
 
 
-        <button
-            class="nav-item"
-            type="button"
-            data-page="schedulePage"
-        >
-            <svg viewBox="0 0 24 24" fill="none">
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="8.5"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                />
-                <path
-                    d="M12 7V12L15 14"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-            </svg>
-            <span>Jadwal</span>
-        </button>
+<!-- BOTTOM NAVIGATION -->
+
+<nav class="bottom-nav">
+
+    <button
+        class="nav-item active"
+        type="button"
+        data-page="dashboardPage"
+    >
+        <svg viewBox="0 0 24 24" fill="none">
+            <path
+                d="M4 10.5L12 4L20 10.5V20H4V10.5Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M9 20V14H15V20"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+        </svg>
+        <span>Dashboard</span>
+    </button>
 
 
-        <button
-            class="nav-item"
-            type="button"
-            data-page="settingsPage"
-        >
-            <svg viewBox="0 0 24 24" fill="none">
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="3"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                />
-                <path
-                    d="M19 13.5C19.2 13 19.2 12.5 19 12L21 10.5L19.5 7.5L17.2 8C16.8 7.6 16.3 7.3 15.8 7.1L15.5 4.5H12.5L12.2 7.1C11.7 7.3 11.2 7.6 10.8 8L8.5 7.5L7 10.5L9 12C8.8 12.5 8.8 13 9 13.5L7 15L8.5 18L10.8 17.5C11.2 17.9 11.7 18.2 12.2 18.4L12.5 21H15.5L15.8 18.4C16.3 18.2 16.8 17.9 17.2 17.5L19.5 18L21 15L19 13.5Z"
-                    stroke="currentColor"
-                    stroke-width="1.3"
-                    stroke-linejoin="round"
-                />
-            </svg>
-            <span>Pengaturan</span>
-        </button>
-
-    </nav>
-
-</div>
+    <button
+        class="nav-item"
+        type="button"
+        data-page="mapPage"
+    >
+        <svg viewBox="0 0 24 24" fill="none">
+            <path
+                d="M9 18L3 21V6L9 3L15 6L21 3V18L15 21L9 18Z"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M9 3V18M15 6V21"
+                stroke="currentColor"
+                stroke-width="1.7"
+            />
+        </svg>
+        <span>Peta</span>
+    </button>
 
 
-<!-- =========================================
-     TOAST
-========================================== -->
+    <button
+        class="nav-item"
+        type="button"
+        data-page="locationPage"
+    >
+        <svg viewBox="0 0 24 24" fill="none">
+            <path
+                d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <circle
+                cx="12"
+                cy="9.5"
+                r="2.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+        </svg>
+        <span>Lokasi</span>
+    </button>
 
-<div
+
+    <button
+        class="nav-item"
+        type="button"
+        data-page="schedulePage"
+    >
+        <svg viewBox="0 0 24 24" fill="none">
+            <circle
+                cx="12"
+                cy="12"
+                r="8.5"
+                stroke="currentColor"
+                stroke-width="1.7"
+            />
+            <path
+                d="M12 7V12L15 14"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+            />
+        </svg>
+        <span>Jadwal</span>
+    </button>
+
+
+    <button
+        class="nav-item"
+        type="button"
+        data-page="settingsPage"
+    >
+        <svg viewBox="0 0 24 24" fill="none">
+            <circle
+                cx="12"
+                cy="12"
+                r="3"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+            <path
+                d="M19 13.5C19.2 13 19.2 12.5 19 12L21 10.5L19.5 7.5L17.2 8C16.8 7.6 16.3 7.3 15.8 7.1L15.5 4.5H12.5L12.2 7.1C11.7 7.3 11.2 7.6 10.8 8L8.5 7.5L7 10.5L9 12C8.8 12.5 8.8 13 9 13.5L7 15L8.5 18L10.8 17.5C11.2 17.9 11.7 18.2 12.2 18.4L12.5 21H15.5L15.8 18.4C16.3 18.2 16.8 17.9 17.2 17.5L19.5 18L21 15L19 13.5Z"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linejoin="round"
+            />
+        </svg>
+        <span>Pengaturan</span>
+    </button>
+
+</nav>
+
+</div><!-- TOAST --><div
     class="toast"
     id="toast"
     role="status"
@@ -1616,93 +1591,192 @@
     <span id="toastMessage">
         Berhasil
     </span>
-</div>
-
-
-<!-- =========================================
-     LOADING
-========================================== -->
-
-<div
+</div><!-- LOADING --><div
     class="loading-overlay"
     id="loadingOverlay"
     aria-hidden="true"
->
+><div class="loading-box">
 
-    <div class="loading-box">
+    <div class="loading-spinner"></div>
 
-        <div class="loading-spinner"></div>
-
-        <strong id="loadingText">
-            Memproses...
-        </strong>
-
-    </div>
+    <strong id="loadingText">
+        Memproses...
+    </strong>
 
 </div>
 
-
-<!-- =========================================
-     CONFIRM MODAL
-========================================== -->
-
-<div
+</div><!-- CONFIRM MODAL --><div
     class="modal-overlay"
     id="confirmModal"
     aria-hidden="true"
+><div class="confirm-modal">
+
+    <div class="modal-icon">
+
+        <svg viewBox="0 0 24 24" fill="none">
+            <path
+                d="M12 3L21 20H3L12 3Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M12 9V14"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+            <circle
+                cx="12"
+                cy="17"
+                r="1"
+                fill="currentColor"
+            />
+        </svg>
+
+    </div>
+
+    <h2 id="confirmModalTitle">
+        Konfirmasi
+    </h2>
+
+    <p id="confirmModalMessage">
+        Apakah kamu yakin?
+    </p>
+
+    <div class="modal-actions">
+
+        <button
+            class="secondary-button"
+            id="confirmCancelButton"
+            type="button"
+        >
+            Batal
+        </button>
+
+        <button
+            class="danger-button"
+            id="confirmActionButton"
+            type="button"
+        >
+            Ya, lanjutkan
+        </button>
+
+    </div>
+
+</div>
+
+</div><!-- =========================================
+     TUTORIAL MODAL
+========================================== --><div
+    class="tutorial-overlay"
+    id="tutorialOverlay"
+    aria-hidden="true"
+><div
+    class="tutorial-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tutorialTitle"
 >
 
-    <div class="confirm-modal">
+    <button
+        class="tutorial-close"
+        id="tutorialCloseButton"
+        type="button"
+        aria-label="Tutup tutorial"
+    >
+        <svg viewBox="0 0 24 24" fill="none">
+            <path
+                d="M6 6L18 18M18 6L6 18"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+            />
+        </svg>
+    </button>
 
-        <div class="modal-icon">
 
-            <svg viewBox="0 0 24 24" fill="none">
-                <path
-                    d="M12 3L21 20H3L12 3Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M12 9V14"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                />
-                <circle
-                    cx="12"
-                    cy="17"
-                    r="1"
-                    fill="currentColor"
-                />
-            </svg>
+    <div class="tutorial-icon" id="tutorialIcon">
+
+        <svg viewBox="0 0 24 24" fill="none">
+            <path
+                d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+            />
+            <circle
+                cx="12"
+                cy="9.5"
+                r="2.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+        </svg>
+
+    </div>
+
+
+    <div class="tutorial-progress">
+
+        <span id="tutorialStepLabel">
+            LANGKAH 1 DARI 5
+        </span>
+
+        <div class="tutorial-dots" id="tutorialDots">
+
+            <span class="tutorial-dot active"></span>
+            <span class="tutorial-dot"></span>
+            <span class="tutorial-dot"></span>
+            <span class="tutorial-dot"></span>
+            <span class="tutorial-dot"></span>
 
         </div>
 
-        <h2 id="confirmModalTitle">
-            Konfirmasi
+    </div>
+
+
+    <div class="tutorial-content">
+
+        <h2 id="tutorialTitle">
+            Pilih lokasi rumah
         </h2>
 
-        <p id="confirmModalMessage">
-            Apakah kamu yakin?
+        <p id="tutorialDescription">
+            Klik <strong>Pilih lokasi</strong> pada bagian Rumah.
+            Kamu dapat menggunakan GPS atau mencari lokasi secara
+            manual, kemudian pilih titik lokasi rumah pada peta.
         </p>
 
-        <div class="modal-actions">
+    </div>
+
+
+    <div class="tutorial-actions">
+
+        <button
+            class="text-button tutorial-skip"
+            id="tutorialSkipButton"
+            type="button"
+        >
+            Lewati
+        </button>
+
+        <div class="tutorial-navigation">
 
             <button
                 class="secondary-button"
-                id="confirmCancelButton"
+                id="tutorialBackButton"
                 type="button"
             >
-                Batal
+                Kembali
             </button>
 
             <button
-                class="danger-button"
-                id="confirmActionButton"
+                class="primary-button"
+                id="tutorialNextButton"
                 type="button"
             >
-                Ya, lanjutkan
+                Lanjut
             </button>
 
         </div>
@@ -1711,18 +1785,7 @@
 
 </div>
 
-
-<!-- =========================================
-     LEAFLET JS
-========================================== -->
-
-<script
+</div><!-- LEAFLET JS --><script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-></script>
-
-<!-- APP JS -->
-
-<script src="app.js"></script>
-
-</body>
+></script><!-- APP JS --><script src="app.js"></script></body>
     </html>
