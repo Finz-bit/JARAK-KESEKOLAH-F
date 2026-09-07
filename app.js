@@ -2,6 +2,7 @@
    JARAK KESEKOLAH
    MAIN JAVASCRIPT
    COMPLETE VERSION
+   SISTEM PILIH LOKASI LANGSUNG DI PETA
 ========================================= */
 
 
@@ -86,6 +87,21 @@ let kecepatanAktif = settings.motorSpeed;
 let transportAktif = "motor";
 
 let currentMapType = settings.defaultMap;
+
+
+/* =========================================
+   MODE PILIH LOKASI DI PETA
+========================================= */
+
+let modePilihLokasi = null;
+
+
+/*
+   Nilai:
+   null    = tidak sedang memilih
+   "home"  = klik berikutnya menjadi rumah
+   "school" = klik berikutnya menjadi sekolah
+*/
 
 
 /* =========================================
@@ -267,6 +283,7 @@ function showPage(pageId) {
         }, 150);
 
     }
+
 }
 
 
@@ -431,6 +448,17 @@ function initializeMap() {
 
     mapInitialized = true;
 
+
+    /* =====================================
+       KLIK PETA
+    ===================================== */
+
+    map.on(
+        "click",
+        handleMapClick
+    );
+
+
     setTimeout(() => {
 
         map.invalidateSize();
@@ -444,11 +472,127 @@ function initializeMap() {
     console.log(
         "Leaflet map berhasil dibuat."
     );
+
 }
 
 
 /* =========================================
-   MAP PAGE
+   HANDLE KLIK PETA
+========================================= */
+
+function handleMapClick(event) {
+
+    /*
+       Kalau sedang tidak memilih lokasi,
+       klik peta tidak melakukan apa-apa.
+    */
+
+    if (!modePilihLokasi) {
+        return;
+    }
+
+    const latitude =
+        event.latlng.lat;
+
+    const longitude =
+        event.latlng.lng;
+
+
+    /* =====================================
+       PILIH RUMAH
+    ===================================== */
+
+    if (modePilihLokasi === "home") {
+
+        setHomeLocation(
+            latitude,
+            longitude,
+            "Lokasi rumah dari peta"
+        );
+
+        modePilihLokasi = null;
+
+        map.setView(
+            [latitude, longitude],
+            16,
+            {
+                animate: true
+            }
+        );
+
+        showToast(
+            "Rumah berhasil dipilih. Sekarang pilih lokasi sekolah di peta."
+        );
+
+
+        /*
+           Otomatis lanjut ke mode sekolah
+           setelah sedikit jeda supaya user
+           melihat marker rumah terlebih dahulu.
+        */
+
+        setTimeout(() => {
+
+            startMapLocationSelection("school");
+
+        }, 700);
+
+        return;
+    }
+
+
+    /* =====================================
+       PILIH SEKOLAH
+    ===================================== */
+
+    if (modePilihLokasi === "school") {
+
+        setSchoolLocation(
+            latitude,
+            longitude,
+            "Lokasi sekolah dari peta"
+        );
+
+        modePilihLokasi = null;
+
+        map.setView(
+            [latitude, longitude],
+            15,
+            {
+                animate: true
+            }
+        );
+
+        showToast(
+            "Sekolah berhasil dipilih. Menghitung perjalanan..."
+        );
+
+
+        /*
+           Kalau rumah dan sekolah sudah ada,
+           langsung hitung rute.
+        */
+
+        if (
+            latLngRumah &&
+            latLngSekolah
+        ) {
+
+            setTimeout(() => {
+
+                calculateRoute();
+
+            }, 400);
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   OPEN MAP PAGE
 ========================================= */
 
 function openMapPage() {
@@ -464,6 +608,54 @@ function openMapPage() {
         }
 
     }, 100);
+
+}
+
+
+/* =========================================
+   MULAI PILIH LOKASI DI PETA
+========================================= */
+
+function startMapLocationSelection(target) {
+
+    if (
+        target !== "home" &&
+        target !== "school"
+    ) {
+        return;
+    }
+
+    showPage("mapPage");
+
+    setTimeout(() => {
+
+        initializeMap();
+
+        if (!map) {
+            showToast(
+                "Peta belum siap."
+            );
+            return;
+        }
+
+        modePilihLokasi = target;
+
+        if (target === "home") {
+
+            showToast(
+                "Silakan ketuk peta untuk menentukan lokasi RUMAH."
+            );
+
+        } else {
+
+            showToast(
+                "Silakan ketuk peta untuk menentukan lokasi SEKOLAH."
+            );
+
+        }
+
+    }, 180);
+
 }
 
 
@@ -526,6 +718,7 @@ function changeMapType(type) {
     showToast(
         "Jenis peta berhasil diubah."
     );
+
 }
 
 
@@ -535,6 +728,7 @@ function updateMapSelect() {
         mapTypeSelect.value =
             currentMapType;
     }
+
 }
 
 
@@ -573,6 +767,7 @@ function createHomeIcon() {
         popupAnchor: [0, -50]
 
     });
+
 }
 
 
@@ -609,6 +804,7 @@ function createSchoolIcon() {
         popupAnchor: [0, -50]
 
     });
+
 }
 
 
@@ -648,7 +844,11 @@ function setHomeLocation(
     }
 
     if (markerRumah) {
-        map.removeLayer(markerRumah);
+
+        map.removeLayer(
+            markerRumah
+        );
+
     }
 
     markerRumah =
@@ -706,7 +906,11 @@ function setSchoolLocation(
     }
 
     if (markerSekolah) {
-        map.removeLayer(markerSekolah);
+
+        map.removeLayer(
+            markerSekolah
+        );
+
     }
 
     markerSekolah =
@@ -750,25 +954,54 @@ function restoreMapLocations() {
 
     if (appData.home) {
 
-        setHomeLocation(
-            appData.home.latitude,
-            appData.home.longitude,
-            appData.home.label
-        );
+        latLngRumah =
+            L.latLng(
+                appData.home.latitude,
+                appData.home.longitude
+            );
+
+        markerRumah =
+            L.marker(
+                latLngRumah,
+                {
+                    icon:
+                        createHomeIcon(),
+                    draggable: false
+                }
+            )
+            .addTo(map)
+            .bindPopup(
+                `<strong>Rumah</strong><br>${escapeHtml(appData.home.label || "Lokasi rumah")}`
+            );
 
     }
 
     if (appData.school) {
 
-        setSchoolLocation(
-            appData.school.latitude,
-            appData.school.longitude,
-            appData.school.label
-        );
+        latLngSekolah =
+            L.latLng(
+                appData.school.latitude,
+                appData.school.longitude
+            );
+
+        markerSekolah =
+            L.marker(
+                latLngSekolah,
+                {
+                    icon:
+                        createSchoolIcon(),
+                    draggable: false
+                }
+            )
+            .addTo(map)
+            .bindPopup(
+                `<strong>Sekolah</strong><br>${escapeHtml(appData.school.label || "Lokasi sekolah")}`
+            );
 
     }
 
     updateLocationUI();
+
 }
 
 
@@ -854,13 +1087,20 @@ const schoolLocationButton =
     );
 
 
+/*
+   SEKARANG tombol Rumah dan Sekolah
+   langsung membuka peta untuk memilih titik.
+*/
+
 if (homeLocationButton) {
 
     homeLocationButton.addEventListener(
         "click",
         () => {
 
-            openLocationPage("home");
+            startMapLocationSelection(
+                "home"
+            );
 
         }
     );
@@ -874,13 +1114,19 @@ if (schoolLocationButton) {
         "click",
         () => {
 
-            openLocationPage("school");
+            startMapLocationSelection(
+                "school"
+            );
 
         }
     );
 
 }
 
+
+/* =========================================
+   LOCATION PAGE
+========================================= */
 
 function openLocationPage(target) {
 
@@ -896,6 +1142,7 @@ function openLocationPage(target) {
     updateLocationTargetStatus();
 
     showPage("locationPage");
+
 }
 
 
@@ -937,12 +1184,12 @@ function updateLocationTargetStatus() {
     if (target === "home") {
 
         status.textContent =
-            "Mode lokasi rumah aktif. Gunakan GPS, pencarian, atau koordinat manual.";
+            "Mode lokasi rumah aktif. Kamu juga bisa langsung memilih titik rumah di peta.";
 
     } else {
 
         status.textContent =
-            "Mode lokasi sekolah aktif. Gunakan pencarian atau koordinat manual.";
+            "Mode lokasi sekolah aktif. Kamu juga bisa langsung memilih titik sekolah di peta.";
 
     }
 
@@ -1016,6 +1263,8 @@ function getCurrentLocation() {
 
             }
 
+            initializeMap();
+
             if (map) {
 
                 map.setView(
@@ -1085,7 +1334,7 @@ function getCurrentLocation() {
 
 
 /* =========================================
-   SELECT ON MAP
+   SELECT ON MAP BUTTON
 ========================================= */
 
 const selectOnMapButton =
@@ -1099,67 +1348,13 @@ if (selectOnMapButton) {
         "click",
         () => {
 
-            showPage("mapPage");
+            const target =
+                locationTarget
+                    ? locationTarget.value
+                    : "home";
 
-            initializeMap();
-
-            if (!map) {
-                return;
-            }
-
-            showToast(
-                "Ketuk peta untuk memilih lokasi."
-            );
-
-            map.once(
-                "click",
-                (event) => {
-
-                    const lat =
-                        event.latlng.lat;
-
-                    const lng =
-                        event.latlng.lng;
-
-                    const target =
-                        locationTarget
-                            ? locationTarget.value
-                            : "home";
-
-                    if (
-                        target ===
-                        "home"
-                    ) {
-
-                        setHomeLocation(
-                            lat,
-                            lng,
-                            "Lokasi rumah dari peta"
-                        );
-
-                    } else {
-
-                        setSchoolLocation(
-                            lat,
-                            lng,
-                            "Lokasi sekolah dari peta"
-                        );
-
-                    }
-
-                    map.setView(
-                        [lat, lng],
-                        16,
-                        {
-                            animate: true
-                        }
-                    );
-
-                    showToast(
-                        "Lokasi berhasil dipilih."
-                    );
-
-                }
+            startMapLocationSelection(
+                target
             );
 
         }
@@ -1340,16 +1535,21 @@ async function searchLocation() {
             await fetch(url);
 
         if (!response.ok) {
+
             throw new Error(
                 "Pencarian lokasi gagal."
             );
+
         }
 
         const data =
             await response.json();
 
         if (!results) {
+
+            hideLoading();
             return;
+
         }
 
         results.innerHTML = "";
@@ -1446,7 +1646,9 @@ async function searchLocation() {
                 }
             );
 
-            results.appendChild(button);
+            results.appendChild(
+                button
+            );
 
         });
 
@@ -1698,9 +1900,11 @@ async function calculateRoute() {
     }
 
     if (!map) {
+
         showToast(
             "Peta belum siap."
         );
+
         return;
     }
 
@@ -1722,9 +1926,11 @@ async function calculateRoute() {
             await fetch(url);
 
         if (!response.ok) {
+
             throw new Error(
                 "Routing server tidak dapat diakses."
             );
+
         }
 
         const data =
@@ -2114,21 +2320,35 @@ function resetJourney() {
     latLngSekolah = null;
     jarakKmGlobal = 0;
 
+    modePilihLokasi = null;
+
     saveStorage(
         STORAGE_KEY,
         appData
     );
 
     if (markerRumah && map) {
-        map.removeLayer(markerRumah);
+
+        map.removeLayer(
+            markerRumah
+        );
+
     }
 
     if (markerSekolah && map) {
-        map.removeLayer(markerSekolah);
+
+        map.removeLayer(
+            markerSekolah
+        );
+
     }
 
     if (garisRute && map) {
-        map.removeLayer(garisRute);
+
+        map.removeLayer(
+            garisRute
+        );
+
     }
 
     markerRumah = null;
@@ -2481,6 +2701,7 @@ function subtractMinutes(
         ":" +
         String(minute).padStart(2, "0")
     );
+
 }
 
 
@@ -2742,13 +2963,17 @@ function saveSettings() {
 
     settings = {
 
-        walkingSpeed: walking,
+        walkingSpeed:
+            walking,
 
-        motorSpeed: motor,
+        motorSpeed:
+            motor,
 
-        carSpeed: car,
+        carSpeed:
+            car,
 
-        defaultBuffer: buffer,
+        defaultBuffer:
+            buffer,
 
         defaultMap:
             defaultMapInput?.value ||
@@ -2771,6 +2996,7 @@ function saveSettings() {
     applyTheme(
         settings.theme
     );
+
 
     if (transportAktif === "walking") {
 
