@@ -5713,3 +5713,131 @@ if (
 }
 
 }
+
+/* =========================================
+   AUTO UPDATE WAKTU BERANGKAT
+   Saat jam masuk / waktu cadangan berubah
+========================================= */
+
+function autoUpdateDepartureTime() {
+
+    const schoolTimeInput =
+        document.getElementById(
+            "schoolStartTime"
+        );
+
+    const bufferSelect =
+        document.getElementById(
+            "bufferSelect"
+        );
+
+    const recommendedDeparture =
+        document.getElementById(
+            "recommendedDeparture"
+        );
+
+    if (
+        !schoolTimeInput ||
+        !recommendedDeparture
+    ) {
+        return;
+    }
+
+    if (
+        !schoolTimeInput.value ||
+        !jarakKmGlobal ||
+        !kecepatanAktif
+    ) {
+        return;
+    }
+
+    const schoolTime =
+        schoolTimeInput.value;
+
+    const buffer =
+        Number(
+            bufferSelect?.value ||
+            settings.defaultBuffer ||
+            10
+        );
+
+    const routeMinutes =
+        Math.ceil(
+            (
+                Number(jarakKmGlobal) /
+                Number(kecepatanAktif)
+            ) * 60
+        );
+
+    const totalMinutes =
+        routeMinutes + buffer;
+
+    const departure =
+        subtractMinutes(
+            schoolTime,
+            totalMinutes
+        );
+
+    recommendedDeparture.textContent =
+        departure;
+
+    /* Simpan hasil terbaru */
+    scheduleData = {
+        ...(scheduleData || {}),
+        schoolTime: schoolTime,
+        buffer: buffer,
+        routeMinutes: routeMinutes,
+        departure: departure
+    };
+
+    saveStorage(
+        SCHEDULE_KEY,
+        scheduleData
+    );
+
+    updateDepartureReminderUI();
+
+}
+
+
+/* =========================================
+   JAM MASUK BERUBAH
+========================================= */
+
+const autoSchoolTimeInput =
+    document.getElementById(
+        "schoolStartTime"
+    );
+
+if (autoSchoolTimeInput) {
+
+    autoSchoolTimeInput.addEventListener(
+        "change",
+        autoUpdateDepartureTime
+    );
+
+    autoSchoolTimeInput.addEventListener(
+        "input",
+        autoUpdateDepartureTime
+    );
+
+}
+
+
+/* =========================================
+   WAKTU CADANGAN BERUBAH
+========================================= */
+
+const autoBufferSelect =
+    document.getElementById(
+        "bufferSelect"
+    );
+
+if (autoBufferSelect) {
+
+    autoBufferSelect.addEventListener(
+        "change",
+        autoUpdateDepartureTime
+    );
+
+}
