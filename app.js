@@ -4457,3 +4457,34 @@ setTimeout(() => {
     }
 
 }, 1200);
+
+
+/* =========================================
+   AUTO OPEN TUTORIAL SAAT PERTAMA KALI
+========================================= */
+
+window.addEventListener("load", () => {
+
+    const tutorialSeen =
+        localStorage.getItem(
+            TUTORIAL_KEY
+        );
+
+    if (!tutorialSeen) {
+
+        setTimeout(() => {
+
+            if (
+                tutorialOverlay &&
+                !tutorialIsOpen
+            ) {
+
+                openTutorial(true);
+
+            }
+
+        }, 1500);
+
+    }
+
+});
