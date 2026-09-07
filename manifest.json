@@ -1,0 +1,10 @@
+{
+  "name": "JARAK KESEKOLAH",
+  "short_name": "JarakSekolah",
+  "description": "Aplikasi untuk menghitung jarak dan waktu perjalanan ke sekolah.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait"
+}
