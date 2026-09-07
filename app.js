@@ -3,6 +3,7 @@
    MAIN JAVASCRIPT
    COMPLETE VERSION
    SISTEM PILIH LOKASI LANGSUNG DI PETA
+   + TUTORIAL PENGGUNAAN
 ========================================= */
 
 
@@ -30,6 +31,44 @@ const confirmActionButton = document.getElementById("confirmActionButton");
 
 
 /* =========================================
+   TUTORIAL ELEMENT
+========================================= */
+
+const tutorialOverlay =
+    document.getElementById("tutorialOverlay");
+
+const tutorialCloseButton =
+    document.getElementById("tutorialCloseButton");
+
+const tutorialIcon =
+    document.getElementById("tutorialIcon");
+
+const tutorialStepLabel =
+    document.getElementById("tutorialStepLabel");
+
+const tutorialDots =
+    document.getElementById("tutorialDots");
+
+const tutorialTitle =
+    document.getElementById("tutorialTitle");
+
+const tutorialDescription =
+    document.getElementById("tutorialDescription");
+
+const tutorialSkipButton =
+    document.getElementById("tutorialSkipButton");
+
+const tutorialBackButton =
+    document.getElementById("tutorialBackButton");
+
+const tutorialNextButton =
+    document.getElementById("tutorialNextButton");
+
+const openTutorialButton =
+    document.getElementById("openTutorialButton");
+
+
+/* =========================================
    STORAGE KEYS
 ========================================= */
 
@@ -37,6 +76,7 @@ const STORAGE_KEY = "jarak_ke_sekolah_data";
 const SETTINGS_KEY = "jarak_ke_sekolah_settings";
 const HISTORY_KEY = "jarak_ke_sekolah_history";
 const SCHEDULE_KEY = "jarak_ke_sekolah_schedule";
+const TUTORIAL_KEY = "jarak_ke_sekolah_tutorial_seen";
 
 
 /* =========================================
@@ -97,10 +137,9 @@ let modePilihLokasi = null;
 
 
 /*
-   Nilai:
-   null    = tidak sedang memilih
-   "home"  = klik berikutnya menjadi rumah
-   "school" = klik berikutnya menjadi sekolah
+   null     = tidak sedang memilih
+   home     = klik berikutnya menjadi rumah
+   school   = klik berikutnya menjadi sekolah
 */
 
 
@@ -119,7 +158,8 @@ function loadStorage(key, fallback) {
 
     try {
 
-        const saved = localStorage.getItem(key);
+        const saved =
+            localStorage.getItem(key);
 
         if (!saved) {
             return fallback;
@@ -189,7 +229,8 @@ function showToast(message) {
         return;
     }
 
-    toastMessage.textContent = message;
+    toastMessage.textContent =
+        message;
 
     toast.classList.add("show");
 
@@ -207,17 +248,22 @@ function showToast(message) {
    LOADING
 ========================================= */
 
-function showLoading(message = "Memproses...") {
+function showLoading(
+    message = "Memproses..."
+) {
 
     if (!loadingOverlay) {
         return;
     }
 
     if (loadingText) {
-        loadingText.textContent = message;
+        loadingText.textContent =
+            message;
     }
 
-    loadingOverlay.classList.add("show");
+    loadingOverlay.classList.add(
+        "show"
+    );
 }
 
 
@@ -227,7 +273,9 @@ function hideLoading() {
         return;
     }
 
-    loadingOverlay.classList.remove("show");
+    loadingOverlay.classList.remove(
+        "show"
+    );
 }
 
 
@@ -243,18 +291,24 @@ function showPage(pageId) {
 
     pages.forEach((page) => {
 
-        page.classList.remove("active");
+        page.classList.remove(
+            "active"
+        );
 
     });
 
     const targetPage =
-        document.getElementById(pageId);
+        document.getElementById(
+            pageId
+        );
 
     if (!targetPage) {
         return;
     }
 
-    targetPage.classList.add("active");
+    targetPage.classList.add(
+        "active"
+    );
 
     navItems.forEach((item) => {
 
@@ -341,7 +395,9 @@ if (settingsButton) {
         "click",
         () => {
 
-            showPage("settingsPage");
+            showPage(
+                "settingsPage"
+            );
 
         }
     );
@@ -482,11 +538,6 @@ function initializeMap() {
 
 function handleMapClick(event) {
 
-    /*
-       Kalau sedang tidak memilih lokasi,
-       klik peta tidak melakukan apa-apa.
-    */
-
     if (!modePilihLokasi) {
         return;
     }
@@ -524,16 +575,11 @@ function handleMapClick(event) {
             "Rumah berhasil dipilih. Sekarang pilih lokasi sekolah di peta."
         );
 
-
-        /*
-           Otomatis lanjut ke mode sekolah
-           setelah sedikit jeda supaya user
-           melihat marker rumah terlebih dahulu.
-        */
-
         setTimeout(() => {
 
-            startMapLocationSelection("school");
+            startMapLocationSelection(
+                "school"
+            );
 
         }, 700);
 
@@ -567,12 +613,6 @@ function handleMapClick(event) {
             "Sekolah berhasil dipilih. Menghitung perjalanan..."
         );
 
-
-        /*
-           Kalau rumah dan sekolah sudah ada,
-           langsung hitung rute.
-        */
-
         if (
             latLngRumah &&
             latLngSekolah
@@ -597,7 +637,9 @@ function handleMapClick(event) {
 
 function openMapPage() {
 
-    showPage("mapPage");
+    showPage(
+        "mapPage"
+    );
 
     setTimeout(() => {
 
@@ -616,7 +658,9 @@ function openMapPage() {
    MULAI PILIH LOKASI DI PETA
 ========================================= */
 
-function startMapLocationSelection(target) {
+function startMapLocationSelection(
+    target
+) {
 
     if (
         target !== "home" &&
@@ -625,20 +669,25 @@ function startMapLocationSelection(target) {
         return;
     }
 
-    showPage("mapPage");
+    showPage(
+        "mapPage"
+    );
 
     setTimeout(() => {
 
         initializeMap();
 
         if (!map) {
+
             showToast(
                 "Peta belum siap."
             );
+
             return;
         }
 
-        modePilihLokasi = target;
+        modePilihLokasi =
+            target;
 
         if (target === "home") {
 
@@ -690,25 +739,34 @@ function changeMapType(type) {
         initializeMap();
     }
 
-    if (!map || !mapLayers[type]) {
+    if (
+        !map ||
+        !mapLayers[type]
+    ) {
         return;
     }
 
-    Object.values(mapLayers).forEach(
-        (layer) => {
+    Object.values(
+        mapLayers
+    ).forEach((layer) => {
 
-            if (map.hasLayer(layer)) {
-                map.removeLayer(layer);
-            }
+        if (map.hasLayer(layer)) {
+
+            map.removeLayer(
+                layer
+            );
 
         }
-    );
+
+    });
 
     mapLayers[type].addTo(map);
 
-    currentMapType = type;
+    currentMapType =
+        type;
 
-    settings.defaultMap = type;
+    settings.defaultMap =
+        type;
 
     saveStorage(
         SETTINGS_KEY,
@@ -725,8 +783,10 @@ function changeMapType(type) {
 function updateMapSelect() {
 
     if (mapTypeSelect) {
+
         mapTypeSelect.value =
             currentMapType;
+
     }
 
 }
@@ -762,9 +822,20 @@ function createHomeIcon() {
             </div>
         `,
 
-        iconSize: [44, 52],
-        iconAnchor: [22, 52],
-        popupAnchor: [0, -50]
+        iconSize: [
+            44,
+            52
+        ],
+
+        iconAnchor: [
+            22,
+            52
+        ],
+
+        popupAnchor: [
+            0,
+            -50
+        ]
 
     });
 
@@ -799,9 +870,20 @@ function createSchoolIcon() {
             </div>
         `,
 
-        iconSize: [44, 52],
-        iconAnchor: [22, 52],
-        popupAnchor: [0, -50]
+        iconSize: [
+            44,
+            52
+        ],
+
+        iconAnchor: [
+            22,
+            52
+        ],
+
+        popupAnchor: [
+            0,
+            -50
+        ]
 
     });
 
@@ -947,10 +1029,11 @@ function restoreMapLocations() {
             }
         );
 
-    appData = saved || {
-        home: null,
-        school: null
-    };
+    appData =
+        saved || {
+            home: null,
+            school: null
+        };
 
     if (appData.home) {
 
@@ -1087,11 +1170,6 @@ const schoolLocationButton =
     );
 
 
-/*
-   SEKARANG tombol Rumah dan Sekolah
-   langsung membuka peta untuk memilih titik.
-*/
-
 if (homeLocationButton) {
 
     homeLocationButton.addEventListener(
@@ -1128,7 +1206,9 @@ if (schoolLocationButton) {
    LOCATION PAGE
 ========================================= */
 
-function openLocationPage(target) {
+function openLocationPage(
+    target
+) {
 
     const targetSelect =
         document.getElementById(
@@ -1136,12 +1216,17 @@ function openLocationPage(target) {
         );
 
     if (targetSelect) {
-        targetSelect.value = target;
+
+        targetSelect.value =
+            target;
+
     }
 
     updateLocationTargetStatus();
 
-    showPage("locationPage");
+    showPage(
+        "locationPage"
+    );
 
 }
 
@@ -1318,7 +1403,9 @@ function getCurrentLocation() {
 
             }
 
-            showToast(message);
+            showToast(
+                message
+            );
 
         },
 
@@ -1458,7 +1545,10 @@ function saveManualLocation() {
     if (map) {
 
         map.setView(
-            [latitude, longitude],
+            [
+                latitude,
+                longitude
+            ],
             16,
             {
                 animate: true
@@ -1548,8 +1638,8 @@ async function searchLocation() {
         if (!results) {
 
             hideLoading();
-            return;
 
+            return;
         }
 
         results.innerHTML = "";
@@ -1574,7 +1664,8 @@ async function searchLocation() {
                     "button"
                 );
 
-            button.type = "button";
+            button.type =
+                "button";
 
             button.className =
                 "search-result-item";
@@ -1656,7 +1747,9 @@ async function searchLocation() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         hideLoading();
 
@@ -1737,22 +1830,29 @@ if (carBtn) {
 }
 
 
-function selectTransport(type) {
+function selectTransport(
+    type
+) {
 
-    transportAktif = type;
+    transportAktif =
+        type;
 
     if (type === "walking") {
 
-        profilRouting = "foot";
+        profilRouting =
+            "foot";
 
         kecepatanAktif =
             Number(
                 settings.walkingSpeed
             );
 
-    } else if (type === "motor") {
+    } else if (
+        type === "motor"
+    ) {
 
-        profilRouting = "driving";
+        profilRouting =
+            "driving";
 
         kecepatanAktif =
             Number(
@@ -1761,7 +1861,8 @@ function selectTransport(type) {
 
     } else {
 
-        profilRouting = "driving";
+        profilRouting =
+            "driving";
 
         kecepatanAktif =
             Number(
@@ -1959,7 +2060,9 @@ async function calculateRoute() {
 
         const timeHours =
             distanceKm /
-            Number(kecepatanAktif);
+            Number(
+                kecepatanAktif
+            );
 
         const timeMinutes =
             Math.max(
@@ -1993,7 +2096,10 @@ async function calculateRoute() {
             map.fitBounds(
                 bounds,
                 {
-                    padding: [35, 35]
+                    padding: [
+                        35,
+                        35
+                    ]
                 }
             );
 
@@ -2029,9 +2135,14 @@ async function calculateRoute() {
    DRAW ROUTE
 ========================================= */
 
-function drawRoute(geometry) {
+function drawRoute(
+    geometry
+) {
 
-    if (!map || !geometry) {
+    if (
+        !map ||
+        !geometry
+    ) {
         return;
     }
 
@@ -2089,28 +2200,36 @@ function updateRouteResult(
     if (routeDistance) {
 
         routeDistance.textContent =
-            formatDistance(distanceKm);
+            formatDistance(
+                distanceKm
+            );
 
     }
 
     if (routeTime) {
 
         routeTime.textContent =
-            formatDuration(timeMinutes);
+            formatDuration(
+                timeMinutes
+            );
 
     }
 
     if (dashboardDistance) {
 
         dashboardDistance.textContent =
-            formatDistance(distanceKm);
+            formatDistance(
+                distanceKm
+            );
 
     }
 
     if (dashboardTime) {
 
         dashboardTime.textContent =
-            formatDuration(timeMinutes);
+            formatDuration(
+                timeMinutes
+            );
 
     }
 
@@ -2121,7 +2240,9 @@ function updateRouteResult(
    FORMAT DISTANCE
 ========================================= */
 
-function formatDistance(km) {
+function formatDistance(
+    km
+) {
 
     if (!Number.isFinite(km)) {
         return "--";
@@ -2141,7 +2262,9 @@ function formatDistance(km) {
    FORMAT DURATION
 ========================================= */
 
-function formatDuration(minutes) {
+function formatDuration(
+    minutes
+) {
 
     if (!Number.isFinite(minutes)) {
         return "--";
@@ -2218,7 +2341,10 @@ if (locateMapButton) {
             }
 
             map.setView(
-                [-6.5891, 110.6677],
+                [
+                    -6.5891,
+                    110.6677
+                ],
                 15,
                 {
                     animate: true
@@ -2327,7 +2453,10 @@ function resetJourney() {
         appData
     );
 
-    if (markerRumah && map) {
+    if (
+        markerRumah &&
+        map
+    ) {
 
         map.removeLayer(
             markerRumah
@@ -2335,7 +2464,10 @@ function resetJourney() {
 
     }
 
-    if (markerSekolah && map) {
+    if (
+        markerSekolah &&
+        map
+    ) {
 
         map.removeLayer(
             markerSekolah
@@ -2343,7 +2475,10 @@ function resetJourney() {
 
     }
 
-    if (garisRute && map) {
+    if (
+        garisRute &&
+        map
+    ) {
 
         map.removeLayer(
             garisRute
@@ -2386,7 +2521,8 @@ function saveHistory(
 
     const item = {
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
         date:
             new Date().toLocaleString(
@@ -2407,7 +2543,9 @@ function saveHistory(
 
     };
 
-    history.unshift(item);
+    history.unshift(
+        item
+    );
 
     const limitedHistory =
         history.slice(
@@ -2458,9 +2596,11 @@ function renderHistory() {
             .map((item) => {
 
                 const transportName =
-                    item.transport === "walking"
+                    item.transport ===
+                    "walking"
                         ? "Jalan kaki"
-                        : item.transport === "motor"
+                        : item.transport ===
+                          "motor"
                             ? "Motor"
                             : "Mobil";
 
@@ -2482,11 +2622,19 @@ function renderHistory() {
                         <div class="history-item-bottom">
 
                             <span>
-                                ${formatDistance(Number(item.distance))}
+                                ${formatDistance(
+                                    Number(
+                                        item.distance
+                                    )
+                                )}
                             </span>
 
                             <span>
-                                ${formatDuration(Number(item.time))}
+                                ${formatDuration(
+                                    Number(
+                                        item.time
+                                    )
+                                )}
                             </span>
 
                         </div>
@@ -2609,7 +2757,9 @@ function calculateSchedule() {
         Math.ceil(
             (
                 jarakKmGlobal /
-                Number(kecepatanAktif)
+                Number(
+                    kecepatanAktif
+                )
             ) * 60
         );
 
@@ -2638,7 +2788,8 @@ function calculateSchedule() {
     scheduleData = {
 
         date:
-            dateInput?.value || "",
+            dateInput?.value ||
+            "",
 
         schoolTime,
 
@@ -2676,10 +2827,14 @@ function subtractMinutes(
         time.split(":");
 
     let hour =
-        Number(parts[0]);
+        Number(
+            parts[0]
+        );
 
     let minute =
-        Number(parts[1]);
+        Number(
+            parts[1]
+        );
 
     minute -= minutes;
 
@@ -2697,9 +2852,15 @@ function subtractMinutes(
     }
 
     return (
-        String(hour).padStart(2, "0") +
+        String(hour).padStart(
+            2,
+            "0"
+        ) +
         ":" +
-        String(minute).padStart(2, "0")
+        String(minute).padStart(
+            2,
+            "0"
+        )
     );
 
 }
@@ -2998,13 +3159,17 @@ function saveSettings() {
     );
 
 
-    if (transportAktif === "walking") {
+    if (
+        transportAktif ===
+        "walking"
+    ) {
 
         kecepatanAktif =
             settings.walkingSpeed;
 
     } else if (
-        transportAktif === "motor"
+        transportAktif ===
+        "motor"
     ) {
 
         kecepatanAktif =
@@ -3104,7 +3269,9 @@ function resetSettings() {
    THEME
 ========================================= */
 
-function applyTheme(theme) {
+function applyTheme(
+    theme
+) {
 
     if (theme === "system") {
 
@@ -3152,7 +3319,8 @@ function applyTheme(theme) {
    CONFIRM MODAL
 ========================================= */
 
-let confirmCallback = null;
+let confirmCallback =
+    null;
 
 
 function openConfirmModal(
@@ -3199,7 +3367,8 @@ function closeConfirmModal() {
         "show"
     );
 
-    confirmCallback = null;
+    confirmCallback =
+        null;
 
 }
 
@@ -3257,10 +3426,488 @@ if (confirmModal) {
 
 
 /* =========================================
+   TUTORIAL DATA
+========================================= */
+
+const tutorialSteps = [
+
+    {
+        title:
+            "Pilih lokasi rumah",
+
+        description:
+            "Klik <strong>Pilih lokasi</strong> pada bagian Rumah. Kamu dapat menggunakan GPS atau mencari lokasi secara manual. Jika memilih secara manual, cari lokasi rumah lalu ketuk titiknya pada peta.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M3 10.5 12 3l9 7.5"></path>
+                <path d="M5 9.5V21h14V9.5"></path>
+                <path d="M9 21v-6h6v6"></path>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Pilih lokasi sekolah",
+
+        description:
+            "Setelah lokasi rumah dipilih, kembali ke Dashboard lalu pilih lokasi <strong>Sekolah</strong>. Caranya sama: gunakan GPS, pencarian manual, atau langsung ketuk titik sekolah pada peta.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M3 21h18"></path>
+                <path d="M5 21V8l7-5 7 5v13"></path>
+                <path d="M9 21v-4h6v4"></path>
+                <path d="M9 10h.01"></path>
+                <path d="M15 10h.01"></path>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Hasilkan perjalanan",
+
+        description:
+            "Setelah lokasi rumah dan sekolah tersedia, scroll ke bawah. Pilih <strong>Motor</strong>, <strong>Mobil</strong>, atau <strong>Jalan kaki</strong>, lalu tekan <strong>Hasilkan Perjalanan</strong>. Jarak dan perkiraan waktu akan muncul.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="6" cy="17" r="3"></circle>
+                <circle cx="18" cy="17" r="3"></circle>
+                <path d="M6 17h3l3-8h3l3 8"></path>
+                <path d="M9 17h6"></path>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Atur kecepatan",
+
+        description:
+            "Untuk mengubah kecepatan Motor, Mobil, atau Jalan kaki, buka <strong>Pengaturan</strong>. Atur kecepatannya sesuai kebutuhan, lalu tekan <strong>Simpan Pengaturan</strong>. Pengaturan akan tersimpan otomatis.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.1h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.6-1H6v-2.6h.4A1.7 1.7 0 0 0 8 10a1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.1h2.6V5a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1V14h-.1a1.7 1.7 0 0 0-1.6 1z"></path>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Gunakan Google Maps",
+
+        description:
+            "Untuk melihat perjalanan langsung melalui Google Maps, buka halaman Peta lalu tekan tombol <strong>Buka di Google Maps</strong>. Untuk memulai dari awal, tekan <strong>Reset perjalanan</strong>.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"></path>
+                <circle cx="12" cy="9" r="2.5"></circle>
+            </svg>
+        `
+    }
+
+];
+
+
+/* =========================================
+   TUTORIAL STATE
+========================================= */
+
+let tutorialCurrentStep =
+    0;
+
+let tutorialIsOpen =
+    false;
+
+
+/* =========================================
+   RENDER TUTORIAL
+========================================= */
+
+function renderTutorialStep() {
+
+    if (!tutorialSteps.length) {
+        return;
+    }
+
+    const step =
+        tutorialSteps[
+            tutorialCurrentStep
+        ];
+
+    const total =
+        tutorialSteps.length;
+
+    const current =
+        tutorialCurrentStep + 1;
+
+
+    if (tutorialStepLabel) {
+
+        tutorialStepLabel.textContent =
+            `LANGKAH ${current} DARI ${total}`;
+
+    }
+
+
+    if (tutorialTitle) {
+
+        tutorialTitle.textContent =
+            step.title;
+
+    }
+
+
+    if (tutorialDescription) {
+
+        tutorialDescription.innerHTML =
+            step.description;
+
+    }
+
+
+    if (tutorialIcon) {
+
+        tutorialIcon.innerHTML =
+            step.icon;
+
+    }
+
+
+    if (tutorialDots) {
+
+        const dots =
+            tutorialDots.querySelectorAll(
+                ".tutorial-dot"
+            );
+
+        dots.forEach(
+            (dot, index) => {
+
+                dot.classList.toggle(
+                    "active",
+                    index ===
+                    tutorialCurrentStep
+                );
+
+            }
+        );
+
+    }
+
+
+    if (tutorialBackButton) {
+
+        tutorialBackButton.disabled =
+            tutorialCurrentStep === 0;
+
+        tutorialBackButton.style.visibility =
+            tutorialCurrentStep === 0
+                ? "hidden"
+                : "visible";
+
+    }
+
+
+    if (tutorialNextButton) {
+
+        tutorialNextButton.textContent =
+            tutorialCurrentStep ===
+            total - 1
+                ? "Selesai"
+                : "Lanjut";
+
+    }
+
+}
+
+
+/* =========================================
+   OPEN TUTORIAL
+========================================= */
+
+function openTutorial(
+    fromFirstStep = true
+) {
+
+    if (!tutorialOverlay) {
+        return;
+    }
+
+    if (fromFirstStep) {
+
+        tutorialCurrentStep =
+            0;
+
+    }
+
+    tutorialIsOpen =
+        true;
+
+    renderTutorialStep();
+
+    tutorialOverlay.classList.add(
+        "show"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =========================================
+   CLOSE TUTORIAL
+========================================= */
+
+function closeTutorial(
+    markAsSeen = true
+) {
+
+    if (!tutorialOverlay) {
+        return;
+    }
+
+    tutorialIsOpen =
+        false;
+
+    tutorialOverlay.classList.remove(
+        "show"
+    );
+
+    document.body.style.overflow =
+        "";
+
+    if (markAsSeen) {
+
+        localStorage.setItem(
+            TUTORIAL_KEY,
+            "true"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   NEXT TUTORIAL STEP
+========================================= */
+
+function nextTutorialStep() {
+
+    if (
+        tutorialCurrentStep <
+        tutorialSteps.length - 1
+    ) {
+
+        tutorialCurrentStep++;
+
+        renderTutorialStep();
+
+        return;
+    }
+
+    closeTutorial(
+        true
+    );
+
+}
+
+
+/* =========================================
+   PREVIOUS TUTORIAL STEP
+========================================= */
+
+function previousTutorialStep() {
+
+    if (
+        tutorialCurrentStep <= 0
+    ) {
+        return;
+    }
+
+    tutorialCurrentStep--;
+
+    renderTutorialStep();
+
+}
+
+
+/* =========================================
+   TUTORIAL BUTTON EVENTS
+========================================= */
+
+if (tutorialNextButton) {
+
+    tutorialNextButton.addEventListener(
+        "click",
+        nextTutorialStep
+    );
+
+}
+
+
+if (tutorialBackButton) {
+
+    tutorialBackButton.addEventListener(
+        "click",
+        previousTutorialStep
+    );
+
+}
+
+
+if (tutorialCloseButton) {
+
+    tutorialCloseButton.addEventListener(
+        "click",
+        () => {
+
+            closeTutorial(
+                true
+            );
+
+        }
+    );
+
+}
+
+
+if (tutorialSkipButton) {
+
+    tutorialSkipButton.addEventListener(
+        "click",
+        () => {
+
+            closeTutorial(
+                true
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   CLICK OVERLAY TUTORIAL
+========================================= */
+
+if (tutorialOverlay) {
+
+    tutorialOverlay.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                event.target ===
+                tutorialOverlay
+            ) {
+
+                closeTutorial(
+                    true
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   TUTORIAL OPEN FROM SETTINGS
+========================================= */
+
+if (openTutorialButton) {
+
+    openTutorialButton.addEventListener(
+        "click",
+        () => {
+
+            openTutorial(
+                true
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   KEYBOARD ESCAPE
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Escape" &&
+            tutorialIsOpen
+        ) {
+
+            closeTutorial(
+                true
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================
    ESCAPE HTML
 ========================================= */
 
-function escapeHtml(value) {
+function escapeHtml(
+    value
+) {
 
     return String(value)
         .replace(
@@ -3320,6 +3967,28 @@ function initializeApp() {
     console.log(
         "JARAK KESEKOLAH berhasil dimuat."
     );
+
+
+    /* =====================================
+       TUTORIAL PERTAMA KALI
+    ===================================== */
+
+    const tutorialSeen =
+        localStorage.getItem(
+            TUTORIAL_KEY
+        );
+
+    if (!tutorialSeen) {
+
+        setTimeout(() => {
+
+            openTutorial(
+                true
+            );
+
+        }, 700);
+
+    }
 
 }
 
