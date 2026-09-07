@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -13,27 +15,45 @@
         content="JARAK KESEKOLAH - Aplikasi untuk mengetahui jarak dan perkiraan waktu perjalanan menuju sekolah."
     >
 
-    <meta name="theme-color" content="#2563eb">
+    <meta
+        name="theme-color"
+        content="#2563eb"
+    >
 
     <title>JARAK KESEKOLAH</title>
 
-    <link rel="stylesheet" href="style.css">
-    <!-- Leaflet CSS -->
-<link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIINfQ3x6L1jY8cX8K8y0k2p7R5F5r5E5E="
-    crossorigin=""
->
+
+    <!-- =========================================
+         APP CSS
+    ========================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- =========================================
+         LEAFLET CSS
+    ========================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
 </head>
 
+
 <body>
+
 
     <!-- =========================================
          APP CONTAINER
     ========================================== -->
 
     <div class="app">
+
 
         <!-- =====================================
              HEADER
@@ -44,11 +64,13 @@
             <div class="brand">
 
                 <div class="brand-icon">
+
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                     >
+
                         <path
                             d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
                             stroke="currentColor"
@@ -64,10 +86,14 @@
                             stroke="currentColor"
                             stroke-width="1.8"
                         />
+
                     </svg>
+
                 </div>
 
+
                 <div class="brand-text">
+
                     <span class="brand-title">
                         JARAK
                     </span>
@@ -75,6 +101,7 @@
                     <span class="brand-subtitle">
                         KESEKOLAH
                     </span>
+
                 </div>
 
             </div>
@@ -102,7 +129,7 @@
                     />
 
                     <path
-                        d="M19.4 15C19.55 14.67 19.68 14.32 19.76 13.96L21.1 12.92L20.95 10.86L19.46 10.03C19.34 9.68 19.19 9.34 19 9.02L19.25 7.34L17.72 5.95L16.13 6.42C15.8 6.2 15.45 6.02 15.08 5.87L14.53 4.27L12.55 3.75L11.3 4.94C10.92 4.93 10.54 4.97 10.17 5.05L8.72 4.05L6.98 5.14L7.02 6.83C6.73 7.09 6.46 7.38 6.22 7.69L4.56 7.61L3.55 9.34L4.38 10.82C4.29 11.2 4.25 11.58 4.25 11.97L3.15 13.27L3.78 15.23L5.45 15.69C5.64 16.03 5.86 16.35 6.11 16.65L5.88 18.33L7.42 19.7L9 19.23C9.34 19.45 9.69 19.64 10.06 19.78L10.61 21.38L12.59 21.9L13.84 20.71C14.22 20.72 14.6 20.68 14.97 20.6L16.42 21.6L18.16 20.51L18.12 18.82C18.41 18.56 18.68 18.27 18.92 17.96L20.58 18.04L21.59 16.31L20.76 14.83C20.85 14.45 20.89 14.07 20.89 13.68"
+                        d="M19.4 15C19.55 14.67 19.68 14.32 19.76 13.96L21.1 12.92L20.95 10.86L19.46 10.03C19.34 9.68 19.19 9.34 19 9.02L19.25 7.34L17.72 5.95L16.13 6.42C15.8 6.2 15.45 6.02 15.08 5.87L14.53 4.27L12.55 3.75L11.3 4.94C10.92 4.93 10.54 4.97 10.17 5.05L8.72 4.05L6.98 5.14L7.02 6.83C6.73 7.09 6.46 7.38 6.22 7.69L4.56 7.61L3.55 9.34L4.38 10.82C4.29 11.2 4.25 11.58 4.25 11.97L3.15 13.27L3.78 15.23L5.45 15.69C5.64 16.03 5.86 16.35 6.11 16.65L5.88 18.33L7.42 19.7L9 19.23C9.34 19.45 9.69 19.64 10.06 19.78L10.61 21.38L12.59 21.9L13.84 20.71C14.22 20.72 14.6 20.68 14.97 20.6L16.42 21.6L18.16 20.51L18.12 18.82C18.41 18.56 18.68 18.27 18.92 17.96L20.58 18.04L21.59 18.04L20.76 14.83C20.85 14.45 20.89 14.07 20.89 13.68"
                         stroke="currentColor"
                         stroke-width="1.5"
                         stroke-linecap="round"
@@ -114,6 +141,7 @@
             </button>
 
         </header>
+
 
 
         <!-- =====================================
@@ -148,6 +176,7 @@
                     </p>
 
                 </div>
+
 
 
                 <!-- =================================
@@ -203,19 +232,26 @@
 
                         </div>
 
-                        <div class="location-value">
+
+                        <div
+                            class="location-value"
+                            id="homeLocationValue"
+                        >
                             Belum dipilih
                         </div>
+
 
                         <button
                             class="small-button"
                             type="button"
                             data-target="locationPage"
+                            data-location-type="home"
                         >
                             Pilih lokasi
                         </button>
 
                     </div>
+
 
 
                     <!-- SCHOOL -->
@@ -270,14 +306,20 @@
 
                         </div>
 
-                        <div class="location-value">
+
+                        <div
+                            class="location-value"
+                            id="schoolLocationValue"
+                        >
                             Belum dipilih
                         </div>
+
 
                         <button
                             class="small-button"
                             type="button"
                             data-target="locationPage"
+                            data-location-type="school"
                         >
                             Pilih sekolah
                         </button>
@@ -287,6 +329,192 @@
                 </div>
 
 
+
+                <!-- =================================
+                     TRANSPORT SUMMARY
+                ================================== -->
+
+                <div class="section-title">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            TRANSPORTASI
+                        </span>
+
+                        <h2>
+                            Kendaraan
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="transport-summary">
+
+                    <button
+                        class="transport-summary-item active"
+                        type="button"
+                        data-transport="walking"
+                    >
+
+                        <span class="transport-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <circle
+                                    cx="13"
+                                    cy="5"
+                                    r="2"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M11 8L8 13L11 15L13 21"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M11 9L15 11L18 9"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                            </svg>
+
+                        </span>
+
+                        <span>
+                            Jalan kaki
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="transport-summary-item"
+                        type="button"
+                        data-transport="motor"
+                    >
+
+                        <span class="transport-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <circle
+                                    cx="6"
+                                    cy="17"
+                                    r="3"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <circle
+                                    cx="18"
+                                    cy="17"
+                                    r="3"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M8 17L11 10H15L18 17"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M11 10L9 8H7"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                            </svg>
+
+                        </span>
+
+                        <span>
+                            Motor
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="transport-summary-item"
+                        type="button"
+                        data-transport="car"
+                    >
+
+                        <span class="transport-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M5 17L6.5 11H17.5L19 17"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M4 17H20V20H4V17Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                                <circle
+                                    cx="7"
+                                    cy="18"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+
+                                <circle
+                                    cx="17"
+                                    cy="18"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+
+                            </svg>
+
+                        </span>
+
+                        <span>
+                            Mobil
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
                 <!-- =================================
                      RESULT SUMMARY
                 ================================== -->
@@ -294,6 +522,7 @@
                 <div class="section-title">
 
                     <div>
+
                         <span class="eyebrow">
                             RINGKASAN
                         </span>
@@ -301,6 +530,7 @@
                         <h2>
                             Hasil perjalanan
                         </h2>
+
                     </div>
 
                 </div>
@@ -359,6 +589,7 @@
                     </div>
 
 
+
                     <!-- TIME -->
 
                     <div class="result-card">
@@ -404,6 +635,7 @@
                 </div>
 
 
+
                 <!-- =================================
                      CTA
                 ================================== -->
@@ -447,150 +679,782 @@
             </section>
 
 
-           <!-- =================================
-     MAP PAGE
-================================== -->
 
-<section
-    class="page"
-    id="mapPage"
->
+            <!-- =================================
+                 MAP PAGE
+            ================================== -->
 
-    <div class="page-heading">
-
-        <span class="eyebrow">
-            PETA PERJALANAN
-        </span>
-
-        <h1>
-            Peta
-        </h1>
-
-        <p>
-            Tentukan dan lihat lokasi perjalanan
-            rumah menuju sekolah.
-        </p>
-
-    </div>
-
-
-    <!-- MAP CARD -->
-
-    <div class="map-card">
-
-        <div
-            id="map"
-            class="map"
-        ></div>
-
-    </div>
-
-
-    <!-- MAP INFORMATION -->
-
-    <div class="map-info-card">
-
-        <div class="map-info-icon">
-
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            <section
+                class="page"
+                id="mapPage"
             >
 
-                <path
-                    d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                />
+                <div class="page-heading">
 
-                <circle
-                    cx="12"
-                    cy="9.5"
-                    r="2.5"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                />
+                    <span class="eyebrow">
+                        PETA PERJALANAN
+                    </span>
 
-            </svg>
+                    <h1>
+                        Peta
+                    </h1>
 
-        </div>
+                    <p>
+                        Tentukan dan lihat lokasi perjalanan
+                        rumah menuju sekolah.
+                    </p>
 
-        <div>
-
-            <strong>
-                Peta aktif
-            </strong>
-
-            <span id="mapStatus">
-                Peta Jalan
-            </span>
-
-        </div>
-
-    </div>
+                </div>
 
 
-    <!-- MAP ACTION -->
 
-    <button
-        class="primary-button"
-        id="locateMapButton"
-        type="button"
-    >
+                <!-- =================================
+                     MAP TYPE SELECTOR
+                ================================== -->
 
-        <span>
-            Pusatkan peta
-        </span>
+                <div class="map-type-card">
 
-        <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
+                    <div class="map-type-header">
 
-            <circle
-                cx="12"
-                cy="12"
-                r="3"
-                stroke="currentColor"
-                stroke-width="1.8"
-            />
+                        <div>
 
-            <path
-                d="M12 2V5"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-            />
+                            <span class="eyebrow">
+                                TAMPILAN PETA
+                            </span>
 
-            <path
-                d="M12 19V22"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-            />
+                            <strong>
+                                Jenis peta
+                            </strong>
 
-            <path
-                d="M2 12H5"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-            />
+                        </div>
 
-            <path
-                d="M19 12H22"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-            />
+                    </div>
 
-        </svg>
 
-    </button>
+                    <div class="map-type-selector">
 
-</section>
+                        <button
+                            class="map-type-button active"
+                            type="button"
+                            data-map-type="street"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M4 5L10 3L16 5L20 3V19L16 21L10 19L4 21V5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M10 3V19"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M16 5V21"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                            </svg>
+
+                            <span>
+                                Jalan
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="map-type-button"
+                            type="button"
+                            data-map-type="satellite"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="8"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M4 12H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M12 4C14 6.2 15 8.9 15 12C15 15.1 14 17.8 12 20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M12 4C10 6.2 9 8.9 9 12C9 15.1 10 17.8 12 20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                            </svg>
+
+                            <span>
+                                Satelit
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="map-type-button"
+                            type="button"
+                            data-map-type="terrain"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M3 19L9 9L13 14L16 10L21 19H3Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M9 9L11 7L13 9"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                            </svg>
+
+                            <span>
+                                Terrain
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="map-type-button"
+                            type="button"
+                            data-map-type="dark"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M20 15.5C18.7 16.4 17.1 17 15.4 17C10.8 17 7 13.2 7 8.6C7 6.9 7.6 5.3 8.5 4C4.9 5.3 2.5 8.7 2.5 12.7C2.5 17.8 6.6 22 11.7 22C15.7 22 19.1 19.6 20.4 16C20.5 15.8 20.5 15.6 20 15.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                            </svg>
+
+                            <span>
+                                Dark
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     MAP CARD
+                ================================== -->
+
+                <div class="map-card">
+
+                    <div
+                        id="map"
+                        class="map"
+                    ></div>
+
+
+                    <!-- GPS CENTER BUTTON -->
+
+                    <button
+                        class="map-control-button"
+                        id="locateMapButton"
+                        type="button"
+                        aria-label="Pusatkan peta"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="3"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            />
+
+                            <path
+                                d="M12 2V5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M12 19V22"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M2 12H5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M19 12H22"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+
+                        </svg>
+
+                    </button>
+
+
+                    <!-- RESET MAP BUTTON -->
+
+                    <button
+                        class="map-control-button reset-map-button"
+                        id="resetMapButton"
+                        type="button"
+                        aria-label="Reset peta"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <path
+                                d="M4 12A8 8 0 1 0 7 6"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M4 5V10H9"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================
+                     MAP INFORMATION
+                ================================== -->
+
+                <div class="map-info-card">
+
+                    <div class="map-info-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <path
+                                d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linejoin="round"
+                            />
+
+                            <circle
+                                cx="12"
+                                cy="9.5"
+                                r="2.5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Peta aktif
+                        </strong>
+
+                        <span id="mapStatus">
+                            Peta Jalan
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     LOCATION MARKER STATUS
+                ================================== -->
+
+                <div class="map-location-status">
+
+                    <div
+                        class="map-location-item"
+                        id="mapHomeStatus"
+                    >
+
+                        <span class="status-dot home-dot"></span>
+
+                        <div>
+
+                            <strong>
+                                Rumah
+                            </strong>
+
+                            <span>
+                                Belum ditentukan
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="map-location-item"
+                        id="mapSchoolStatus"
+                    >
+
+                        <span class="status-dot school-dot"></span>
+
+                        <div>
+
+                            <strong>
+                                Sekolah
+                            </strong>
+
+                            <span>
+                                Belum ditentukan
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     TRANSPORT CHOICE
+                ================================== -->
+
+                <div class="section-title">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            MODA PERJALANAN
+                        </span>
+
+                        <h2>
+                            Pilih kendaraan
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="transport-grid">
+
+
+                    <!-- WALK -->
+
+                    <button
+                        class="transport-button active"
+                        type="button"
+                        data-transport="walking"
+                        id="walkButton"
+                    >
+
+                        <span class="transport-large-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <circle
+                                    cx="13"
+                                    cy="5"
+                                    r="2"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M11 8L8 13L11 15L13 21"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M11 9L15 11L18 9"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                            </svg>
+
+                        </span>
+
+                        <span class="transport-name">
+                            Jalan kaki
+                        </span>
+
+                        <span
+                            class="transport-speed"
+                            id="walkingSpeedLabel"
+                        >
+                            4.5 km/jam
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- MOTOR -->
+
+                    <button
+                        class="transport-button"
+                        type="button"
+                        data-transport="motor"
+                        id="motorButton"
+                    >
+
+                        <span class="transport-large-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <circle
+                                    cx="6"
+                                    cy="17"
+                                    r="3"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <circle
+                                    cx="18"
+                                    cy="17"
+                                    r="3"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M8 17L11 10H15L18 17"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M11 10L9 8H7"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                            </svg>
+
+                        </span>
+
+                        <span class="transport-name">
+                            Motor
+                        </span>
+
+                        <span
+                            class="transport-speed"
+                            id="motorSpeedLabel"
+                        >
+                            30 km/jam
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- CAR -->
+
+                    <button
+                        class="transport-button"
+                        type="button"
+                        data-transport="car"
+                        id="carButton"
+                    >
+
+                        <span class="transport-large-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M5 17L6.5 11H17.5L19 17"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M4 17H20V20H4V17Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                                <circle
+                                    cx="7"
+                                    cy="18"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+
+                                <circle
+                                    cx="17"
+                                    cy="18"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+
+                            </svg>
+
+                        </span>
+
+                        <span class="transport-name">
+                            Mobil
+                        </span>
+
+                        <span
+                            class="transport-speed"
+                            id="carSpeedLabel"
+                        >
+                            45 km/jam
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================
+                     ROUTE RESULT
+                ================================== -->
+
+                <div
+                    class="route-result-card"
+                    id="routeResultCard"
+                >
+
+                    <div class="route-result-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                HASIL RUTE
+                            </span>
+
+                            <strong>
+                                Perjalanan
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="route-result-grid">
+
+                        <div>
+
+                            <span>
+                                Jarak
+                            </span>
+
+                            <strong id="routeDistance">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Waktu
+                            </span>
+
+                            <strong id="routeTime">
+                                --
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     GENERATE ROUTE BUTTON
+                ================================== -->
+
+                <button
+                    class="primary-button"
+                    id="generateRouteButton"
+                    type="button"
+                >
+
+                    <span>
+                        Hasilkan perjalanan
+                    </span>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M5 12H19"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M13 6L19 12L13 18"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </button>
+
+
+
+                <!-- =================================
+                     GOOGLE MAPS BUTTON
+                ================================== -->
+
+                <button
+                    class="secondary-button full-width"
+                    id="googleMapsButton"
+                    type="button"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M12 21C16.2 16.8 19 13.4 19 9.5C19 5.91 15.87 3 12 3C8.13 3 5 5.91 5 9.5C5 13.4 7.8 16.8 12 21Z"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linejoin="round"
+                        />
+
+                        <circle
+                            cx="12"
+                            cy="9.5"
+                            r="2.5"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        />
+
+                    </svg>
+
+                    Buka rute di Google Maps
+
+                </button>
+
+            </section>
+
 
 
             <!-- =================================
@@ -619,6 +1483,116 @@
 
                 </div>
 
+
+
+                <!-- LOCATION MODE -->
+
+                <div class="location-mode-card">
+
+                    <span class="eyebrow">
+                        LOKASI YANG DIPILIH
+                    </span>
+
+                    <div
+                        class="location-mode-selector"
+                        id="locationModeSelector"
+                    >
+
+                        <button
+                            class="location-mode-button active"
+                            type="button"
+                            data-location-mode="home"
+                        >
+
+                            <span class="mode-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+
+                                    <path
+                                        d="M3 10.5L12 3L21 10.5"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+
+                                    <path
+                                        d="M5.5 9.5V20H18.5V9.5"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                    />
+
+                                    <path
+                                        d="M9.5 20V14H14.5V20"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                    />
+
+                                </svg>
+
+                            </span>
+
+                            Rumah
+
+                        </button>
+
+
+                        <button
+                            class="location-mode-button"
+                            type="button"
+                            data-location-mode="school"
+                        >
+
+                            <span class="mode-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+
+                                    <path
+                                        d="M4 20V9L12 5L20 9V20"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+
+                                    <path
+                                        d="M8 20V14H16V20"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                    />
+
+                                    <path
+                                        d="M12 5V2"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                    />
+
+                                </svg>
+
+                            </span>
+
+                            Sekolah
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     GPS
+                ================================== -->
 
                 <div class="action-list">
 
@@ -677,6 +1651,7 @@
 
                         </div>
 
+
                         <div class="action-content">
 
                             <strong>
@@ -688,6 +1663,7 @@
                             </span>
 
                         </div>
+
 
                         <svg
                             class="action-arrow"
@@ -709,8 +1685,12 @@
                     </button>
 
 
+
+                    <!-- SELECT ON MAP -->
+
                     <button
                         class="action-card"
+                        id="selectLocationOnMapButton"
                         type="button"
                         data-target="mapPage"
                     >
@@ -742,6 +1722,7 @@
 
                         </div>
 
+
                         <div class="action-content">
 
                             <strong>
@@ -753,6 +1734,7 @@
                             </span>
 
                         </div>
+
 
                         <svg
                             class="action-arrow"
@@ -774,6 +1756,196 @@
                     </button>
 
                 </div>
+
+
+
+                <!-- =================================
+                     SEARCH LOCATION
+                ================================== -->
+
+                <div class="location-search-card">
+
+                    <div class="search-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                PENCARIAN
+                            </span>
+
+                            <strong>
+                                Cari tempat
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="search-box">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <circle
+                                cx="11"
+                                cy="11"
+                                r="7"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            />
+
+                            <path
+                                d="M16 16L21 21"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+
+                        </svg>
+
+
+                        <input
+                            type="text"
+                            id="locationSearchInput"
+                            placeholder="Cari rumah atau sekolah..."
+                            autocomplete="off"
+                        >
+
+
+                        <button
+                            type="button"
+                            id="searchLocationButton"
+                            aria-label="Cari lokasi"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M5 12H19"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M13 6L19 12L13 18"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                            </svg>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CURRENT LOCATIONS -->
+
+                <div class="saved-location-card">
+
+                    <div class="saved-location-row">
+
+                        <div class="saved-location-icon home-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M3 10.5L12 3L21 10.5"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M5.5 9.5V20H18.5V9.5"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Rumah
+                            </span>
+
+                            <strong id="savedHomeLocation">
+                                Belum dipilih
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="saved-location-row">
+
+                        <div class="saved-location-icon school-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M4 20V9L12 5L20 9V20"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M8 20V14H16V20"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sekolah
+                            </span>
+
+                            <strong id="savedSchoolLocation">
+                                Belum dipilih
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
 
 
                 <div class="info-card">
@@ -812,15 +1984,17 @@
 
                     </div>
 
+
                     <p>
-                        Pada tahap berikutnya, kamu dapat
-                        memilih lokasi rumah dan sekolah
-                        langsung dari peta.
+                        Pilih Rumah atau Sekolah terlebih dahulu,
+                        lalu gunakan GPS, pencarian, atau peta
+                        untuk menentukan lokasinya.
                     </p>
 
                 </div>
 
             </section>
+
 
 
             <!-- =================================
@@ -850,48 +2024,220 @@
                 </div>
 
 
-                <div class="empty-state">
 
-                    <div class="empty-icon">
+                <!-- SCHOOL TIME -->
 
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
+                <div class="schedule-card">
 
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="8.5"
-                                stroke="currentColor"
-                                stroke-width="1.7"
-                            />
+                    <div class="schedule-card-header">
 
-                            <path
-                                d="M12 7V12L15 14"
-                                stroke="currentColor"
-                                stroke-width="1.7"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
+                        <div>
 
-                        </svg>
+                            <span class="eyebrow">
+                                WAKTU SEKOLAH
+                            </span>
+
+                            <strong>
+                                Jam masuk sekolah
+                            </strong>
+
+                        </div>
 
                     </div>
 
-                    <h2>
-                        Belum ada jadwal
-                    </h2>
 
-                    <p>
-                        Fitur jadwal akan ditambahkan
-                        pada tahap berikutnya.
-                    </p>
+                    <label
+                        class="input-label"
+                        for="schoolStartTime"
+                    >
+                        Jam masuk
+                    </label>
+
+
+                    <input
+                        class="app-input"
+                        type="time"
+                        id="schoolStartTime"
+                        value="07:00"
+                    >
+
+                </div>
+
+
+
+                <!-- DEPARTURE -->
+
+                <div class="schedule-card">
+
+                    <div class="schedule-card-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                PERJALANAN
+                            </span>
+
+                            <strong>
+                                Waktu berangkat
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="schedule-result">
+
+                        <span>
+                            Disarankan berangkat
+                        </span>
+
+                        <strong id="recommendedDepartureTime">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BUFFER -->
+
+                <div class="schedule-card">
+
+                    <div class="schedule-card-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                BUFFER KEAMANAN
+                            </span>
+
+                            <strong>
+                                Waktu tambahan
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="buffer-selector">
+
+                        <button
+                            class="buffer-button"
+                            type="button"
+                            data-buffer="5"
+                        >
+                            5 menit
+                        </button>
+
+                        <button
+                            class="buffer-button active"
+                            type="button"
+                            data-buffer="10"
+                        >
+                            10 menit
+                        </button>
+
+                        <button
+                            class="buffer-button"
+                            type="button"
+                            data-buffer="15"
+                        >
+                            15 menit
+                        </button>
+
+                        <button
+                            class="buffer-button"
+                            type="button"
+                            data-buffer="20"
+                        >
+                            20 menit
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <button
+                    class="primary-button"
+                    id="calculateScheduleButton"
+                    type="button"
+                >
+
+                    <span>
+                        Hitung waktu berangkat
+                    </span>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M5 12H19"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M13 6L19 12L13 18"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </button>
+
+
+
+                <!-- HISTORY -->
+
+                <div class="schedule-history-card">
+
+                    <div class="section-title">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                RIWAYAT
+                            </span>
+
+                            <h2>
+                                Perjalanan terakhir
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="historyList"
+                        class="history-list"
+                    >
+
+                        <div class="history-empty">
+
+                            Belum ada riwayat perjalanan.
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </section>
+
 
 
             <!-- =================================
@@ -920,55 +2266,355 @@
                 </div>
 
 
-                <div class="settings-list">
 
-                    <div class="setting-item">
+                <!-- =================================
+                     SPEED SETTINGS
+                ================================== -->
+
+                <div class="settings-card">
+
+                    <div class="settings-card-header">
 
                         <div>
+
+                            <span class="eyebrow">
+                                KECEPATAN
+                            </span>
 
                             <strong>
                                 Kecepatan perjalanan
                             </strong>
 
-                            <span>
-                                Atur kecepatan jalan kaki,
-                                motor, dan mobil.
-                            </span>
-
                         </div>
-
-                        <span class="setting-badge">
-                            Segera
-                        </span>
 
                     </div>
 
 
-                    <div class="setting-item">
+                    <div class="setting-control">
 
-                        <div>
+                        <label for="walkingSpeed">
+                            Jalan kaki
+                        </label>
 
-                            <strong>
-                                Tampilan aplikasi
-                            </strong>
+                        <div class="number-input">
+
+                            <input
+                                type="number"
+                                id="walkingSpeed"
+                                min="1"
+                                max="20"
+                                step="0.5"
+                                value="4.5"
+                            >
 
                             <span>
-                                Atur tema terang atau gelap.
+                                km/jam
                             </span>
 
                         </div>
 
-                        <span class="setting-badge">
-                            Segera
-                        </span>
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <label for="motorSpeed">
+                            Motor
+                        </label>
+
+                        <div class="number-input">
+
+                            <input
+                                type="number"
+                                id="motorSpeed"
+                                min="5"
+                                max="120"
+                                step="1"
+                                value="30"
+                            >
+
+                            <span>
+                                km/jam
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <label for="carSpeed">
+                            Mobil
+                        </label>
+
+                        <div class="number-input">
+
+                            <input
+                                type="number"
+                                id="carSpeed"
+                                min="5"
+                                max="120"
+                                step="1"
+                                value="45"
+                            >
+
+                            <span>
+                                km/jam
+                            </span>
+
+                        </div>
 
                     </div>
 
                 </div>
 
+
+
+                <!-- =================================
+                     DEFAULT MAP
+                ================================== -->
+
+                <div class="settings-card">
+
+                    <div class="settings-card-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                PETA
+                            </span>
+
+                            <strong>
+                                Peta default
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <select
+                        class="app-select"
+                        id="defaultMapType"
+                    >
+
+                        <option value="street">
+                            Peta Jalan
+                        </option>
+
+                        <option value="satellite">
+                            Satelit
+                        </option>
+
+                        <option value="terrain">
+                            Terrain
+                        </option>
+
+                        <option value="dark">
+                            Dark
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =================================
+                     THEME
+                ================================== -->
+
+                <div class="settings-card">
+
+                    <div class="settings-card-header">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                TAMPILAN
+                            </span>
+
+                            <strong>
+                                Tema aplikasi
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="theme-selector">
+
+                        <button
+                            class="theme-button active"
+                            type="button"
+                            data-theme="light"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="4"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M12 2V4"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M12 20V22"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M2 12H4"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M20 12H22"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                            </svg>
+
+                            Terang
+
+                        </button>
+
+
+                        <button
+                            class="theme-button"
+                            type="button"
+                            data-theme="dark"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    d="M20 15.5C18.7 16.4 17.1 17 15.4 17C10.8 17 7 13.2 7 8.6C7 6.9 7.6 5.3 8.5 4C4.9 5.3 2.5 8.7 2.5 12.7C2.5 17.8 6.6 22 11.7 22C15.7 22 19.1 19.6 20.4 16C20.5 15.8 20.5 15.6 20 15.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                            </svg>
+
+                            Gelap
+
+                        </button>
+
+
+                        <button
+                            class="theme-button"
+                            type="button"
+                            data-theme="system"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <rect
+                                    x="3"
+                                    y="4"
+                                    width="18"
+                                    height="13"
+                                    rx="2"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M8 21H16"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M12 17V21"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                            </svg>
+
+                            Sistem
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     RESET SETTINGS
+                ================================== -->
+
+                <button
+                    class="danger-button"
+                    id="resetSettingsButton"
+                    type="button"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M4 12A8 8 0 1 0 7 6"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M4 5V10H9"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                    Reset pengaturan
+
+                </button>
+
             </section>
 
         </main>
+
 
 
         <!-- =====================================
@@ -976,6 +2622,9 @@
         ====================================== -->
 
         <nav class="bottom-nav">
+
+
+            <!-- DASHBOARD -->
 
             <button
                 class="nav-item active"
@@ -1010,6 +2659,9 @@
 
             </button>
 
+
+
+            <!-- MAP -->
 
             <button
                 class="nav-item"
@@ -1051,6 +2703,9 @@
             </button>
 
 
+
+            <!-- LOCATION -->
+
             <button
                 class="nav-item"
                 type="button"
@@ -1086,6 +2741,9 @@
 
             </button>
 
+
+
+            <!-- SCHEDULE -->
 
             <button
                 class="nav-item"
@@ -1123,6 +2781,9 @@
 
             </button>
 
+
+
+            <!-- SETTINGS -->
 
             <button
                 class="nav-item"
@@ -1164,6 +2825,7 @@
     </div>
 
 
+
     <!-- =========================================
          TOAST
     ========================================== -->
@@ -1174,20 +2836,32 @@
         role="status"
         aria-live="polite"
     >
+
         <span id="toastMessage">
             Berhasil
         </span>
+
     </div>
 
 
-<!-- Leaflet JS -->
-<script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-></script>
 
-<script src="app.js"></script>
-    
+    <!-- =========================================
+         LEAFLET JAVASCRIPT
+    ========================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+
+    <!-- =========================================
+         APP JAVASCRIPT
+    ========================================== -->
+
+    <script src="app.js"></script>
+
+
 </body>
-</html>
+
+    </html>
