@@ -78,7 +78,7 @@ const STORAGE_KEY = "jarak_ke_sekolah_data";
 const SETTINGS_KEY = "jarak_ke_sekolah_settings";
 const HISTORY_KEY = "jarak_ke_sekolah_history";
 const SCHEDULE_KEY = "jarak_ke_sekolah_schedule";
-const TUTORIAL_KEY = "jarak_ke_sekolah_tutorial_seen";
+const TUTORIAL_KEY = "jarak_ke_sekolah_tutorial_seen_v2";
 
 
 /* =========================================
@@ -3793,7 +3793,13 @@ function openTutorial(
 ) {
 
     if (!tutorialOverlay) {
+
+        console.warn(
+            "Tutorial overlay tidak ditemukan."
+        );
+
         return;
+
     }
 
     if (fromFirstStep) {
@@ -3812,11 +3818,22 @@ function openTutorial(
         "show"
     );
 
-    document.body.style.overflow =
+    /*
+       Jangan mengunci scroll halaman.
+       Tutorial tetap bisa dibuka tanpa
+       membuat halaman utama macet.
+    */
+
+    document.documentElement.style.overflowY =
+        "auto";
+
+    document.body.style.overflowY =
+        "auto";
+
+    document.body.style.overflowX =
         "hidden";
 
 }
-
 
 /* =========================================
    CLOSE TUTORIAL
@@ -4097,21 +4114,36 @@ function initializeApp() {
     ===================================== */
 
     const tutorialSeen =
-        localStorage.getItem(
-            TUTORIAL_KEY
-        );
+    localStorage.getItem(
+        TUTORIAL_KEY
+    );
 
-    if (!tutorialSeen) {
+if (!tutorialSeen) {
 
-        setTimeout(() => {
+    setTimeout(() => {
+
+        if (
+            tutorialOverlay &&
+            !tutorialIsOpen
+        ) {
+
+            console.log(
+                "Tutorial pertama kali dibuka otomatis."
+            );
 
             openTutorial(
                 true
             );
 
-        }, 700);
+        } else if (!tutorialOverlay) {
 
-    }
+            console.warn(
+                "Tutorial tidak dapat dibuka karena #tutorialOverlay tidak ditemukan."
+            );
+
+        }
+
+    }, 1200);
 
 }
 
