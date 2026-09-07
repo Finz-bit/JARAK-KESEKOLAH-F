@@ -1,2203 +1,4878 @@
 /* =========================================
-   JARAK KESEKOLAH
-   COMPLETE STYLESHEET
+JARAK KESEKOLAH
+MAIN JAVASCRIPT
+COMPLETE VERSION
 ========================================= */
-
-:root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-soft: #eff6ff;
-
-    --background: #f6f8fc;
-    --surface: #ffffff;
-    --surface-soft: #f8fafc;
-
-    --text: #111827;
-    --text-secondary: #64748b;
-    --text-muted: #94a3b8;
-
-    --border: #e5e7eb;
-
-    --danger: #ef4444;
-    --danger-dark: #dc2626;
-    --danger-soft: #fef2f2;
-
-    --success: #16a34a;
-    --success-soft: #f0fdf4;
-
-    --radius-small: 12px;
-    --radius-medium: 18px;
-    --radius-large: 24px;
-
-    --shadow-small:
-        0 2px 10px rgba(15, 23, 42, 0.04);
-
-    --shadow-medium:
-        0 8px 30px rgba(15, 23, 42, 0.07);
-
-    --nav-height: 76px;
-}
-
 
 /* =========================================
-   RESET
+ELEMENT
 ========================================= */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+const pages = {
+dashboard: document.getElementById("dashboardPage"),
+map: document.getElementById("mapPage"),
+location: document.getElementById("locationPage"),
+schedule: document.getElementById("schedulePage"),
+settings: document.getElementById("settingsPage")
+};
 
-html {
-    scroll-behavior: smooth;
-}
+const navItems = document.querySelectorAll(".bottom-nav-item");
 
-body {
-    min-height: 100vh;
-    background: var(--background);
-    color: var(--text);
+const loadingScreen =
+document.getElementById("loadingScreen");
 
-    font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+const toastContainer =
+document.getElementById("toastContainer");
 
-    -webkit-font-smoothing: antialiased;
-}
+const confirmOverlay =
+document.getElementById("confirmOverlay");
 
-button,
-input,
-select {
-    font: inherit;
-}
+const confirmTitle =
+document.getElementById("confirmTitle");
 
-button {
-    border: none;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-}
+const confirmMessage =
+document.getElementById("confirmMessage");
 
-button:active {
-    transform: scale(0.97);
-}
+const confirmCancel =
+document.getElementById("confirmCancel");
 
-input,
-select {
-    outline: none;
-}
-
+const confirmOk =
+document.getElementById("confirmOk");
 
 /* =========================================
-   APP
+DASHBOARD
 ========================================= */
 
-.app {
-    width: 100%;
-    min-height: 100vh;
-    max-width: 680px;
-    margin: 0 auto;
-    background: var(--background);
-}
+const dashboardHome =
+document.getElementById("dashboardHome");
 
+const dashboardSchool =
+document.getElementById("dashboardSchool");
+
+const dashboardDistance =
+document.getElementById("dashboardDistance");
+
+const dashboardTime =
+document.getElementById("dashboardTime");
+
+const dashboardTransport =
+document.getElementById("dashboardTransport");
+
+const dashboardMapType =
+document.getElementById("dashboardMapType");
 
 /* =========================================
-   HEADER
+MAP
 ========================================= */
 
-.app-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
+const mapContainer =
+document.getElementById("map");
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+const mapTypeSelect =
+document.getElementById("mapTypeSelect");
 
-    height: 72px;
-    padding: 0 18px;
+const petaJalan =
+document.getElementById("petaJalan");
 
-    background: rgba(246, 248, 252, 0.92);
+const petaSatelit =
+document.getElementById("petaSatelit");
 
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+const petaTerrain =
+document.getElementById("petaTerrain");
 
-    border-bottom:
-        1px solid rgba(226, 232, 240, 0.7);
-}
+const petaDark =
+document.getElementById("petaDark");
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+const locateButton =
+document.getElementById("locateButton");
 
-.brand-icon {
-    width: 42px;
-    height: 42px;
+const resetMapButton =
+document.getElementById("resetMapButton");
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+const calculateRouteButton =
+document.getElementById("calculateRouteButton");
 
-    border-radius: 14px;
+const googleMapsButton =
+document.getElementById("googleMapsButton");
 
-    background: var(--primary);
-    color: white;
+const distanceResult =
+document.getElementById("distanceResult");
 
-    box-shadow:
-        0 8px 18px rgba(37, 99, 235, 0.22);
-}
+const timeResult =
+document.getElementById("timeResult");
 
-.brand-icon svg {
-    width: 23px;
-    height: 23px;
-}
+const homeStatus =
+document.getElementById("homeStatus");
 
-.brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-}
+const schoolStatus =
+document.getElementById("schoolStatus");
 
-.brand-title {
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-}
-
-.brand-subtitle {
-    margin-top: 4px;
-
-    color: var(--primary);
-
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-}
-
-.icon-button {
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
-    background: var(--surface);
-    color: var(--text-secondary);
-
-    box-shadow: var(--shadow-small);
-}
-
-.icon-button svg {
-    width: 21px;
-    height: 21px;
-}
-
+const activeMapLabel =
+document.getElementById("activeMapLabel");
 
 /* =========================================
-   MAIN
+LOCATION
 ========================================= */
 
-.main-content {
-    padding:
-        24px 16px
-        calc(var(--nav-height) + 28px);
-}
+const homeLocationButton =
+document.getElementById("homeLocationButton");
 
+const schoolLocationButton =
+document.getElementById("schoolLocationButton");
+
+const homeSearchInput =
+document.getElementById("homeSearchInput");
+
+const schoolSearchInput =
+document.getElementById("schoolSearchInput");
+
+const searchHomeButton =
+document.getElementById("searchHomeButton");
+
+const searchSchoolButton =
+document.getElementById("searchSchoolButton");
+
+const manualHomeLat =
+document.getElementById("manualHomeLat");
+
+const manualHomeLng =
+document.getElementById("manualHomeLng");
+
+const manualSchoolLat =
+document.getElementById("manualSchoolLat");
+
+const manualSchoolLng =
+document.getElementById("manualSchoolLng");
+
+const saveManualHome =
+document.getElementById("saveManualHome");
+
+const saveManualSchool =
+document.getElementById("saveManualSchool");
+
+const locationInstruction =
+document.getElementById("locationInstruction");
+
+const locationHomeName =
+document.getElementById("locationHomeName");
+
+const locationSchoolName =
+document.getElementById("locationSchoolName");
 
 /* =========================================
-   PAGE
+TRANSPORT
 ========================================= */
 
-.page {
-    display: none;
-    animation: pageIn 0.25s ease;
+const walkBtn =
+document.getElementById("walkBtn");
+
+const motorBtn =
+document.getElementById("motorBtn");
+
+const carBtn =
+document.getElementById("carBtn");
+
+/* =========================================
+SETTINGS
+========================================= */
+
+const walkingSpeedInput =
+document.getElementById("walkingSpeed");
+
+const motorSpeedInput =
+document.getElementById("motorSpeed");
+
+const carSpeedInput =
+document.getElementById("carSpeed");
+
+const defaultBufferSelect =
+document.getElementById("defaultBuffer");
+
+const defaultMapSelect =
+document.getElementById("defaultMap");
+
+const themeSelect =
+document.getElementById("themeSelect");
+
+const saveSettingsButton =
+document.getElementById("saveSettingsButton");
+
+const resetSettingsButton =
+document.getElementById("resetSettingsButton");
+
+/* =========================================
+SCHEDULE
+========================================= */
+
+const scheduleDay =
+document.getElementById("scheduleDay");
+
+const scheduleDate =
+document.getElementById("scheduleDate");
+
+const scheduleEntryTime =
+document.getElementById("scheduleEntryTime");
+
+const scheduleDepartureTime =
+document.getElementById("scheduleDepartureTime");
+
+const scheduleBuffer =
+document.getElementById("scheduleBuffer");
+
+const saveScheduleButton =
+document.getElementById("saveScheduleButton");
+
+const scheduleResult =
+document.getElementById("scheduleResult");
+
+const recommendedDeparture =
+document.getElementById("recommendedDeparture");
+
+const scheduleStatus =
+document.getElementById("scheduleStatus");
+
+/* =========================================
+REMINDER
+========================================= */
+
+const departureReminderToggle =
+document.getElementById("departureReminderToggle");
+
+const reminderSoundSelect =
+document.getElementById("reminderSoundSelect");
+
+const testReminderSoundButton =
+document.getElementById("testReminderSoundButton");
+
+const reminderStatusTitle =
+document.getElementById("reminderStatusTitle");
+
+const reminderStatusText =
+document.getElementById("reminderStatusText");
+
+/* =========================================
+HISTORY
+========================================= */
+
+const historyList =
+document.getElementById("historyList");
+
+const clearHistoryButton =
+document.getElementById("clearHistoryButton");
+
+/* =========================================
+TUTORIAL
+========================================= */
+
+const tutorialOverlay =
+document.getElementById("tutorialOverlay");
+
+const tutorialClose =
+document.getElementById("tutorialClose");
+
+const tutorialStepLabel =
+document.getElementById("tutorialStepLabel");
+
+const tutorialDots =
+document.getElementById("tutorialDots");
+
+const tutorialTitle =
+document.getElementById("tutorialTitle");
+
+const tutorialDescription =
+document.getElementById("tutorialDescription");
+
+const tutorialSkip =
+document.getElementById("tutorialSkip");
+
+const tutorialBack =
+document.getElementById("tutorialBack");
+
+const tutorialNext =
+document.getElementById("tutorialNext");
+
+const openTutorialButton =
+document.getElementById("openTutorialButton");
+
+/* =========================================
+STORAGE
+========================================= */
+
+const STORAGE_KEY =
+"jarak_ke_sekolah_data";
+
+const SETTINGS_KEY =
+"jarak_ke_sekolah_settings";
+
+const HISTORY_KEY =
+"jarak_ke_sekolah_history";
+
+const SCHEDULE_KEY =
+"jarak_ke_sekolah_schedule";
+
+const TUTORIAL_KEY =
+"jarak_ke_sekolah_tutorial_seen_v3";
+
+const REMINDER_KEY =
+"jarak_ke_sekolah_departure_reminder";
+
+/* =========================================
+DEFAULT SETTINGS
+========================================= */
+
+const DEFAULT_SETTINGS = {
+walkingSpeed: 4.5,
+motorSpeed: 30,
+carSpeed: 45,
+defaultBuffer: 10,
+defaultMap: "street",
+theme: "system"
+};
+
+/* =========================================
+APP DATA
+========================================= */
+
+let appData = {
+home: null,
+school: null
+};
+
+let settings = {
+...DEFAULT_SETTINGS
+};
+
+/* =========================================
+MAP VARIABLES
+========================================= */
+
+let map = null;
+
+let mapInitialized = false;
+
+let markerRumah = null;
+
+let markerSekolah = null;
+
+let garisRute = null;
+
+let latLngRumah = null;
+
+let latLngSekolah = null;
+
+let jarakKmGlobal = null;
+
+let profilRouting = "driving";
+
+let kecepatanAktif =
+settings.motorSpeed;
+
+let transportAktif = "motor";
+
+let currentMapType =
+settings.defaultMap;
+
+let modePilihLokasi = null;
+
+let mapLayers = {};
+
+/* =========================================
+OTHER VARIABLES
+========================================= */
+
+let confirmCallback = null;
+
+let tutorialCurrentStep = 0;
+
+let tutorialIsOpen = false;
+
+let reminderTimer = null;
+
+let audioContext = null;
+
+/* =========================================
+MAP TYPE NAMES
+========================================= */
+
+const MAP_TYPE_NAMES = {
+street: "Peta Jalan",
+satellite: "Peta Satelit",
+terrain: "Peta Terrain",
+dark: "Peta Dark"
+};
+
+/* =========================================
+TUTORIAL DATA
+========================================= */
+
+const tutorialSteps = [
+{
+title: "Pilih lokasi rumah",
+description:
+"Klik pilih lokasi rumah. Kamu bisa mencari lokasi secara manual atau menggunakan GPS. Jika memilih manual, cari lokasi rumah lalu klik titik di peta.",
+icon:   <svg viewBox="0 0 24 24" fill="none"   stroke="currentColor" stroke-width="1.8"   stroke-linecap="round" stroke-linejoin="round">   <path d="M3 11.5 12 4l9 7.5"/>   <path d="M5.5 10.5V20h13v-9.5"/>   <path d="M9.5 20v-5h5v5"/>   </svg>  
+},
+{
+title: "Pilih lokasi sekolah",
+description:
+"Kembali ke Dashboard lalu pilih sekolah. Caranya sama seperti memilih rumah: gunakan pencarian, GPS, atau klik langsung lokasi sekolah pada peta.",
+icon:   <svg viewBox="0 0 24 24" fill="none"   stroke="currentColor" stroke-width="1.8"   stroke-linecap="round" stroke-linejoin="round">   <path d="M4 21V6l8-3 8 3v15"/>   <path d="M8 21v-5h8v5"/>   <path d="M8 9h.01M12 9h.01M16 9h.01"/>   </svg>  
+},
+{
+title: "Hasilkan perjalanan",
+description:
+"Setelah rumah dan sekolah dipilih, scroll ke bawah. Pilih motor, mobil, atau jalan kaki, lalu klik HASILKAN PERJALANAN. Jarak dan waktu perjalanan akan muncul.",
+icon:   <svg viewBox="0 0 24 24" fill="none"   stroke="currentColor" stroke-width="1.8"   stroke-linecap="round" stroke-linejoin="round">   <path d="M5 19h14"/>   <path d="M7 16V8h10v8"/>   <path d="m9 8 3-4 3 4"/>   </svg>  
+},
+{
+title: "Atur kecepatan",
+description:
+"Untuk mengubah kecepatan motor, mobil, atau jalan kaki, buka Pengaturan. Atur kecepatannya lalu klik Simpan. Pengaturan akan tersimpan otomatis.",
+icon:   <svg viewBox="0 0 24 24" fill="none"   stroke="currentColor" stroke-width="1.8"   stroke-linecap="round" stroke-linejoin="round">   <circle cx="12" cy="12" r="3"/>   <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5v.1h-2.5v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.5-1H6.4v-2.5h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5v-.1h2.5v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1V14h-.1a1.7 1.7 0 0 0-1.5 1Z"/>   </svg>  
+},
+{
+title: "Buka Google Maps",
+description:
+"Untuk mengecek perjalanan langsung melalui Google Maps, klik tombol Buka di Google Maps setelah rute berhasil dibuat.",
+icon:   <svg viewBox="0 0 24 24" fill="none"   stroke="currentColor" stroke-width="1.8"   stroke-linecap="round" stroke-linejoin="round">   <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z"/>   <circle cx="12" cy="10" r="2.5"/>   </svg>  
+},
+{
+title: "Reset perjalanan",
+description:
+"Jika ingin mulai dari awal, klik Reset perjalanan. Lokasi rumah, sekolah, dan rute saat ini akan dihapus.",
+icon:   <svg viewBox="0 0 24 24" fill="none"   stroke="currentColor" stroke-width="1.8"   stroke-linecap="round" stroke-linejoin="round">   <path d="M4 12a8 8 0 0 1 13.7-5.7L20 8"/>   <path d="M20 4v4h-4"/>   <path d="M20 12a8 8 0 0 1-13.7 5.7L4 16"/>   <path d="M4 20v-4h4"/>   </svg>  
+}
+];
+
+/* =========================================
+UTILITIES
+========================================= */
+
+function showToast(
+message,
+type = "info",
+duration = 3000
+) {
+
+if (!toastContainer) return;  
+
+const toast =  
+    document.createElement("div");  
+
+toast.className =  
+    `toast toast-${type}`;  
+
+toast.innerHTML = `  
+    <div class="toast-content">  
+        <span class="toast-message">  
+            ${escapeHtml(message)}  
+        </span>  
+    </div>  
+`;  
+
+toastContainer.appendChild(toast);  
+
+requestAnimationFrame(() => {  
+    toast.classList.add("show");  
+});  
+
+setTimeout(() => {  
+
+    toast.classList.remove("show");  
+
+    setTimeout(() => {  
+        toast.remove();  
+    }, 300);  
+
+}, duration);
+
 }
 
-.page.active {
-    display: block;
+function escapeHtml(value) {
+
+if (value === null ||  
+    value === undefined) {  
+    return "";  
+}  
+
+return String(value)  
+    .replace(/&/g, "&amp;")  
+    .replace(/</g, "&lt;")  
+    .replace(/>/g, "&gt;")  
+    .replace(/"/g, "&quot;")  
+    .replace(/'/g, "&#039;");
+
 }
 
-@keyframes pageIn {
-    from {
-        opacity: 0;
-        transform: translateY(6px);
+function formatDistance(km) {
+
+if (  
+    km === null ||  
+    km === undefined ||  
+    Number.isNaN(Number(km))  
+) {  
+    return "--";  
+}  
+
+const value = Number(km);  
+
+if (value < 1) {  
+    return `${Math.round(value * 1000)} m`;  
+}  
+
+return `${value.toFixed(2)} km`;
+
+}
+
+function formatTime(minutes) {
+
+if (  
+    minutes === null ||  
+    minutes === undefined ||  
+    Number.isNaN(Number(minutes))  
+) {  
+    return "--";  
+}  
+
+const totalMinutes =  
+    Math.max(1, Math.round(Number(minutes)));  
+
+if (totalMinutes < 60) {  
+    return `${totalMinutes} menit`;  
+}  
+
+const hours =  
+    Math.floor(totalMinutes / 60);  
+
+const mins =  
+    totalMinutes % 60;  
+
+if (mins === 0) {  
+    return `${hours} jam`;  
+}  
+
+return `${hours} jam ${mins} menit`;
+
+}
+
+function formatTimeClock(date) {
+
+if (!(date instanceof Date)) {  
+    return "--:--";  
+}  
+
+return date.toLocaleTimeString(  
+    "id-ID",  
+    {  
+        hour: "2-digit",  
+        minute: "2-digit",  
+        hour12: false  
+    }  
+);
+
+}
+
+/* =========================================
+STORAGE
+========================================= */
+
+function loadAppData() {
+
+try {  
+
+    const saved =  
+        localStorage.getItem(STORAGE_KEY);  
+
+    if (saved) {  
+
+        const parsed =  
+            JSON.parse(saved);  
+
+        if (  
+            parsed &&  
+            typeof parsed === "object"  
+        ) {  
+            appData = {  
+                ...appData,  
+                ...parsed  
+            };  
+        }  
+    }  
+
+} catch (error) {  
+
+    console.error(  
+        "Gagal membaca data:",  
+        error  
+    );  
+}
+
+}
+
+function saveAppData() {
+
+try {  
+
+    localStorage.setItem(  
+        STORAGE_KEY,  
+        JSON.stringify(appData)  
+    );  
+
+} catch (error) {  
+
+    console.error(  
+        "Gagal menyimpan data:",  
+        error  
+    );  
+}
+
+}
+
+function loadSettings() {
+
+try {  
+
+    const saved =  
+        localStorage.getItem(SETTINGS_KEY);  
+
+    if (saved) {  
+
+        const parsed =  
+            JSON.parse(saved);  
+
+        if (  
+            parsed &&  
+            typeof parsed === "object"  
+        ) {  
+            settings = {  
+                ...DEFAULT_SETTINGS,  
+                ...parsed  
+            };  
+        }  
+    }  
+
+} catch (error) {  
+
+    console.error(  
+        "Gagal membaca pengaturan:",  
+        error  
+    );  
+
+    settings = {  
+        ...DEFAULT_SETTINGS  
+    };  
+}
+
+}
+
+function saveSettingsToStorage() {
+
+try {  
+
+    localStorage.setItem(  
+        SETTINGS_KEY,  
+        JSON.stringify(settings)  
+    );  
+
+} catch (error) {  
+
+    console.error(  
+        "Gagal menyimpan pengaturan:",  
+        error  
+    );  
+}
+
+}
+
+/* =========================================
+HISTORY
+========================================= */
+
+function loadHistory() {
+
+try {  
+
+    const saved =  
+        localStorage.getItem(HISTORY_KEY);  
+
+    if (!saved) {  
+        return [];  
+    }  
+
+    const parsed =  
+        JSON.parse(saved);  
+
+    return Array.isArray(parsed)  
+        ? parsed  
+        : [];  
+
+} catch (error) {  
+
+    console.error(  
+        "Gagal membaca riwayat:",  
+        error  
+    );  
+
+    return [];  
+}
+
+}
+
+function saveHistory(item) {
+
+try {  
+
+    const history =  
+        loadHistory();  
+
+    history.unshift(item);  
+
+    const limitedHistory =  
+        history.slice(0, 20);  
+
+    localStorage.setItem(  
+        HISTORY_KEY,  
+        JSON.stringify(limitedHistory)  
+    );  
+
+    renderHistory();  
+
+} catch (error) {  
+
+    console.error(  
+        "Gagal menyimpan riwayat:",  
+        error  
+    );  
+}
+
+}
+
+function clearHistory() {
+
+localStorage.removeItem(  
+    HISTORY_KEY  
+);  
+
+renderHistory();  
+
+showToast(  
+    "Riwayat berhasil dihapus.",  
+    "success"  
+);
+
+}
+
+function renderHistory() {
+
+if (!historyList) {  
+    return;  
+}  
+
+const history =  
+    loadHistory();  
+
+if (!history.length) {  
+
+    historyList.innerHTML = `  
+        <div class="empty-state">  
+            <div class="empty-state-title">  
+                Belum ada riwayat  
+            </div>  
+            <div class="empty-state-text">  
+                Perjalanan yang sudah dihitung  
+                akan muncul di sini.  
+            </div>  
+        </div>  
+    `;  
+
+    return;  
+}  
+
+historyList.innerHTML =  
+    history.map(item => {  
+
+        const date =  
+            item.date  
+                ? new Date(item.date)  
+                : null;  
+
+        const dateText =  
+            date  
+                ? date.toLocaleString(  
+                    "id-ID",  
+                    {  
+                        dateStyle: "medium",  
+                        timeStyle: "short"  
+                    }  
+                )  
+                : "";  
+
+        return `  
+            <div class="history-item">  
+                <div class="history-main">  
+                    <strong>  
+                        ${escapeHtml(  
+                            item.transportName || "Perjalanan"  
+                        )}  
+                    </strong>  
+
+                    <span>  
+                        ${formatDistance(item.distance)}  
+                        ·  
+                        ${formatTime(item.time)}  
+                    </span>  
+                </div>  
+
+                <div class="history-date">  
+                    ${escapeHtml(dateText)}  
+                </div>  
+            </div>  
+        `;  
+
+    }).join("");
+
+}
+
+/* =========================================
+THEME
+========================================= */
+
+function applyTheme(theme) {
+
+const root =  
+    document.documentElement;  
+
+if (theme === "dark") {  
+
+    root.setAttribute(  
+        "data-theme",  
+        "dark"  
+    );  
+
+    return;  
+}  
+
+if (theme === "light") {  
+
+    root.setAttribute(  
+        "data-theme",  
+        "light"  
+    );  
+
+    return;  
+}  
+
+root.removeAttribute("data-theme");
+
+}
+
+function initializeTheme() {
+
+applyTheme(settings.theme);  
+
+if (themeSelect) {  
+    themeSelect.value =  
+        settings.theme;  
+}
+
+}
+
+/* =========================================
+MAP ICONS
+========================================= */
+
+function createHomeIcon() {
+
+return L.divIcon({  
+
+    className: "custom-map-marker home-marker",  
+
+    html: `  
+        <div style="  
+            width:60px;  
+            height:68px;  
+            display:flex;  
+            align-items:flex-start;  
+            justify-content:center;  
+            transform:scale(1.25);  
+            transform-origin:center bottom;  
+            filter:drop-shadow(0 4px 7px rgba(0,0,0,.22));  
+        ">  
+            <svg  
+                width="34"  
+                height="34"  
+                viewBox="0 0 34 34"  
+                fill="none"  
+                xmlns="http://www.w3.org/2000/svg"  
+            >  
+                <path  
+                    d="M17 32C17 32 28 21.6 28 13.2C28 7.01 23.075 2 17 2C10.925 2 6 7.01 6 13.2C6 21.6 17 32 17 32Z"  
+                    fill="#2563EB"  
+                />  
+                <path  
+                    d="M10.5 14.1L17 8.7L23.5 14.1V22.8H10.5V14.1Z"  
+                    fill="white"  
+                />  
+                <path  
+                    d="M14.1 22.8V17.3H19.9V22.8"  
+                    fill="#2563EB"  
+                />  
+                <path  
+                    d="M13.2 14.3H13.21M17 14.3H17.01M20.8 14.3H20.81"  
+                    stroke="#2563EB"  
+                    stroke-width="1.5"  
+                    stroke-linecap="round"  
+                />  
+            </svg>  
+        </div>  
+    `,  
+
+    iconSize: [60, 68],  
+
+    iconAnchor: [30, 68],  
+
+    popupAnchor: [0, -68]  
+});
+
+}
+
+function createSchoolIcon() {
+
+return L.divIcon({  
+
+    className: "custom-map-marker school-marker",  
+
+    html: `  
+        <div style="  
+            width:60px;  
+            height:68px;  
+            display:flex;  
+            align-items:flex-start;  
+            justify-content:center;  
+            transform:scale(1.25);  
+            transform-origin:center bottom;  
+            filter:drop-shadow(0 4px 7px rgba(0,0,0,.22));  
+        ">  
+            <svg  
+                width="34"  
+                height="34"  
+                viewBox="0 0 34 34"  
+                fill="none"  
+                xmlns="http://www.w3.org/2000/svg"  
+            >  
+                <path  
+                    d="M17 32C17 32 28 21.6 28 13.2C28 7.01 23.075 2 17 2C10.925 2 6 7.01 6 13.2C6 21.6 17 32 17 32Z"  
+                    fill="#DC2626"  
+                />  
+                <path  
+                    d="M9.5 14.1L17 8.8L24.5 14.1V23H9.5V14.1Z"  
+                    fill="white"  
+                />  
+                <path  
+                    d="M12.5 14H21.5"  
+                    stroke="#DC2626"  
+                    stroke-width="1.5"  
+                    stroke-linecap="round"  
+                />  
+                <path  
+                    d="M13.2 17.2H20.8V23H13.2V17.2Z"  
+                    fill="#DC2626"  
+                />  
+                <path  
+                    d="M16 17.2V23"  
+                    stroke="white"  
+                    stroke-width="1.3"  
+                />  
+                <path  
+                    d="M17 6.2V9"  
+                    stroke="#DC2626"  
+                    stroke-width="1.5"  
+                    stroke-linecap="round"  
+                />  
+            </svg>  
+        </div>  
+    `,  
+
+    iconSize: [60, 68],  
+
+    iconAnchor: [30, 68],  
+
+    popupAnchor: [0, -68]  
+});
+
+}
+
+/* =========================================
+MAP INITIALIZATION
+========================================= */
+
+function initializeMap() {
+
+if (  
+    mapInitialized ||  
+    !mapContainer ||  
+    typeof L === "undefined"  
+) {  
+    return;  
+}  
+
+map = L.map(  
+    mapContainer,  
+    {  
+        zoomControl: true,  
+        attributionControl: true  
+    }  
+);  
+
+map.setView(  
+    [-6.5891, 110.6677],  
+    15  
+);  
+
+mapLayers.street =  
+    L.tileLayer(  
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",  
+        {  
+            maxZoom: 19,  
+            attribution:  
+                '&copy; OpenStreetMap contributors'  
+        }  
+    );  
+
+mapLayers.satellite =  
+    L.tileLayer(  
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",  
+        {  
+            maxZoom: 19,  
+            attribution:  
+                "Tiles &copy; Esri"  
+        }  
+    );  
+
+mapLayers.terrain =  
+    L.tileLayer(  
+        "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",  
+        {  
+            maxZoom: 17,  
+            attribution:  
+                '&copy; OpenTopoMap'  
+        }  
+    );  
+
+mapLayers.dark =  
+    L.tileLayer(  
+        "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",  
+        {  
+            maxZoom: 19,  
+            attribution:  
+                '&copy; CARTO'  
+        }  
+    );  
+
+const selectedLayer =  
+    mapLayers[currentMapType] ||  
+    mapLayers.street;  
+
+selectedLayer.addTo(map);  
+
+mapInitialized = true;  
+
+map.on(  
+    "click",  
+    handleMapClick  
+);  
+
+updateActiveMapUI();  
+
+restoreMapLocations();
+
+}
+
+/* =========================================
+MAP TYPE
+========================================= */
+
+function changeMapType(type) {
+
+if (  
+    !map ||  
+    !mapLayers[type]  
+) {  
+    return;  
+}  
+
+Object.values(mapLayers)  
+    .forEach(layer => {  
+
+        if (map.hasLayer(layer)) {  
+            map.removeLayer(layer);  
+        }  
+
+    });  
+
+mapLayers[type].addTo(map);  
+
+currentMapType = type;  
+
+updateActiveMapUI();  
+
+if (mapTypeSelect) {  
+    mapTypeSelect.value = type;  
+}  
+
+settings.defaultMap = type;  
+
+saveSettingsToStorage();  
+
+showToast(  
+    `${MAP_TYPE_NAMES[type] || "Peta"} aktif.`,  
+    "success",  
+    1800  
+);
+
+}
+
+function updateActiveMapUI() {
+
+const label =  
+    MAP_TYPE_NAMES[currentMapType] ||  
+    "Peta Jalan";  
+
+if (activeMapLabel) {  
+    activeMapLabel.textContent =  
+        label;  
+}  
+
+const candidates = [  
+    petaJalan,  
+    petaSatelit,  
+    petaTerrain,  
+    petaDark  
+];  
+
+candidates.forEach(button => {  
+
+    if (!button) return;  
+
+    const type =  
+        button.dataset.map ||  
+        button.dataset.mapType;  
+
+    button.classList.toggle(  
+        "active",  
+        type === currentMapType  
+    );  
+
+});  
+
+document  
+    .querySelectorAll(  
+        "[data-map-type]"  
+    )  
+    .forEach(button => {  
+
+        button.classList.toggle(  
+            "active",  
+            button.dataset.mapType ===  
+            currentMapType  
+        );  
+
+    });  
+
+document  
+    .querySelectorAll(  
+        "[data-map]"  
+    )  
+    .forEach(button => {  
+
+        button.classList.toggle(  
+            "active",  
+            button.dataset.map ===  
+            currentMapType  
+        );  
+
+    });
+
+}
+
+/* =========================================
+MAP CLICK LOCATION SELECTION
+========================================= */
+
+function handleMapClick(event) {
+
+if (!modePilihLokasi) {  
+    return;  
+}  
+
+const latlng =  
+    event.latlng;  
+
+if (  
+    !latlng ||  
+    typeof latlng.lat !== "number" ||  
+    typeof latlng.lng !== "number"  
+) {  
+    return;  
+}  
+
+if (modePilihLokasi === "home") {  
+
+    setHomeLocation(  
+        latlng.lat,  
+        latlng.lng,  
+        "Lokasi rumah dipilih dari peta"  
+    );  
+
+    modePilihLokasi = null;  
+
+    updateLocationInstruction();  
+
+    showToast(  
+        "Lokasi rumah berhasil dipilih.",  
+        "success"  
+    );  
+
+    setTimeout(() => {  
+
+        modePilihLokasi = "school";  
+
+        updateLocationInstruction();  
+
+        showToast(  
+            "Sekarang pilih lokasi sekolah di peta.",  
+            "info",  
+            3000  
+        );  
+
+    }, 700);  
+
+    return;  
+}  
+
+if (modePilihLokasi === "school") {  
+
+    setSchoolLocation(  
+        latlng.lat,  
+        latlng.lng,  
+        "Lokasi sekolah dipilih dari peta"  
+    );  
+
+    modePilihLokasi = null;  
+
+    updateLocationInstruction();  
+
+    showToast(  
+        "Lokasi sekolah berhasil dipilih.",  
+        "success"  
+    );  
+
+    setTimeout(() => {  
+
+        if (  
+            latLngRumah &&  
+            latLngSekolah  
+        ) {  
+            calculateRoute();  
+        }  
+
+    }, 400);  
+}
+
+}
+
+function startSelectHome() {
+
+initializeMap();  
+
+modePilihLokasi = "home";  
+
+updateLocationInstruction();  
+
+showToast(  
+    "Klik lokasi rumah kamu pada peta.",  
+    "info",  
+    3000  
+);  
+
+navigateTo("map");
+
+}
+
+function startSelectSchool() {
+
+initializeMap();  
+
+modePilihLokasi = "school";  
+
+updateLocationInstruction();  
+
+showToast(  
+    "Klik lokasi sekolah pada peta.",  
+    "info",  
+    3000  
+);  
+
+navigateTo("map");
+
+}
+
+function updateLocationInstruction() {
+
+if (!locationInstruction) {  
+    return;  
+}  
+
+if (modePilihLokasi === "home") {  
+
+    locationInstruction.textContent =  
+        "Klik titik lokasi rumah kamu pada peta.";  
+
+    locationInstruction.classList.add(  
+        "active"  
+    );  
+
+    return;  
+}  
+
+if (modePilihLokasi === "school") {  
+
+    locationInstruction.textContent =  
+        "Klik titik lokasi sekolah pada peta.";  
+
+    locationInstruction.classList.add(  
+        "active"  
+    );  
+
+    return;  
+}  
+
+locationInstruction.textContent =  
+    "Pilih rumah atau sekolah untuk menentukan lokasi.";  
+
+locationInstruction.classList.remove(  
+    "active"  
+);
+
+}
+
+/* =========================================
+SET HOME LOCATION
+========================================= */
+
+function setHomeLocation(
+lat,
+lng,
+name = "Rumah"
+) {
+
+const latitude =  
+    Number(lat);  
+
+const longitude =  
+    Number(lng);  
+
+if (  
+    Number.isNaN(latitude) ||  
+    Number.isNaN(longitude)  
+) {  
+    showToast(  
+        "Koordinat rumah tidak valid.",  
+        "error"  
+    );  
+
+    return;  
+}  
+
+latLngRumah = [  
+    latitude,  
+    longitude  
+];  
+
+appData.home = {  
+    lat: latitude,  
+    lng: longitude,  
+    name  
+};  
+
+saveAppData();  
+
+initializeMap();  
+
+if (markerRumah) {  
+    markerRumah.remove();  
+}  
+
+markerRumah =  
+    L.marker(  
+        latLngRumah,  
+        {  
+            icon: createHomeIcon(),  
+            zIndexOffset: 1000  
+        }  
+    )  
+    .addTo(map)  
+    .bindPopup(  
+        `<strong>Rumah</strong><br>${escapeHtml(name)}`  
+    );  
+
+updateHomeUI();  
+
+map.setView(  
+    latLngRumah,  
+    Math.max(map.getZoom(), 15)  
+);  
+
+recalculateIfLocationsReady();
+
+}
+
+/* =========================================
+SET SCHOOL LOCATION
+========================================= */
+
+function setSchoolLocation(
+lat,
+lng,
+name = "Sekolah"
+) {
+
+const latitude =  
+    Number(lat);  
+
+const longitude =  
+    Number(lng);  
+
+if (  
+    Number.isNaN(latitude) ||  
+    Number.isNaN(longitude)  
+) {  
+    showToast(  
+        "Koordinat sekolah tidak valid.",  
+        "error"  
+    );  
+
+    return;  
+}  
+
+latLngSekolah = [  
+    latitude,  
+    longitude  
+];  
+
+appData.school = {  
+    lat: latitude,  
+    lng: longitude,  
+    name  
+};  
+
+saveAppData();  
+
+initializeMap();  
+
+if (markerSekolah) {  
+    markerSekolah.remove();  
+}  
+
+markerSekolah =  
+    L.marker(  
+        latLngSekolah,  
+        {  
+            icon: createSchoolIcon(),  
+            zIndexOffset: 900  
+        }  
+    )  
+    .addTo(map)  
+    .bindPopup(  
+        `<strong>Sekolah</strong><br>${escapeHtml(name)}`  
+    );  
+
+updateSchoolUI();  
+
+map.setView(  
+    latLngSekolah,  
+    Math.max(map.getZoom(), 15)  
+);  
+
+recalculateIfLocationsReady();
+
+}
+
+/* =========================================
+RESTORE MAP LOCATIONS
+========================================= */
+
+function restoreMapLocations() {
+
+if (!map) {  
+    return;  
+}  
+
+if (  
+    appData.home &&  
+    typeof appData.home.lat === "number" &&  
+    typeof appData.home.lng === "number"  
+) {  
+
+    latLngRumah = [  
+        appData.home.lat,  
+        appData.home.lng  
+    ];  
+
+    markerRumah =  
+        L.marker(  
+            latLngRumah,  
+            {  
+                icon: createHomeIcon(),  
+                zIndexOffset: 1000  
+            }  
+        )  
+        .addTo(map)  
+        .bindPopup(  
+            `<strong>Rumah</strong><br>${escapeHtml(  
+                appData.home.name || "Rumah"  
+            )}`  
+        );  
+}  
+
+if (  
+    appData.school &&  
+    typeof appData.school.lat === "number" &&  
+    typeof appData.school.lng === "number"  
+) {  
+
+    latLngSekolah = [  
+        appData.school.lat,  
+        appData.school.lng  
+    ];  
+
+    markerSekolah =  
+        L.marker(  
+            latLngSekolah,  
+            {  
+                icon: createSchoolIcon(),  
+                zIndexOffset: 900  
+            }  
+        )  
+        .addTo(map)  
+        .bindPopup(  
+            `<strong>Sekolah</strong><br>${escapeHtml(  
+                appData.school.name || "Sekolah"  
+            )}`  
+        );  
+}  
+
+updateHomeUI();  
+
+updateSchoolUI();  
+
+if (  
+    latLngRumah &&  
+    latLngSekolah  
+) {  
+    fitMapToLocations();  
+}
+
+}
+
+/* =========================================
+FIT MAP TO LOCATIONS
+========================================= */
+
+function fitMapToLocations() {
+
+if (  
+    !map ||  
+    !latLngRumah ||  
+    !latLngSekolah  
+) {  
+    return;  
+}  
+
+const bounds =  
+    L.latLngBounds([  
+        latLngRumah,  
+        latLngSekolah  
+    ]);  
+
+map.fitBounds(  
+    bounds,  
+    {  
+        padding: [50, 50],  
+        maxZoom: 16  
+    }  
+);
+
+}
+
+/* =========================================
+LOCATION UI
+========================================= */
+
+function updateHomeUI() {
+
+const hasHome =  
+    !!latLngRumah;  
+
+if (homeStatus) {  
+
+    homeStatus.textContent =  
+        hasHome  
+            ? (  
+                appData.home?.name ||  
+                "Lokasi rumah sudah dipilih"  
+            )  
+            : "Lokasi rumah belum dipilih";  
+
+    homeStatus.classList.toggle(  
+        "success",  
+        hasHome  
+    );  
+}  
+
+if (locationHomeName) {  
+
+    locationHomeName.textContent =  
+        hasHome  
+            ? (  
+                appData.home?.name ||  
+                "Lokasi rumah"  
+            )  
+            : "Belum dipilih";  
+}  
+
+if (dashboardHome) {  
+
+    dashboardHome.textContent =  
+        hasHome  
+            ? (  
+                appData.home?.name ||  
+                "Lokasi rumah"  
+            )  
+            : "Belum dipilih";  
+}
+
+}
+
+function updateSchoolUI() {
+
+const hasSchool =  
+    !!latLngSekolah;  
+
+if (schoolStatus) {  
+
+    schoolStatus.textContent =  
+        hasSchool  
+            ? (  
+                appData.school?.name ||  
+                "Lokasi sekolah sudah dipilih"  
+            )  
+            : "Lokasi sekolah belum dipilih";  
+
+    schoolStatus.classList.toggle(  
+        "success",  
+        hasSchool  
+    );  
+}  
+
+if (locationSchoolName) {  
+
+    locationSchoolName.textContent =  
+        hasSchool  
+            ? (  
+                appData.school?.name ||  
+                "Lokasi sekolah"  
+            )  
+            : "Belum dipilih";  
+}  
+
+if (dashboardSchool) {  
+
+    dashboardSchool.textContent =  
+        hasSchool  
+            ? (  
+                appData.school?.name ||  
+                "Belum dipilih"  
+            )  
+            : "Belum dipilih";  
+}
+
+}
+
+/* =========================================
+GPS
+========================================= */
+
+function useGPSForHome() {
+
+if (!navigator.geolocation) {  
+
+    showToast(  
+        "GPS tidak didukung oleh perangkat ini.",  
+        "error"  
+    );  
+
+    return;  
+}  
+
+showLoading(true);  
+
+navigator.geolocation.getCurrentPosition(  
+    position => {  
+
+        const {  
+            latitude,  
+            longitude  
+        } = position.coords;  
+
+        setHomeLocation(  
+            latitude,  
+            longitude,  
+            "Lokasi GPS"  
+        );  
+
+        modePilihLokasi = null;  
+
+        updateLocationInstruction();  
+
+        showLoading(false);  
+
+        showToast(  
+            "Lokasi GPS berhasil digunakan sebagai rumah.",  
+            "success"  
+        );  
+
+    },  
+
+    error => {  
+
+        showLoading(false);  
+
+        console.error(  
+            "GPS error:",  
+            error  
+        );  
+
+        let message =  
+            "Gagal mendapatkan lokasi GPS.";  
+
+        if (error.code === 1) {  
+            message =  
+                "Izin lokasi ditolak. Aktifkan izin lokasi di browser.";  
+        }  
+
+        if (error.code === 2) {  
+            message =  
+                "Lokasi tidak tersedia.";  
+        }  
+
+        if (error.code === 3) {  
+            message =  
+                "GPS terlalu lama merespons.";  
+        }  
+
+        showToast(  
+            message,  
+            "error",  
+            4000  
+        );  
+    },  
+
+    {  
+        enableHighAccuracy: true,  
+        timeout: 15000,  
+        maximumAge: 0  
+    }  
+);
+
+}
+
+function locateUserOnMap() {
+
+if (!navigator.geolocation) {  
+
+    showToast(  
+        "GPS tidak didukung.",  
+        "error"  
+    );  
+
+    return;  
+}  
+
+showLoading(true);  
+
+navigator.geolocation.getCurrentPosition(  
+    position => {  
+
+        const {  
+            latitude,  
+            longitude  
+        } = position.coords;  
+
+        initializeMap();  
+
+        map.setView(  
+            [latitude, longitude],  
+            17  
+        );  
+
+        showLoading(false);  
+
+        showToast(  
+            "Lokasi kamu ditemukan.",  
+            "success"  
+        );  
+
+    },  
+
+    error => {  
+
+        showLoading(false);  
+
+        console.error(  
+            "GPS error:",  
+            error  
+        );  
+
+        showToast(  
+            "Tidak dapat mendapatkan lokasi kamu.",  
+            "error"  
+        );  
+    },  
+
+    {  
+        enableHighAccuracy: true,  
+        timeout: 15000,  
+        maximumAge: 0  
+    }  
+);
+
+}
+
+/* =========================================
+NOMINATIM SEARCH
+========================================= */
+
+async function searchLocation(
+query,
+type
+) {
+
+const cleanQuery =  
+    String(query || "").trim();  
+
+if (!cleanQuery) {  
+
+    showToast(  
+        "Masukkan nama atau alamat terlebih dahulu.",  
+        "warning"  
+    );  
+
+    return;  
+}  
+
+showLoading(true);  
+
+try {  
+
+    const url =  
+        "https://nominatim.openstreetmap.org/search" +  
+        `?format=jsonv2&limit=1&q=${encodeURIComponent(cleanQuery)}`;  
+
+    const response =  
+        await fetch(  
+            url,  
+            {  
+                headers: {  
+                    "Accept":  
+                        "application/json"  
+                }  
+            }  
+        );  
+
+    if (!response.ok) {  
+        throw new Error(  
+            "Gagal menghubungi pencarian lokasi."  
+        );  
+    }  
+
+    const results =  
+        await response.json();  
+
+    if (  
+        !Array.isArray(results) ||  
+        !results.length  
+    ) {  
+
+        showToast(  
+            "Lokasi tidak ditemukan.",  
+            "warning"  
+        );  
+
+        return;  
+    }  
+
+    const result =  
+        results[0];  
+
+    const lat =  
+        Number(result.lat);  
+
+    const lng =  
+        Number(result.lon);  
+
+    const name =  
+        result.display_name ||  
+        cleanQuery;  
+
+    if (  
+        Number.isNaN(lat) ||  
+        Number.isNaN(lng)  
+    ) {  
+
+        showToast(  
+            "Koordinat hasil pencarian tidak valid.",  
+            "error"  
+        );  
+
+        return;  
+    }  
+
+    if (type === "home") {  
+
+        setHomeLocation(  
+            lat,  
+            lng,  
+            name  
+        );  
+
+        modePilihLokasi = null;  
+
+    } else if (type === "school") {  
+
+        setSchoolLocation(  
+            lat,  
+            lng,  
+            name  
+        );  
+
+        modePilihLokasi = null;  
+    }  
+
+    updateLocationInstruction();  
+
+    initializeMap();  
+
+    map.setView(  
+        [lat, lng],  
+        16  
+    );  
+
+    showToast(  
+        "Lokasi berhasil ditemukan.",  
+        "success"  
+    );  
+
+} catch (error) {  
+
+    console.error(  
+        "Search error:",  
+        error  
+    );  
+
+    showToast(  
+        "Gagal mencari lokasi. Coba lagi.",  
+        "error"  
+    );  
+
+} finally {  
+
+    showLoading(false);  
+}
+
+}
+
+/* =========================================
+MANUAL COORDINATES
+========================================= */
+
+function saveManualLocation(type) {
+
+const latInput =  
+    type === "home"  
+        ? manualHomeLat  
+        : manualSchoolLat;  
+
+const lngInput =  
+    type === "home"  
+        ? manualHomeLng  
+        : manualSchoolLng;  
+
+if (!latInput || !lngInput) {  
+    return;  
+}  
+
+const lat =  
+    Number(latInput.value);  
+
+const lng =  
+    Number(lngInput.value);  
+
+if (  
+    Number.isNaN(lat) ||  
+    Number.isNaN(lng) ||  
+    lat < -90 ||  
+    lat > 90 ||  
+    lng < -180 ||  
+    lng > 180  
+) {  
+
+    showToast(  
+        "Koordinat tidak valid.",  
+        "warning"  
+    );  
+
+    return;  
+}  
+
+if (type === "home") {  
+
+    setHomeLocation(  
+        lat,  
+        lng,  
+        "Lokasi manual"  
+    );  
+
+} else {  
+
+    setSchoolLocation(  
+        lat,  
+        lng,  
+        "Lokasi manual"  
+    );  
+}  
+
+modePilihLokasi = null;  
+
+updateLocationInstruction();  
+
+initializeMap();  
+
+map.setView(  
+    [lat, lng],  
+    16  
+);  
+
+showToast(  
+    type === "home"  
+        ? "Lokasi rumah disimpan."  
+        : "Lokasi sekolah disimpan.",  
+    "success"  
+);
+
+}
+
+/* =========================================
+TRANSPORT
+========================================= */
+
+function setTransport(
+transport
+) {
+
+transportAktif =  
+    transport;  
+
+if (transport === "walking") {  
+
+    profilRouting = "foot";  
+
+    kecepatanAktif =  
+        Number(settings.walkingSpeed) ||  
+        4.5;  
+
+} else if (transport === "car") {  
+
+    profilRouting = "driving";  
+
+    kecepatanAktif =  
+        Number(settings.carSpeed) ||  
+        45;  
+
+} else {  
+
+    profilRouting = "driving";  
+
+    kecepatanAktif =  
+        Number(settings.motorSpeed) ||  
+        30;  
+
+    transportAktif = "motor";  
+}  
+
+updateTransportUI();  
+
+if (  
+    latLngRumah &&  
+    latLngSekolah  
+) {  
+    calculateRoute();  
+}
+
+}
+
+function updateTransportUI() {
+
+const buttons = [  
+    {  
+        element: walkBtn,  
+        value: "walking"  
+    },  
+    {  
+        element: motorBtn,  
+        value: "motor"  
+    },  
+    {  
+        element: carBtn,  
+        value: "car"  
+    }  
+];  
+
+buttons.forEach(item => {  
+
+    if (!item.element) {  
+        return;  
+    }  
+
+    item.element.classList.toggle(  
+        "active",  
+        item.value === transportAktif  
+    );  
+
+});  
+
+if (dashboardTransport) {  
+
+    const names = {  
+        walking: "Jalan kaki",  
+        motor: "Motor",  
+        car: "Mobil"  
+    };  
+
+    dashboardTransport.textContent =  
+        names[transportAktif] ||  
+        "Motor";  
+}
+
+}
+
+/* =========================================
+ROUTING
+========================================= */
+
+async function calculateRoute() {
+
+if (  
+    !latLngRumah ||  
+    !latLngSekolah  
+) {  
+
+    showToast(  
+        "Pilih lokasi rumah dan sekolah terlebih dahulu.",  
+        "warning"  
+    );  
+
+    return;  
+}  
+
+initializeMap();  
+
+showLoading(true);  
+
+if (garisRute) {  
+
+    garisRute.remove();  
+
+    garisRute = null;  
+}  
+
+try {  
+
+    const [homeLat, homeLng] =  
+        latLngRumah;  
+
+    const [schoolLat, schoolLng] =  
+        latLngSekolah;  
+
+    const profile =  
+        profilRouting === "foot"  
+            ? "foot"  
+            : "driving";  
+
+    const url =  
+        `https://router.project-osrm.org/route/v1/${profile}/` +  
+        `${homeLng},${homeLat};${schoolLng},${schoolLat}` +  
+        "?overview=full&geometries=geojson";  
+
+    const response =  
+        await fetch(url);  
+
+    if (!response.ok) {  
+        throw new Error(  
+            "Routing server error"  
+        );  
+    }  
+
+    const data =  
+        await response.json();  
+
+    if (  
+        data.code !== "Ok" ||  
+        !data.routes ||  
+        !data.routes.length  
+    ) {  
+        throw new Error(  
+            "Rute tidak ditemukan"  
+        );  
+    }  
+
+    const route =  
+        data.routes[0];  
+
+    jarakKmGlobal =  
+        Number(route.distance) / 1000;  
+
+    const routeCoordinates =  
+        route.geometry.coordinates  
+            .map(coord => [  
+                coord[1],  
+                coord[0]  
+            ]);  
+
+    garisRute =  
+        L.polyline(  
+            routeCoordinates,  
+            {  
+                weight: 5,  
+                opacity: 0.85  
+            }  
+        ).addTo(map);  
+
+    const distanceMeters =  
+        Number(route.distance);  
+
+    const estimatedMinutes =  
+        (  
+            distanceMeters / 1000  
+        ) /  
+        Math.max(  
+            Number(kecepatanAktif) || 1,  
+            0.1  
+        ) *  
+        60;  
+
+    updateRouteResult(  
+        jarakKmGlobal,  
+        estimatedMinutes  
+    );  
+
+    fitMapToRoute(  
+        routeCoordinates  
+    );  
+
+    saveHistory({  
+        date:  
+            new Date().toISOString(),  
+        transport:  
+            transportAktif,  
+        transportName:  
+            getTransportName(  
+                transportAktif  
+            ),  
+        distance:  
+            jarakKmGlobal,  
+        time:  
+            estimatedMinutes  
+    });  
+
+    updateDashboard();  
+
+    showToast(  
+        "Rute berhasil dibuat.",  
+        "success"  
+    );  
+
+} catch (error) {  
+
+    console.error(  
+        "Routing error:",  
+        error  
+    );  
+
+    showToast(  
+        "Rute gagal dibuat. Pastikan kedua lokasi sudah benar dan coba lagi.",  
+        "error",  
+        4000  
+    );  
+
+} finally {  
+
+    showLoading(false);  
+}
+
+}
+
+function recalculateIfLocationsReady() {
+
+if (  
+    latLngRumah &&  
+    latLngSekolah  
+) {  
+    setTimeout(() => {  
+        calculateRoute();  
+    }, 300);  
+}
+
+}
+
+function fitMapToRoute(
+coordinates
+) {
+
+if (  
+    !map ||  
+    !Array.isArray(coordinates) ||  
+    !coordinates.length  
+) {  
+    return;  
+}  
+
+const bounds =  
+    L.latLngBounds(  
+        coordinates  
+    );  
+
+map.fitBounds(  
+    bounds,  
+    {  
+        padding: [60, 60]  
+    }  
+);
+
+}
+
+/* =========================================
+ROUTE RESULT
+========================================= */
+
+function updateRouteResult(
+distance,
+minutes
+) {
+
+if (distanceResult) {  
+
+    distanceResult.textContent =  
+        formatDistance(distance);  
+}  
+
+if (timeResult) {  
+
+    timeResult.textContent =  
+        formatTime(minutes);  
+}  
+
+if (dashboardDistance) {  
+
+    dashboardDistance.textContent =  
+        formatDistance(distance);  
+}  
+
+if (dashboardTime) {  
+
+    dashboardTime.textContent =  
+        formatTime(minutes);  
+}  
+
+if (dashboardTransport) {  
+
+    dashboardTransport.textContent =  
+        getTransportName(  
+            transportAktif  
+        );  
+}
+
+}
+
+function getTransportName(
+transport
+) {
+
+const names = {  
+    walking: "Jalan kaki",  
+    motor: "Motor",  
+    car: "Mobil"  
+};  
+
+return names[transport] ||  
+    "Motor";
+
+}
+
+/* =========================================
+GOOGLE MAPS
+========================================= */
+
+function openGoogleMaps() {
+
+if (  
+    !latLngRumah ||  
+    !latLngSekolah  
+) {  
+
+    showToast(  
+        "Buat rute terlebih dahulu.",  
+        "warning"  
+    );  
+
+    return;  
+}  
+
+const [  
+    homeLat,  
+    homeLng  
+] = latLngRumah;  
+
+const [  
+    schoolLat,  
+    schoolLng  
+] = latLngSekolah;  
+
+const url =  
+    "https://www.google.com/maps/dir/?api=1" +  
+    `&origin=${homeLat},${homeLng}` +  
+    `&destination=${schoolLat},${schoolLng}` +  
+    "&travelmode=driving";  
+
+window.open(  
+    url,  
+    "_blank",  
+    "noopener,noreferrer"  
+);
+
+}
+
+/* =========================================
+RESET MAP ONLY
+========================================= */
+
+function resetMap() {
+
+if (markerRumah) {  
+
+    markerRumah.remove();  
+
+    markerRumah = null;  
+}  
+
+if (markerSekolah) {  
+
+    markerSekolah.remove();  
+
+    markerSekolah = null;  
+}  
+
+if (garisRute) {  
+
+    garisRute.remove();  
+
+    garisRute = null;  
+}  
+
+latLngRumah = null;  
+
+latLngSekolah = null;  
+
+jarakKmGlobal = null;  
+
+modePilihLokasi = null;  
+
+appData.home = null;  
+
+appData.school = null;  
+
+saveAppData();  
+
+if (distanceResult) {  
+    distanceResult.textContent = "--";  
+}  
+
+if (timeResult) {  
+    timeResult.textContent = "--";  
+}  
+
+updateHomeUI();  
+
+updateSchoolUI();  
+
+updateLocationInstruction();  
+
+updateDashboard();  
+
+if (map) {  
+
+    map.setView(  
+        [-6.5891, 110.6677],  
+        15  
+    );  
+}  
+
+showToast(  
+    "Peta berhasil direset.",  
+    "success"  
+);
+
+}
+
+/* =========================================
+RESET JOURNEY
+========================================= */
+
+function initializeResetJourneyButton() {
+
+const resetJourneyButton =  
+    document.getElementById(  
+        "resetJourneyButton"  
+    );  
+
+if (!resetJourneyButton) {  
+    return;  
+}  
+
+resetJourneyButton.addEventListener(  
+    "click",  
+    () => {  
+
+        openConfirmModal(  
+            "Reset perjalanan?",  
+            "Lokasi rumah, sekolah, dan rute saat ini akan dihapus.",  
+            resetJourney  
+        );  
+
+    }  
+);
+
+}
+
+function resetJourney() {
+    appData = {
+        home: null,
+        school: null
+    };
+
+    latLngRumah = null;
+    latLngSekolah = null;
+    jarakKmGlobal = 0;
+    modePilihLokasi = null;
+
+    saveStorage(
+        STORAGE_KEY,
+        appData
+    );
+
+    if (markerRumah && map) {
+        map.removeLayer(markerRumah);
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    if (markerSekolah && map) {
+        map.removeLayer(markerSekolah);
+    }
+
+    if (garisRute && map) {
+        map.removeLayer(garisRute);
+    }
+
+    markerRumah = null;
+    markerSekolah = null;
+    garisRute = null;
+
+    updateLocationUI();
+
+    updateRouteResult(
+        NaN,
+        NaN
+    );
+
+    showToast(
+        "Perjalanan berhasil direset."
+    );
+}
+
+if (clearHistoryButton) {
+    clearHistoryButton.addEventListener(
+        "click",
+        () => {
+            openConfirmModal(
+                "Hapus riwayat?",
+                "Semua riwayat perjalanan akan dihapus.",
+                () => {
+                    localStorage.removeItem(
+                        HISTORY_KEY
+                    );
+
+                    renderHistory();
+
+                    showToast(
+                        "Riwayat berhasil dihapus."
+                    );
+                }
+            );
+        }
+    );
+}
+
+const departureReminderCard =
+    document.querySelector(
+        ".departure-reminder-card"
+    );
+
+let reminderData = loadStorage(
+    REMINDER_KEY,
+    {
+        enabled: false,
+        sound: "classic"
+    }
+);
+
+let reminderAudioContext = null;
+let reminderTriggeredKey = null;
+
+function getReminderAudioContext() {
+    if (!reminderAudioContext) {
+        const AudioContextClass =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        if (!AudioContextClass) {
+            return null;
+        }
+
+        reminderAudioContext =
+            new AudioContextClass();
+    }
+
+    if (
+        reminderAudioContext.state ===
+        "suspended"
+    ) {
+        reminderAudioContext
+            .resume()
+            .catch(() => {});
+    }
+
+    return reminderAudioContext;
+}
+
+function playReminderSound(
+    sound = "classic"
+) {
+    const audioContext =
+        getReminderAudioContext();
+
+    if (!audioContext) {
+        showToast(
+            "Perangkat tidak mendukung suara pengingat."
+        );
+        return;
+    }
+
+    const now =
+        audioContext.currentTime;
+
+    const patterns = {
+        classic: [
+            {
+                frequency: 880,
+                start: 0,
+                duration: 0.18
+            },
+            {
+                frequency: 1175,
+                start: 0.22,
+                duration: 0.22
+            }
+        ],
+
+        soft: [
+            {
+                frequency: 659,
+                start: 0,
+                duration: 0.28
+            },
+            {
+                frequency: 784,
+                start: 0.32,
+                duration: 0.32
+            }
+        ],
+
+        double: [
+            {
+                frequency: 988,
+                start: 0,
+                duration: 0.14
+            },
+            {
+                frequency: 988,
+                start: 0.20,
+                duration: 0.14
+            },
+            {
+                frequency: 1319,
+                start: 0.40,
+                duration: 0.22
+            }
+        ]
+    };
+
+    const pattern =
+        patterns[sound] ||
+        patterns.classic;
+
+    pattern.forEach((tone) => {
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+        oscillator.type = "sine";
+
+        oscillator.frequency.setValueAtTime(
+            tone.frequency,
+            now + tone.start
+        );
+
+        gain.gain.setValueAtTime(
+            0.0001,
+            now + tone.start
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.18,
+            now + tone.start + 0.025
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            now + tone.start + tone.duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(
+            audioContext.destination
+        );
+
+        oscillator.start(
+            now + tone.start
+        );
+
+        oscillator.stop(
+            now +
+            tone.start +
+            tone.duration +
+            0.02
+        );
+    });
+}
+
+async function requestReminderNotificationPermission() {
+    if (!("Notification" in window)) {
+        return false;
+    }
+
+    if (
+        Notification.permission ===
+        "granted"
+    ) {
+        return true;
+    }
+
+    if (
+        Notification.permission ===
+        "denied"
+    ) {
+        return false;
+    }
+
+    try {
+        const permission =
+            await Notification.requestPermission();
+
+        return (
+            permission === "granted"
+        );
+    } catch (error) {
+        console.error(
+            "Izin notifikasi gagal:",
+            error
+        );
+
+        return false;
     }
 }
 
-
-/* =========================================
-   PAGE HEADING
-========================================= */
-
-.page-heading {
-    margin-bottom: 22px;
-}
-
-.eyebrow {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: var(--primary);
-
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-}
-
-.page-heading h1 {
-    font-size: clamp(26px, 7vw, 34px);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-}
-
-.page-heading p {
-    margin-top: 8px;
-
-    max-width: 520px;
-
-    color: var(--text-secondary);
-
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-
-/* =========================================
-   LOCATION GRID
-========================================= */
-
-.location-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 12px;
-}
-
-.location-card {
-    padding: 16px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius-medium);
-
-    box-shadow: var(--shadow-small);
-}
-
-.location-card-top {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-}
-
-.location-icon {
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-}
-
-.location-icon svg {
-    width: 20px;
-    height: 20px;
-}
-
-.home-icon {
-    background: #eff6ff;
-    color: #2563eb;
-}
-
-.school-icon {
-    background: #fef2f2;
-    color: #ef4444;
-}
-
-.location-label {
-    color: var(--text-secondary);
-
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-}
-
-.location-value {
-    min-height: 40px;
-
-    display: flex;
-    align-items: center;
-
-    margin: 12px 0;
-
-    color: var(--text);
-
-    font-size: 13px;
-    font-weight: 650;
-    line-height: 1.4;
-
-    word-break: break-word;
-}
-
-.small-button {
-    width: 100%;
-
-    padding: 10px 12px;
-
-    border-radius: 11px;
-
-    background: var(--primary-soft);
-    color: var(--primary);
-
-    font-size: 12px;
-    font-weight: 750;
-}
-
-.small-button:active {
-    background: #dbeafe;
-}
-
-
-/* =========================================
-   SECTION TITLE
-========================================= */
-
-.section-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-
-    margin: 30px 0 14px;
-}
-
-.section-title h2 {
-    font-size: 20px;
-    letter-spacing: -0.025em;
-}
-
-.text-button {
-    background: transparent;
-    color: var(--primary);
-
-    font-size: 12px;
-    font-weight: 750;
-}
-
-
-/* =========================================
-   RESULT GRID
-========================================= */
-
-.result-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 12px;
-}
-
-.result-card {
-    min-height: 150px;
-
-    padding: 17px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius-medium);
-
-    box-shadow: var(--shadow-small);
-}
-
-.result-icon {
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-
-    background: var(--primary-soft);
-    color: var(--primary);
-}
-
-.result-icon svg {
-    width: 21px;
-    height: 21px;
-}
-
-.result-card span {
-    margin-top: 15px;
-
-    color: var(--text-secondary);
-
-    font-size: 12px;
-}
-
-.result-card strong {
-    margin-top: 3px;
-
-    font-size: 24px;
-    letter-spacing: -0.04em;
-}
-
-
-/* =========================================
-   PRIMARY BUTTON
-========================================= */
-
-.primary-button {
-    width: 100%;
-    min-height: 54px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 10px;
-    margin-top: 18px;
-    padding: 14px 18px;
-
-    border-radius: 15px;
-
-    background: var(--primary);
-    color: white;
-
-    font-size: 14px;
-    font-weight: 750;
-
-    box-shadow:
-        0 10px 24px rgba(37, 99, 235, 0.2);
-
-    transition:
-        background 0.2s ease,
-        transform 0.15s ease;
-}
-
-.primary-button:hover {
-    background: var(--primary-dark);
-}
-
-.primary-button svg {
-    width: 20px;
-    height: 20px;
-}
-
-
-/* =========================================
-   SECONDARY BUTTON
-========================================= */
-
-.secondary-button {
-    width: 100%;
-    min-height: 48px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-top: 10px;
-    padding: 12px 16px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 14px;
-
-    background: var(--surface);
-    color: var(--text);
-
-    font-size: 13px;
-    font-weight: 700;
-
-    box-shadow: var(--shadow-small);
-}
-
-.secondary-button:hover {
-    background: var(--surface-soft);
-}
-
-
-/* =========================================
-   DANGER BUTTON
-========================================= */
-
-.danger-button {
-    width: 100%;
-    min-height: 48px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-top: 10px;
-    padding: 12px 16px;
-
-    border-radius: 14px;
-
-    background: var(--danger-soft);
-    color: var(--danger);
-
-    font-size: 13px;
-    font-weight: 750;
-}
-
-.danger-button:hover {
-    background: #fee2e2;
-    color: var(--danger-dark);
-}
-
-
-/* =========================================
-   ACTION LIST
-========================================= */
-
-.action-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.action-card {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-
-    gap: 13px;
-
-    padding: 15px;
-
-    text-align: left;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius-medium);
-
-    box-shadow: var(--shadow-small);
-}
-
-.action-icon {
-    flex: 0 0 auto;
-
-    width: 44px;
-    height: 44px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 13px;
-
-    background: var(--primary-soft);
-    color: var(--primary);
-}
-
-.action-icon svg {
-    width: 22px;
-    height: 22px;
-}
-
-.action-content {
-    min-width: 0;
-    flex: 1;
-
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.action-content strong {
-    font-size: 14px;
-}
-
-.action-content span {
-    color: var(--text-secondary);
-    font-size: 12px;
-}
-
-.action-arrow {
-    width: 20px;
-    height: 20px;
-
-    flex: 0 0 auto;
-
-    color: var(--text-muted);
-}
-
-
-/* =========================================
-   INFO CARD
-========================================= */
-
-.info-card {
-    display: flex;
-    align-items: flex-start;
-
-    gap: 12px;
-
-    margin-top: 18px;
-    padding: 15px;
-
-    background: var(--primary-soft);
-
-    border:
-        1px solid #dbeafe;
-
-    border-radius: var(--radius-medium);
-}
-
-.info-card-icon {
-    flex: 0 0 auto;
-
-    width: 32px;
-    height: 32px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: var(--primary);
-}
-
-.info-card-icon svg {
-    width: 20px;
-    height: 20px;
-}
-
-.info-card p {
-    color: #475569;
-
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-
-/* =========================================
-   MAP TOOLBAR
-========================================= */
-
-.map-toolbar {
-    margin-bottom: 12px;
-}
-
-.field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-
-    margin-bottom: 14px;
-}
-
-.field-group label {
-    color: var(--text-secondary);
-
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.field-group input,
-.field-group select {
-    width: 100%;
-    min-height: 46px;
-
-    padding: 11px 13px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 13px;
-
-    background: var(--surface);
-    color: var(--text);
-
-    font-size: 13px;
-
-    box-shadow: var(--shadow-small);
-}
-
-.field-group input:focus,
-.field-group select:focus {
-    border-color: var(--primary);
-
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
-}
-
-
-/* =========================================
-   MAP
-========================================= */
-
-.map-card {
-    width: 100%;
-
-    overflow: hidden;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius-large);
-
-    box-shadow: var(--shadow-small);
-}
-
-.map {
-    width: 100%;
-    height: 430px;
-
-    min-height: 350px;
-
-    position: relative;
-}
-
-
-/*
-   Fix Leaflet rendering
-*/
-
-.leaflet-container {
-    width: 100%;
-    height: 100%;
-
-    min-height: 350px;
-
-    font-family: inherit;
-
-    background: #e5e7eb;
-}
-
-.leaflet-control-zoom {
-    border-radius: 10px !important;
-    overflow: hidden;
-}
-
-.leaflet-control-zoom a {
-    width: 34px !important;
-    height: 34px !important;
-
-    line-height: 34px !important;
-}
-
-
-/* =========================================
-   MAP INFO
-========================================= */
-
-.map-info-card {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    margin-top: 12px;
-    padding: 14px 15px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius-medium);
-
-    box-shadow: var(--shadow-small);
-}
-
-.map-info-icon {
-    width: 40px;
-    height: 40px;
-
-    flex: 0 0 auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-
-    background: var(--primary-soft);
-    color: var(--primary);
-}
-
-.map-info-icon svg {
-    width: 21px;
-    height: 21px;
-}
-
-.map-info-card strong {
-    display: block;
-    font-size: 13px;
-}
-
-.map-info-card span {
-    display: block;
-
-    margin-top: 3px;
-
-    color: var(--text-secondary);
-
-    font-size: 12px;
-}
-
-
-/* =========================================
-   TRANSPORT
-========================================= */
-
-.transport-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 9px;
-}
-
-.transport-button {
-    min-height: 105px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    gap: 6px;
-
-    padding: 10px 7px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 16px;
-
-    background: var(--surface);
-    color: var(--text-secondary);
-
-    box-shadow: var(--shadow-small);
-
-    transition:
-        border-color 0.2s ease,
-        background 0.2s ease,
-        color 0.2s ease;
-}
-
-.transport-button svg {
-    width: 24px;
-    height: 24px;
-}
-
-.transport-button span {
-    font-size: 12px;
-    font-weight: 750;
-}
-
-.transport-button small {
-    color: var(--text-muted);
-    font-size: 10px;
-}
-
-.transport-button.active {
-    border-color: var(--primary);
-
-    background: var(--primary-soft);
-
-    color: var(--primary);
-}
-
-.transport-button.active small {
-    color: var(--primary);
-}
-
-
-/* =========================================
-   ACTIVE SPEED
-========================================= */
-
-.active-speed-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 12px;
-    padding: 13px 15px;
-
-    border-radius: 14px;
-
-    background: var(--surface-soft);
-
-    border:
-        1px solid var(--border);
-}
-
-.active-speed-card span {
-    color: var(--text-secondary);
-    font-size: 12px;
-}
-
-.active-speed-card strong {
-    color: var(--primary);
-    font-size: 13px;
-}
-
-
-/* =========================================
-   ROUTE RESULT
-========================================= */
-
-.route-result-card {
-    display: grid;
-
-    grid-template-columns: 1fr auto 1fr;
-
-    align-items: center;
-
-    margin-top: 12px;
-    padding: 16px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius-medium);
-
-    box-shadow: var(--shadow-small);
-}
-
-.route-result-item {
-    display: flex;
-    flex-direction: column;
-
-    gap: 5px;
-}
-
-.route-result-item span {
-    color: var(--text-secondary);
-    font-size: 11px;
-}
-
-.route-result-item strong {
-    font-size: 21px;
-    letter-spacing: -0.03em;
-}
-
-.route-result-divider {
-    width: 1px;
-    height: 38px;
-
-    margin: 0 15px;
-
-    background: var(--border);
-}
-
-
-/* =========================================
-   STATUS GRID
-========================================= */
-
-.location-status-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 10px;
-
-    margin-top: 10px;
-}
-
-.status-card {
-    min-width: 0;
-
-    padding: 13px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 14px;
-}
-
-.status-card span {
-    display: block;
-
-    color: var(--text-secondary);
-
-    font-size: 10px;
-    font-weight: 700;
-}
-
-.status-card strong {
-    display: block;
-
-    margin-top: 5px;
-
-    font-size: 12px;
-
-    word-break: break-word;
-}
-
-
-/* =========================================
-   MAP LEGEND
-========================================= */
-
-.map-legend {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 12px;
-
-    margin-top: 15px;
-    padding: 13px 14px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 14px;
-
-    color: var(--text-secondary);
-
-    font-size: 11px;
-}
-
-.map-legend > div {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.legend-dot {
-    width: 10px;
-    height: 10px;
-
-    border-radius: 50%;
-}
-
-.home-dot {
-    background: #2563eb;
-}
-
-.school-dot {
-    background: #ef4444;
-}
-
-.legend-line {
-    width: 18px;
-    height: 3px;
-
-    border-radius: 99px;
-
-    background: var(--primary);
-}
-
-
-/* =========================================
-   LOCATION PAGE
-========================================= */
-
-.target-status-card {
-    margin-bottom: 15px;
-    padding: 13px 14px;
-
-    border-radius: 14px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    color: var(--text-secondary);
-
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.form-card {
-    margin-top: 14px;
-    padding: 16px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius-medium);
-
-    box-shadow: var(--shadow-small);
-}
-
-.form-card-title {
-    margin-bottom: 14px;
-
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.form-card .field-group:last-child {
-    margin-bottom: 0;
-}
-
-.input-with-button {
-    display: flex;
-    gap: 8px;
-}
-
-.input-with-button input {
-    flex: 1;
-    min-width: 0;
-}
-
-.input-with-button button {
-    flex: 0 0 auto;
-
-    min-width: 64px;
-
-    border-radius: 13px;
-
-    background: var(--primary);
-    color: white;
-
-    font-size: 12px;
-    font-weight: 750;
-}
-
-.coordinate-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 10px;
-}
-
-.search-results {
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-
-    margin-top: 10px;
-}
-
-.search-result-item {
-    width: 100%;
-
-    padding: 12px;
-
-    text-align: left;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 12px;
-
-    background: var(--surface-soft);
-
-    color: var(--text);
-
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-
-/* =========================================
-   SCHEDULE
-========================================= */
-
-.schedule-result-card {
-    margin-top: 14px;
-    padding: 20px;
-
-    text-align: center;
-
-    background: var(--primary-soft);
-
-    border:
-        1px solid #dbeafe;
-
-    border-radius: var(--radius-large);
-}
-
-.schedule-result-card > span {
-    display: block;
-
-    color: var(--text-secondary);
-
-    font-size: 12px;
-}
-
-.schedule-result-card strong {
-    display: block;
-
-    margin-top: 8px;
-
-    color: var(--primary);
-
-    font-size: 32px;
-
-    letter-spacing: -0.04em;
-}
-
-.schedule-result-card p {
-    margin-top: 7px;
-
-    color: var(--text-secondary);
-
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-
-/* =========================================
-   HISTORY
-========================================= */
-
-.history-list {
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-.history-empty {
-    padding: 20px;
-
-    text-align: center;
-
-    border:
-        1px dashed var(--border);
-
-    border-radius: 14px;
-
-    color: var(--text-muted);
-
-    background: var(--surface);
-
-    font-size: 12px;
-}
-
-.history-item {
-    padding: 14px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 15px;
-
-    box-shadow: var(--shadow-small);
-}
-
-.history-item-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.history-item strong {
-    font-size: 13px;
-}
-
-.history-item span {
-    color: var(--text-secondary);
-    font-size: 11px;
-}
-
-.history-item-bottom {
-    display: flex;
-    justify-content: space-between;
-
-    margin-top: 9px;
-
-    color: var(--text-secondary);
-
-    font-size: 11px;
-}
-
-
-/* =========================================
-   SETTINGS
-========================================= */
-
-.settings-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.setting-item {
-    display: flex;
-    align-items: center;
-
-    gap: 15px;
-
-    padding: 16px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius-medium);
-}
-
-.setting-item > div {
-    flex: 1;
-}
-
-.setting-item strong {
-    display: block;
-    font-size: 14px;
-}
-
-.setting-item span {
-    display: block;
-
-    margin-top: 5px;
-
-    color: var(--text-secondary);
-
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.setting-badge {
-    flex: 0 0 auto;
-
-    padding: 6px 8px;
-
-    border-radius: 8px;
-
-    background: var(--surface-soft);
-
-    color: var(--text-muted);
-
-    font-size: 10px !important;
-    font-weight: 700;
-}
-
-
-/* =========================================
-   BOTTOM NAVIGATION
-========================================= */
-
-.bottom-nav {
-    position: fixed;
-
-    z-index: 200;
-
-    bottom: 0;
-    left: 50%;
-
-    width: 100%;
-    max-width: 680px;
-
-    height: var(--nav-height);
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(5, 1fr);
-
-    align-items: center;
-
-    transform: translateX(-50%);
-
-    padding:
-        7px 5px
-        calc(7px + env(safe-area-inset-bottom));
-
-    background:
-        rgba(255, 255, 255, 0.94);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    border-top:
-        1px solid var(--border);
-}
-
-.nav-item {
-    height: 58px;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 4px;
-
-    background: transparent;
-
-    color: #94a3b8;
-
-    font-size: 9px;
-    font-weight: 650;
-
-    transition: color 0.2s ease;
-}
-
-.nav-item svg {
-    width: 21px;
-    height: 21px;
-}
-
-.nav-item.active {
-    color: var(--primary);
-}
-
-.nav-item.active svg {
-    transform: translateY(-1px);
-}
-
-
-/* =========================================
-   TOAST
-========================================= */
-
-.toast {
-    position: fixed;
-
-    z-index: 500;
-
-    left: 50%;
-
-    bottom:
-        calc(var(--nav-height) + 18px);
-
-    max-width:
-        calc(100% - 32px);
-
-    padding: 12px 16px;
-
-    border-radius: 12px;
-
-    background: #111827;
-    color: white;
-
-    font-size: 12px;
-    font-weight: 600;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transform:
-        translate(-50%, 10px);
-
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease,
-        visibility 0.2s ease;
-}
-
-.toast.show {
-    opacity: 1;
-    visibility: visible;
-
-    transform:
-        translate(-50%, 0);
-}
-
-
-/* =========================================
-   LOADING OVERLAY
-========================================= */
-
-.loading-overlay {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 1000;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        rgba(15, 23, 42, 0.35);
-
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition:
-        opacity 0.2s ease,
-        visibility 0.2s ease;
-}
-
-.loading-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.loading-box {
-    min-width: 160px;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 22px;
-
-    border-radius: 18px;
-
-    background: var(--surface);
-
-    box-shadow: var(--shadow-medium);
-}
-
-.loading-box strong {
-    font-size: 13px;
-}
-
-.loading-spinner {
-    width: 30px;
-    height: 30px;
-
-    border:
-        3px solid var(--border);
-
-    border-top-color:
-        var(--primary);
-
-    border-radius: 50%;
-
-    animation:
-        spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
+function showDepartureNotification() {
+    if (!("Notification" in window)) {
+        return;
+    }
+
+    if (
+        Notification.permission !==
+        "granted"
+    ) {
+        return;
+    }
+
+    try {
+        const notification =
+            new Notification(
+                "Waktunya berangkat",
+                {
+                    body:
+                        `Berangkat sekarang agar tiba di sekolah sekitar ${scheduleData?.schoolTime || "waktu yang ditentukan"}.`,
+
+                    icon:
+                        "./icon-192.png",
+
+                    badge:
+                        "./icon-192.png",
+
+                    tag:
+                        "jarak-ke-sekolah-departure"
+                }
+            );
+
+        notification.onclick = () => {
+            window.focus();
+
+            notification.close();
+
+            showPage(
+                "schedulePage"
+            );
+        };
+    } catch (error) {
+        console.error(
+            "Notifikasi pengingat gagal:",
+            error
+        );
     }
 }
 
+function updateDepartureReminderUI() {
+    const enabled =
+        Boolean(
+            reminderData?.enabled
+        );
 
-/* =========================================
-   MODAL
+    if (departureReminderToggle) {
+        departureReminderToggle.checked =
+            enabled;
+    }
+
+    if (reminderSoundSelect) {
+        reminderSoundSelect.value =
+            reminderData?.sound ||
+            "classic";
+    }
+
+    if (departureReminderCard) {
+        departureReminderCard.classList.toggle(
+            "reminder-active",
+            enabled
+        );
+    }
+
+    if (
+        !reminderStatusTitle ||
+        !reminderStatusText
+    ) {
+        return;
+    }
+
+    if (!enabled) {
+        reminderStatusTitle.textContent =
+            "Pengingat belum aktif";
+
+        reminderStatusText.textContent =
+            "Aktifkan pengingat setelah menyimpan jadwal berangkat.";
+
+        return;
+    }
+
+    if (!scheduleData?.departure) {
+        reminderStatusTitle.textContent =
+            "Pengingat menunggu jadwal";
+
+        reminderStatusText.textContent =
+            "Hitung dan simpan jadwal berangkat terlebih dahulu.";
+
+        return;
+    }
+
+    const soundNames = {
+        classic: "Nada klasik",
+        soft: "Nada lembut",
+        double: "Ting Ting"
+    };
+
+    reminderStatusTitle.textContent =
+        `Pengingat aktif · ${scheduleData.departure}`;
+
+    reminderStatusText.textContent =
+        `Akan mengingatkan saat waktu berangkat. ${soundNames[reminderData.sound] || soundNames.classic}.`;
+}
+
+function getScheduleReminderKey() {
+    if (!scheduleData?.departure) {
+        return null;
+    }
+
+    return [
+        scheduleData.date ||
+            "today",
+
+        scheduleData.departure
+    ].join("_");
+}
+
+function shouldTriggerDepartureReminder() {
+    if (!reminderData?.enabled) {
+        return false;
+    }
+
+    if (!scheduleData?.departure) {
+        return false;
+    }
+
+    const departure =
+        scheduleData.departure;
+
+    const today =
+        new Date();
+
+    if (scheduleData.date) {
+        const selectedDate =
+            new Date(
+                `${scheduleData.date}T00:00:00`
+            );
+
+        if (
+            Number.isNaN(
+                selectedDate.getTime()
+            )
+        ) {
+            return false;
+        }
+
+        if (
+            selectedDate.toDateString() !==
+            today.toDateString()
+        ) {
+            return false;
+        }
+    }
+
+    const parts =
+        departure.split(":");
+
+    if (parts.length !== 2) {
+        return false;
+    }
+
+    const hour =
+        Number(parts[0]);
+
+    const minute =
+        Number(parts[1]);
+
+    if (
+        !Number.isInteger(hour) ||
+        !Number.isInteger(minute) ||
+        hour < 0 ||
+        hour > 23 ||
+        minute < 0 ||
+        minute > 59
+    ) {
+        return false;
+    }
+
+    return (
+        today.getHours() === hour &&
+        today.getMinutes() === minute
+    );
+}
+
+function checkDepartureReminder() {
+    if (
+        !shouldTriggerDepartureReminder()
+    ) {
+        return;
+    }
+
+    const reminderKey =
+        getScheduleReminderKey();
+
+    if (
+        !reminderKey ||
+        reminderTriggeredKey ===
+            reminderKey
+    ) {
+        return;
+    }
+
+    reminderTriggeredKey =
+        reminderKey;
+
+    playReminderSound(
+        reminderData.sound
+    );
+
+    showDepartureNotification();
+
+    showToast(
+        "Waktunya berangkat! Pengingat perjalanan aktif."
+    );
+}
+
+function startDepartureReminderTimer() {
+    clearInterval(
+        reminderTimer
+    );
+
+    reminderTimer =
+        setInterval(
+            checkDepartureReminder,
+            15000
+        );
+
+    checkDepartureReminder();
+}
+
+if (testReminderSoundButton) {
+    testReminderSoundButton.addEventListener(
+        "click",
+        () => {
+            playReminderSound(
+                reminderSoundSelect?.value ||
+                    "classic"
+            );
+
+            showToast(
+                "Tes suara pengingat diputar."
+            );
+        }
+    );
+}
+
+if (reminderSoundSelect) {
+    reminderSoundSelect.addEventListener(
+        "change",
+        () => {
+            reminderData = {
+                ...(reminderData || {}),
+
+                sound:
+                    reminderSoundSelect.value
+            };
+
+            saveStorage(
+                REMINDER_KEY,
+                reminderData
+            );
+
+            updateDepartureReminderUI();
+        }
+    );
+}
+
+if (departureReminderToggle) {
+    departureReminderToggle.addEventListener(
+        "change",
+        async () => {
+            const enabled =
+                departureReminderToggle.checked;
+
+            if (
+                enabled &&
+                !scheduleData?.departure
+            ) {
+                departureReminderToggle.checked =
+                    false;
+
+                updateDepartureReminderUI();
+
+                showToast(
+                    "Hitung jadwal berangkat terlebih dahulu."
+                );
+
+                return;
+            }
+
+            if (enabled) {
+                const notificationReady =
+                    await requestReminderNotificationPermission();
+
+                reminderData = {
+                    ...(reminderData || {}),
+
+                    enabled:
+                        true,
+
+                    sound:
+                        reminderSoundSelect?.value ||
+                        reminderData?.sound ||
+                        "classic",
+
+                    notification:
+                        notificationReady
+                };
+
+                saveStorage(
+                    REMINDER_KEY,
+                    reminderData
+                );
+
+                updateDepartureReminderUI();
+
+                startDepartureReminderTimer();
+
+                if (notificationReady) {
+                    showToast(
+                        "Pengingat aktif. Notifikasi diizinkan."
+                    );
+                } else {
+                    showToast(
+                        "Pengingat aktif. Suara bekerja saat aplikasi dapat berjalan."
+                    );
+                }
+
+                return;
+            }
+
+            reminderData = {
+                ...(reminderData || {}),
+                enabled: false
+            };
+
+            saveStorage(
+                REMINDER_KEY,
+                reminderData
+            );
+
+            reminderTriggeredKey =
+                null;
+
+            updateDepartureReminderUI();
+
+            showToast(
+                "Pengingat berangkat dimatikan."
+            );
+        }
+    );
+}
+
+const calculateScheduleButton =
+    document.getElementById(
+        "calculateScheduleButton"
+    );
+
+if (calculateScheduleButton) {
+    calculateScheduleButton.addEventListener(
+        "click",
+        calculateSchedule
+    );
+}
+
+function calculateSchedule() {
+    const dateInput =
+        document.getElementById(
+            "scheduleDate"
+        );
+
+    const schoolTimeInput =
+        document.getElementById(
+            "schoolStartTime"
+        );
+
+    const bufferSelect =
+        document.getElementById(
+            "bufferSelect"
+        );
+
+    if (
+        !schoolTimeInput ||
+        !schoolTimeInput.value
+    ) {
+        showToast(
+            "Masukkan jam masuk sekolah."
+        );
+
+        return;
+    }
+
+    if (!jarakKmGlobal) {
+        showToast(
+            "Hitung rute terlebih dahulu."
+        );
+
+        return;
+    }
+
+    const schoolTime =
+        schoolTimeInput.value;
+
+    const buffer =
+        Number(
+            bufferSelect?.value ||
+                settings.defaultBuffer
+        );
+
+    const routeMinutes =
+        Math.ceil(
+            (
+                jarakKmGlobal /
+                Number(
+                    kecepatanAktif
+                )
+            ) *
+                60
+        );
+
+    const totalMinutes =
+        routeMinutes +
+        buffer;
+
+    const departure =
+        subtractMinutes(
+            schoolTime,
+            totalMinutes
+        );
+
+    const recommendedDeparture =
+        document.getElementById(
+            "recommendedDeparture"
+        );
+
+    if (recommendedDeparture) {
+        recommendedDeparture.textContent =
+            departure;
+    }
+
+    scheduleData = {
+        date:
+            dateInput?.value ||
+            "",
+
+        schoolTime,
+
+        buffer,
+
+        routeMinutes,
+
+        departure,
+
+        createdAt:
+            Date.now()
+    };
+
+    saveStorage(
+        SCHEDULE_KEY,
+        scheduleData
+    );
+
+    updateScheduleUI();
+    updateDepartureReminderUI();
+
+    if (reminderData?.enabled) {
+        reminderTriggeredKey =
+            null;
+
+        startDepartureReminderTimer();
+    }
+
+    showToast(
+        "Waktu keberangkatan berhasil dihitung."
+    );
+}
+
+function subtractMinutes(
+    time,
+    minutes
+) {
+    const parts =
+        time.split(":");
+
+    let hour =
+        Number(
+            parts[0]
+        );
+
+    let minute =
+        Number(
+            parts[1]
+        );
+
+    minute -= minutes;
+
+    while (minute < 0) {
+        minute += 60;
+        hour--;
+    }
+
+    while (hour < 0) {
+        hour += 24;
+    }
+
+    return (
+        String(hour).padStart(
+            2,
+            "0"
+        ) +
+        ":" +
+        String(minute).padStart(
+            2,
+            "0"
+        )
+    );
+}
+
+function updateScheduleUI() {
+    if (!scheduleData) {
+        return;
+    }
+
+    const recommendedDeparture =
+        document.getElementById(
+            "recommendedDeparture"
+        );
+
+    if (recommendedDeparture) {
+        recommendedDeparture.textContent =
+            scheduleData.departure ||
+            "--:--";
+    }
+}
+
+function updateScheduleRecommendation() {
+    if (
+        scheduleData &&
+        jarakKmGlobal
+    ) {
+        calculateSchedule();
+    }
+}
+
+const saveScheduleButton =
+    document.getElementById(
+        "saveScheduleButton"
+    );
+
+if (saveScheduleButton) {
+    saveScheduleButton.addEventListener(
+        "click",
+        () => {
+            if (!scheduleData) {
+                showToast(
+                    "Hitung jadwal terlebih dahulu."
+                );
+
+                return;
+            }
+
+            saveStorage(
+                SCHEDULE_KEY,
+                scheduleData
+            );
+
+            updateDepartureReminderUI();
+
+            if (reminderData?.enabled) {
+                reminderTriggeredKey =
+                    null;
+
+                startDepartureReminderTimer();
+            }
+
+            showToast(
+                "Jadwal berhasil disimpan."
+            );
+        }
+    );
+}
+
+const walkingSpeedInput =
+    document.getElementById(
+        "walkingSpeed"
+    );
+
+const motorSpeedInput =
+    document.getElementById(
+        "motorSpeed"
+    );
+
+const carSpeedInput =
+    document.getElementById(
+        "carSpeed"
+    );
+
+const defaultBufferInput =
+    document.getElementById(
+        "defaultBuffer"
+    );
+
+const defaultMapInput =
+    document.getElementById(
+        "defaultMap"
+    );
+
+const themeSelect =
+    document.getElementById(
+        "themeSelect"
+    );
+
+const saveSettingsButton =
+    document.getElementById(
+        "saveSettingsButton"
+    );
+
+const resetSettingsButton =
+    document.getElementById(
+        "resetSettingsButton"
+    );
+
+function populateSettingsUI() {
+    if (walkingSpeedInput) {
+        walkingSpeedInput.value =
+            settings.walkingSpeed;
+    }
+
+    if (motorSpeedInput) {
+        motorSpeedInput.value =
+            settings.motorSpeed;
+    }
+
+    if (carSpeedInput) {
+        carSpeedInput.value =
+            settings.carSpeed;
+    }
+
+    if (defaultBufferInput) {
+        defaultBufferInput.value =
+            settings.defaultBuffer;
+    }
+
+    if (defaultMapInput) {
+        defaultMapInput.value =
+            settings.defaultMap;
+    }
+
+    if (themeSelect) {
+        themeSelect.value =
+            settings.theme;
+    }
+}
+
+if (saveSettingsButton) {
+    saveSettingsButton.addEventListener(
+        "click",
+        saveSettings
+    );
+}
+
+function saveSettings() {
+    const walking =
+        Number(
+            walkingSpeedInput?.value
+        );
+
+    const motor =
+        Number(
+            motorSpeedInput?.value
+        );
+
+    const car =
+        Number(
+            carSpeedInput?.value
+        );
+
+    const buffer =
+        Number(
+            defaultBufferInput?.value
+        );
+
+    if (
+        !Number.isFinite(walking) ||
+        walking <= 0
+    ) {
+        showToast(
+            "Kecepatan jalan kaki tidak valid."
+        );
+
+        return;
+    }
+
+    if (
+        !Number.isFinite(motor) ||
+        motor <= 0
+    ) {
+        showToast(
+            "Kecepatan motor tidak valid."
+        );
+
+        return;
+    }
+
+    if (
+        !Number.isFinite(car) ||
+        car <= 0
+    ) {
+        showToast(
+            "Kecepatan mobil tidak valid."
+        );
+
+        return;
+    }
+
+    if (
+        !Number.isFinite(buffer) ||
+        buffer < 0
+    ) {
+        showToast(
+            "Waktu cadangan tidak valid."
+        );
+
+        return;
+    }
+
+    settings = {
+        walkingSpeed:
+            walking,
+
+        motorSpeed:
+            motor,
+
+        carSpeed:
+            car,
+
+        defaultBuffer:
+            buffer,
+
+        defaultMap:
+            defaultMapInput?.value ||
+            "street",
+
+        theme:
+            themeSelect?.value ||
+            "system"
+    };
+
+    saveStorage(
+        SETTINGS_KEY,
+        settings
+    );
+
+    currentMapType =
+        settings.defaultMap;
+
+    applyTheme(
+        settings.theme
+    );
+
+    if (
+        transportAktif ===
+        "walking"
+    ) {
+        kecepatanAktif =
+            settings.walkingSpeed;
+
+    } else if (
+        transportAktif ===
+        "motor"
+    ) {
+        kecepatanAktif =
+            settings.motorSpeed;
+
+    } else {
+        kecepatanAktif =
+            settings.carSpeed;
+    }
+
+    updateSpeedLabels();
+
+    if (
+        map &&
+        mapLayers[currentMapType]
+    ) {
+        changeMapType(
+            currentMapType
+        );
+    } else {
+        updateActiveMapUI();
+    }
+
+    showToast(
+        "Pengaturan berhasil disimpan."
+    );
+}
+
+if (resetSettingsButton) {
+    resetSettingsButton.addEventListener(
+        "click",
+        () => {
+            openConfirmModal(
+                "Reset pengaturan?",
+                "Semua pengaturan kecepatan dan tampilan akan kembali ke nilai awal.",
+                resetSettings
+            );
+        }
+    );
+}
+
+function resetSettings() {
+    settings = {
+        ...DEFAULT_SETTINGS
+    };
+
+    saveStorage(
+        SETTINGS_KEY,
+        settings
+    );
+
+    currentMapType =
+        settings.defaultMap;
+
+    populateSettingsUI();
+
+    applyTheme(
+        settings.theme
+    );
+
+    selectTransport(
+        "motor"
+    );
+
+    updateSpeedLabels();
+
+    if (map) {
+        changeMapType(
+            currentMapType
+        );
+    } else {
+        updateActiveMapUI();
+    }
+
+    showToast(
+        "Pengaturan berhasil direset."
+    );
+   }
+
+   /* =========================================
+   THEME
 ========================================= */
 
-.modal-overlay {
-    position: fixed;
+function applyTheme(
+    theme
+) {
 
-    inset: 0;
+    if (theme === "system") {
 
-    z-index: 1100;
+        document.body.setAttribute(
+            "data-theme",
+            "system"
+        );
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        if (
+            window.matchMedia &&
+            window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            ).matches
+        ) {
 
-    padding: 20px;
+            document.documentElement
+                .setAttribute(
+                    "data-theme",
+                    "dark"
+                );
 
-    background:
-        rgba(15, 23, 42, 0.45);
+        } else {
 
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+            document.documentElement
+                .setAttribute(
+                    "data-theme",
+                    "light"
+                );
 
-    opacity: 0;
-    visibility: hidden;
+        }
 
-    transition:
-        opacity 0.2s ease,
-        visibility 0.2s ease;
-}
+        return;
+    }
 
-.modal-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            theme
+        );
 
-.confirm-modal {
-    width: 100%;
-    max-width: 390px;
-
-    padding: 22px;
-
-    text-align: center;
-
-    background: var(--surface);
-
-    border-radius: 22px;
-
-    box-shadow:
-        0 25px 70px rgba(15, 23, 42, 0.18);
-
-    transform: translateY(10px);
-
-    transition:
-        transform 0.2s ease;
-}
-
-.modal-overlay.show .confirm-modal {
-    transform: translateY(0);
-}
-
-.modal-icon {
-    width: 50px;
-    height: 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 0 auto 13px;
-
-    border-radius: 15px;
-
-    background: var(--danger-soft);
-    color: var(--danger);
-}
-
-.modal-icon svg {
-    width: 25px;
-    height: 25px;
-}
-
-.confirm-modal h2 {
-    font-size: 18px;
-}
-
-.confirm-modal p {
-    margin-top: 7px;
-
-    color: var(--text-secondary);
-
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.modal-actions {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 9px;
-
-    margin-top: 18px;
-}
-
-.modal-actions button {
-    margin-top: 0;
 }
 
 
 /* =========================================
-   DARK MODE
+   CONFIRM MODAL
 ========================================= */
 
-[data-theme="dark"] {
-    --background: #0f172a;
-    --surface: #111827;
-    --surface-soft: #1e293b;
+let confirmCallback =
+    null;
 
-    --text: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
 
-    --border: #263244;
+function openConfirmModal(
+    title,
+    message,
+    callback
+) {
 
-    --primary-soft: #172554;
+    if (!confirmModal) {
+        return;
+    }
 
-    --danger-soft: #3f1717;
-    --success-soft: #052e16;
+    if (confirmModalTitle) {
+
+        confirmModalTitle.textContent =
+            title;
+
+    }
+
+    if (confirmModalMessage) {
+
+        confirmModalMessage.textContent =
+            message;
+
+    }
+
+    confirmCallback =
+        callback;
+
+    confirmModal.classList.add(
+        "show"
+    );
+
 }
 
-[data-theme="dark"] body {
-    background: var(--background);
+
+function closeConfirmModal() {
+
+    if (!confirmModal) {
+        return;
+    }
+
+    confirmModal.classList.remove(
+        "show"
+    );
+
+    confirmCallback =
+        null;
+
 }
 
-[data-theme="dark"] .app-header {
-    background:
-        rgba(15, 23, 42, 0.92);
 
-    border-bottom-color:
-        rgba(51, 65, 85, 0.7);
+if (confirmCancelButton) {
+
+    confirmCancelButton.addEventListener(
+        "click",
+        closeConfirmModal
+    );
+
 }
 
-[data-theme="dark"] .bottom-nav {
-    background:
-        rgba(15, 23, 42, 0.94);
+
+if (confirmActionButton) {
+
+    confirmActionButton.addEventListener(
+        "click",
+        () => {
+
+            const callback =
+                confirmCallback;
+
+            closeConfirmModal();
+
+            if (callback) {
+                callback();
+            }
+
+        }
+    );
+
 }
 
-[data-theme="dark"] .info-card p {
-    color: #cbd5e1;
-}
 
-[data-theme="dark"] .home-icon {
-    background: #172554;
-}
+if (confirmModal) {
 
-[data-theme="dark"] .school-icon {
-    background: #3f1717;
-}
+    confirmModal.addEventListener(
+        "click",
+        (event) => {
 
-[data-theme="dark"] .map {
-    background: #1e293b;
-}
+            if (
+                event.target ===
+                confirmModal
+            ) {
 
-[data-theme="dark"] .leaflet-container {
-    background: #1e293b;
-}
+                closeConfirmModal();
 
-[data-theme="dark"] .leaflet-control-zoom a {
-    background: #111827;
-    color: #f8fafc;
-    border-bottom-color: #263244;
+            }
+
+        }
+    );
+
 }
 
 
 /* =========================================
-   RESPONSIVE
+   TUTORIAL DATA
 ========================================= */
 
-@media (min-width: 681px) {
+const tutorialSteps = [
 
-    body {
-        padding: 18px 0;
+    {
+        title:
+            "Pilih lokasi rumah",
+
+        description:
+            "Klik <strong>Pilih lokasi</strong> pada bagian Rumah. Kamu dapat menggunakan GPS atau mencari lokasi secara manual. Jika memilih secara manual, cari lokasi rumah lalu ketuk titiknya pada peta.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M3 10.5 12 3l9 7.5"></path>
+                <path d="M5 9.5V21h14V9.5"></path>
+                <path d="M9 21v-6h6v6"></path>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Pilih lokasi sekolah",
+
+        description:
+            "Setelah lokasi rumah dipilih, kembali ke Dashboard lalu pilih lokasi <strong>Sekolah</strong>. Caranya sama: gunakan GPS, pencarian manual, atau langsung ketuk titik sekolah pada peta.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M3 21h18"></path>
+                <path d="M5 21V8l7-5 7 5v13"></path>
+                <path d="M9 21v-4h6v4"></path>
+                <path d="M9 10h.01"></path>
+                <path d="M15 10h.01"></path>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Hasilkan perjalanan",
+
+        description:
+            "Setelah lokasi rumah dan sekolah tersedia, scroll ke bawah. Pilih <strong>Motor</strong>, <strong>Mobil</strong>, atau <strong>Jalan kaki</strong>, lalu tekan <strong>Hasilkan Perjalanan</strong>. Jarak dan perkiraan waktu akan muncul.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="6" cy="17" r="3"></circle>
+                <circle cx="18" cy="17" r="3"></circle>
+                <path d="M6 17h3l3-8h3l3 8"></path>
+                <path d="M9 17h6"></path>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Atur kecepatan",
+
+        description:
+            "Untuk mengubah kecepatan Motor, Mobil, atau Jalan kaki, buka <strong>Pengaturan</strong>. Atur kecepatannya sesuai kebutuhan, lalu tekan <strong>Simpan Pengaturan</strong>. Pengaturan akan tersimpan otomatis.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.1h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.6-1H6v-2.6h.4A1.7 1.7 0 0 0 8 10a1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.1h2.6V5a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1V14h-.1a1.7 1.7 0 0 0-1.6 1z"></path>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Gunakan Google Maps",
+
+        description:
+            "Untuk melihat perjalanan langsung melalui Google Maps, buka halaman Peta lalu tekan tombol <strong>Buka di Google Maps</strong>.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"></path>
+                <circle cx="12" cy="9" r="2.5"></circle>
+            </svg>
+        `
+    },
+
+    {
+        title:
+            "Reset perjalanan",
+
+        description:
+            "Jika ingin memulai dari awal, gunakan tombol <strong>Reset perjalanan</strong>. Lokasi rumah, sekolah, dan rute akan dihapus sehingga kamu dapat memilih kembali.",
+
+        icon: `
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+                <path d="M3 4v6h6"></path>
+            </svg>
+        `
     }
 
-    .app {
-        min-height:
-            calc(100vh - 36px);
+];
 
-        border:
-            1px solid var(--border);
 
-        border-radius: 28px;
+/* =========================================
+   TUTORIAL STATE
+========================================= */
 
-        overflow: hidden;
+let tutorialCurrentStep =
+    0;
 
-        box-shadow:
-            0 20px 60px rgba(15, 23, 42, 0.08);
+let tutorialIsOpen =
+    false;
+
+
+/* =========================================
+   RENDER TUTORIAL
+========================================= */
+
+function renderTutorialStep() {
+
+    if (!tutorialSteps.length) {
+        return;
     }
 
-    .app-header {
-        position: relative;
+    const step =
+        tutorialSteps[
+            tutorialCurrentStep
+        ];
+
+    const total =
+        tutorialSteps.length;
+
+    const current =
+        tutorialCurrentStep + 1;
+
+
+    if (tutorialStepLabel) {
+
+        tutorialStepLabel.textContent =
+            `LANGKAH ${current} DARI ${total}`;
+
     }
 
-    .bottom-nav {
-        position: absolute;
 
-        left: auto;
-        bottom: auto;
+    if (tutorialTitle) {
 
-        transform: none;
+        tutorialTitle.textContent =
+            step.title;
 
-        width: 100%;
-        max-width: 680px;
     }
+
+
+    if (tutorialDescription) {
+
+        tutorialDescription.innerHTML =
+            step.description;
+
+    }
+
+
+    if (tutorialIcon) {
+
+        tutorialIcon.innerHTML =
+            step.icon;
+
+    }
+
+
+    if (tutorialDots) {
+
+        const dots =
+            tutorialDots.querySelectorAll(
+                ".tutorial-dot"
+            );
+
+        dots.forEach(
+            (dot, index) => {
+
+                dot.classList.toggle(
+                    "active",
+                    index ===
+                    tutorialCurrentStep
+                );
+
+            }
+        );
+
+    }
+
+
+    if (tutorialBackButton) {
+
+        tutorialBackButton.disabled =
+            tutorialCurrentStep === 0;
+
+        tutorialBackButton.style.visibility =
+            tutorialCurrentStep === 0
+                ? "hidden"
+                : "visible";
+
+    }
+
+
+    if (tutorialNextButton) {
+
+        tutorialNextButton.textContent =
+            tutorialCurrentStep ===
+            total - 1
+                ? "Selesai"
+                : "Lanjut";
+
+    }
+
 }
 
 
 /* =========================================
-   SMALL PHONE
+   OPEN TUTORIAL
 ========================================= */
 
-@media (max-width: 360px) {
+function openTutorial(
+    fromFirstStep = true
+) {
 
-    .main-content {
-        padding-left: 12px;
-        padding-right: 12px;
+    if (!tutorialOverlay) {
+        return;
     }
 
-    .location-grid {
-        grid-template-columns: 1fr;
+    if (fromFirstStep) {
+
+        tutorialCurrentStep =
+            0;
+
     }
 
-    .page-heading h1 {
-        font-size: 27px;
-    }
+    tutorialIsOpen =
+        true;
 
-    .nav-item {
-        font-size: 8px;
-    }
+    renderTutorialStep();
 
-    .transport-grid {
-        gap: 6px;
-    }
+    tutorialOverlay.classList.add(
+        "show"
+    );
 
-    .transport-button {
-        min-height: 98px;
-    }
+    document.body.style.overflow =
+        "hidden";
 
-    .transport-button span {
-        font-size: 11px;
-    }
-
-    .coordinate-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 
 /* =========================================
-   REDUCED MOTION
+   CLOSE TUTORIAL
 ========================================= */
 
-@media (prefers-reduced-motion: reduce) {
+function closeTutorial(
+    markAsSeen = true
+) {
 
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
+    if (!tutorialOverlay) {
+        return;
     }
-}
 
-/* =========================================
-   PENGINGAT BERANGKAT
-========================================= */
+    tutorialIsOpen =
+        false;
 
-.departure-reminder-card {
-    margin-top: 14px;
-}
+    tutorialOverlay.classList.remove(
+        "show"
+    );
 
-.reminder-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+    document.body.style.overflow =
+        "";
 
-.reminder-icon {
-    flex: 0 0 auto;
+    if (markAsSeen) {
 
-    width: 44px;
-    height: 44px;
+        localStorage.setItem(
+            TUTORIAL_KEY,
+            "true"
+        );
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    }
 
-    border-radius: 13px;
-
-    background: var(--primary-soft);
-    color: var(--primary);
-}
-
-.reminder-icon svg {
-    width: 22px;
-    height: 22px;
-}
-
-.reminder-text {
-    min-width: 0;
-    flex: 1;
-
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.reminder-text strong {
-    font-size: 13px;
-    line-height: 1.35;
-}
-
-.reminder-text span {
-    color: var(--text-secondary);
-
-    font-size: 11px;
-    line-height: 1.45;
 }
 
 
 /* =========================================
-   REMINDER SWITCH
+   NEXT TUTORIAL
 ========================================= */
 
-.reminder-switch {
-    position: relative;
+function nextTutorialStep() {
 
-    flex: 0 0 auto;
+    if (
+        tutorialCurrentStep <
+        tutorialSteps.length - 1
+    ) {
 
-    width: 48px;
-    height: 28px;
+        tutorialCurrentStep++;
 
-    cursor: pointer;
-}
+        renderTutorialStep();
 
-.reminder-switch input {
-    width: 0;
-    height: 0;
+        return;
+    }
 
-    opacity: 0;
+    closeTutorial(
+        true
+    );
 
-    position: absolute;
-}
-
-.reminder-slider {
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: 999px;
-
-    background: #cbd5e1;
-
-    transition:
-        background 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.reminder-slider::before {
-    content: "";
-
-    position: absolute;
-
-    width: 22px;
-    height: 22px;
-
-    left: 3px;
-    top: 3px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    box-shadow:
-        0 2px 6px rgba(15, 23, 42, 0.18);
-
-    transition:
-        transform 0.2s ease;
-}
-
-.reminder-switch input:checked + .reminder-slider {
-    background: var(--primary);
-
-    box-shadow:
-        0 4px 12px rgba(37, 99, 235, 0.22);
-}
-
-.reminder-switch input:checked + .reminder-slider::before {
-    transform: translateX(20px);
 }
 
 
 /* =========================================
-   REMINDER SETTINGS
+   PREVIOUS TUTORIAL
 ========================================= */
 
-.reminder-settings {
-    display: grid;
+function previousTutorialStep() {
 
-    grid-template-columns:
-        minmax(0, 1fr)
-        auto;
+    if (
+        tutorialCurrentStep <= 0
+    ) {
+        return;
+    }
 
-    align-items: end;
+    tutorialCurrentStep--;
 
-    gap: 10px;
+    renderTutorialStep();
 
-    margin-top: 18px;
-}
-
-.reminder-settings .field-group {
-    margin-bottom: 0;
-}
-
-.reminder-settings .secondary-button {
-    width: auto;
-
-    min-width: 94px;
-
-    margin-top: 0;
-
-    white-space: nowrap;
-}
-
-.reminder-settings select {
-    min-height: 46px;
 }
 
 
 /* =========================================
-   REMINDER STATUS
+   TUTORIAL BUTTON EVENTS
 ========================================= */
 
-.reminder-status {
-    display: flex;
-    align-items: flex-start;
+if (tutorialNextButton) {
 
-    gap: 10px;
+    tutorialNextButton.addEventListener(
+        "click",
+        nextTutorialStep
+    );
 
-    margin-top: 14px;
-    padding: 12px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 13px;
-
-    background: var(--surface-soft);
 }
 
-.reminder-status-icon {
-    flex: 0 0 auto;
 
-    width: 32px;
-    height: 32px;
+if (tutorialBackButton) {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    tutorialBackButton.addEventListener(
+        "click",
+        previousTutorialStep
+    );
 
-    border-radius: 10px;
-
-    background: var(--surface);
-    color: var(--text-secondary);
 }
 
-.reminder-status-icon svg {
-    width: 17px;
-    height: 17px;
+
+if (tutorialCloseButton) {
+
+    tutorialCloseButton.addEventListener(
+        "click",
+        () => {
+
+            closeTutorial(
+                true
+            );
+
+        }
+    );
+
 }
 
-.reminder-status strong {
-    display: block;
 
-    font-size: 12px;
-    line-height: 1.4;
-}
+if (tutorialSkipButton) {
 
-.reminder-status span {
-    display: block;
+    tutorialSkipButton.addEventListener(
+        "click",
+        () => {
 
-    margin-top: 3px;
+            closeTutorial(
+                true
+            );
 
-    color: var(--text-secondary);
+        }
+    );
 
-    font-size: 10px;
-    line-height: 1.5;
 }
 
 
 /* =========================================
-   REMINDER ACTIVE STATE
+   CLICK OVERLAY TUTORIAL
 ========================================= */
 
-.departure-reminder-card.reminder-active {
-    border-color: rgba(37, 99, 235, 0.28);
+if (tutorialOverlay) {
 
-    box-shadow:
-        0 8px 25px rgba(37, 99, 235, 0.07);
-}
+    tutorialOverlay.addEventListener(
+        "click",
+        (event) => {
 
-.departure-reminder-card.reminder-active
-.reminder-status-icon {
-    background: var(--primary-soft);
-    color: var(--primary);
-}
+            if (
+                event.target ===
+                tutorialOverlay
+            ) {
 
-.departure-reminder-card.reminder-active
-.reminder-status strong {
-    color: var(--primary);
+                closeTutorial(
+                    true
+                );
+
+            }
+
+        }
+    );
+
 }
 
 
 /* =========================================
-   DARK MODE - REMINDER
+   TUTORIAL FROM SETTINGS
 ========================================= */
 
-[data-theme="dark"] .reminder-slider {
-    background: #475569;
-}
+if (openTutorialButton) {
 
-[data-theme="dark"] .reminder-slider::before {
-    background: #f8fafc;
-}
+    openTutorialButton.addEventListener(
+        "click",
+        () => {
 
-[data-theme="dark"] .reminder-status-icon {
-    background: #111827;
-}
+            openTutorial(
+                true
+            );
 
-[data-theme="dark"] .departure-reminder-card.reminder-active {
-    border-color: rgba(96, 165, 250, 0.3);
+        }
+    );
+
 }
 
 
 /* =========================================
-   SMALL PHONE - REMINDER
+   KEYBOARD ESCAPE
 ========================================= */
 
-@media (max-width: 360px) {
+document.addEventListener(
+    "keydown",
+    (event) => {
 
-    .reminder-header {
-        gap: 9px;
+        if (
+            event.key === "Escape" &&
+            tutorialIsOpen
+        ) {
+
+            closeTutorial(
+                true
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(
+    value
+) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================
+   INITIALIZE APP
+========================================= */
+
+function initializeApp() {
+
+    populateSettingsUI();
+
+    applyTheme(
+        settings.theme
+    );
+
+    selectTransport(
+        "motor"
+    );
+
+    updateSpeedLabels();
+
+    updateLocationUI();
+
+    updateLocationTargetStatus();
+
+    updateScheduleUI();
+
+    updateDepartureReminderUI();
+
+    if (reminderData?.enabled) {
+
+        startDepartureReminderTimer();
+
     }
 
-    .reminder-icon {
-        width: 40px;
-        height: 40px;
+    renderHistory();
+
+    updateActiveMapUI();
+
+    showPage(
+        "dashboardPage"
+    );
+
+    console.log(
+        "JARAK KESEKOLAH berhasil dimuat."
+    );
+
+
+    /* =====================================
+       AUTO TUTORIAL
+    ===================================== */
+
+    const tutorialSeen =
+        localStorage.getItem(
+            TUTORIAL_KEY
+        );
+
+    if (!tutorialSeen) {
+
+        setTimeout(
+            () => {
+
+                if (
+                    tutorialOverlay &&
+                    !tutorialIsOpen
+                ) {
+
+                    openTutorial(
+                        true
+                    );
+
+                }
+
+            },
+            1200
+        );
+
     }
 
-    .reminder-icon svg {
-        width: 20px;
-        height: 20px;
+}
+
+
+/* =========================================
+   SYSTEM THEME CHANGE
+========================================= */
+
+if (window.matchMedia) {
+
+    const mediaQuery =
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        );
+
+    mediaQuery.addEventListener(
+        "change",
+        () => {
+
+            if (
+                settings.theme ===
+                "system"
+            ) {
+
+                applyTheme(
+                    "system"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+initializeApp();
+
+
+/* =========================================
+   FIX TUTORIAL + SCROLL
+========================================= */
+
+document.documentElement.style.overflowY =
+    "auto";
+
+document.body.style.overflowY =
+    "auto";
+
+document.body.style.overflowX =
+    "hidden";
+
+
+/* =========================================
+   TUTORIAL CSS FIX
+========================================= */
+
+(function fixTutorialUI() {
+
+    if (
+        document.getElementById(
+            "tutorial-fix-style"
+        )
+    ) {
+        return;
     }
 
-    .reminder-text strong {
-        font-size: 12px;
+    const style =
+        document.createElement(
+            "style"
+        );
+
+    style.id =
+        "tutorial-fix-style";
+
+    style.textContent = `
+
+        .tutorial-overlay {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 99999 !important;
+            display: none !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 20px !important;
+            background: rgba(0,0,0,.55) !important;
+            overflow-y: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        .tutorial-overlay.show {
+            display: flex !important;
+        }
+
+        .tutorial-modal {
+            width: 100% !important;
+            max-width: 430px !important;
+            max-height: calc(100vh - 40px) !important;
+            overflow-y: auto !important;
+            background: #ffffff !important;
+            border-radius: 24px !important;
+            padding: 24px !important;
+            box-sizing: border-box !important;
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,.25) !important;
+            position: relative !important;
+        }
+
+        .tutorial-modal button {
+            cursor: pointer !important;
+        }
+
+        .tutorial-icon {
+            width: 64px !important;
+            height: 64px !important;
+            margin: 0 auto 16px !important;
+            border-radius: 18px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #eef4ff !important;
+        }
+
+        .tutorial-icon svg {
+            width: 32px !important;
+            height: 32px !important;
+        }
+
+        .tutorial-step-label {
+            text-align: center !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            letter-spacing: .08em !important;
+            opacity: .6 !important;
+            margin-bottom: 10px !important;
+        }
+
+        .tutorial-title {
+            text-align: center !important;
+            font-size: 22px !important;
+            font-weight: 800 !important;
+            margin: 0 0 10px !important;
+        }
+
+        .tutorial-description {
+            font-size: 15px !important;
+            line-height: 1.65 !important;
+            text-align: center !important;
+            opacity: .78 !important;
+            margin-bottom: 20px !important;
+        }
+
+        .tutorial-dots {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 7px !important;
+            margin: 10px 0 20px !important;
+        }
+
+        .tutorial-dot {
+            width: 7px !important;
+            height: 7px !important;
+            border-radius: 50% !important;
+            background: #cbd5e1 !important;
+            transition: .2s !important;
+        }
+
+        .tutorial-dot.active {
+            width: 22px !important;
+            border-radius: 10px !important;
+            background: #2563eb !important;
+        }
+
+        .tutorial-actions,
+        .tutorial-navigation {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .tutorial-navigation {
+            justify-content: space-between !important;
+        }
+
+        .tutorial-navigation button {
+            min-height: 46px !important;
+            border: 0 !important;
+            border-radius: 14px !important;
+            padding: 0 18px !important;
+            font-weight: 700 !important;
+        }
+
+        .tutorial-skip {
+            background: transparent !important;
+            border: 0 !important;
+            opacity: .65 !important;
+            font-weight: 600 !important;
+        }
+
+        #tutorialBackButton {
+            background: #eef2f7 !important;
+        }
+
+        #tutorialNextButton {
+            background: #2563eb !important;
+            color: white !important;
+        }
+
+        #tutorialCloseButton {
+            position: absolute !important;
+            top: 14px !important;
+            right: 14px !important;
+            width: 38px !important;
+            height: 38px !important;
+            border: 0 !important;
+            border-radius: 50% !important;
+            background: #f1f5f9 !important;
+            font-size: 20px !important;
+        }
+
+        @media (max-width: 480px) {
+
+            .tutorial-overlay {
+                padding: 14px !important;
+            }
+
+            .tutorial-modal {
+                max-height:
+                    calc(100vh - 28px)
+                    !important;
+
+                border-radius: 22px !important;
+
+                padding:
+                    22px 18px
+                    !important;
+            }
+
+        }
+
+        html[data-theme="dark"]
+        .tutorial-modal {
+            background: #151922 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-theme="dark"]
+        .tutorial-icon {
+            background: #202b43 !important;
+        }
+
+        html[data-theme="dark"]
+        #tutorialBackButton {
+            background: #252b36 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-theme="dark"]
+        #tutorialCloseButton {
+            background: #252b36 !important;
+            color: #ffffff !important;
+        }
+
+    `;
+
+    document.head.appendChild(
+        style
+    );
+
+})();
+
+
+/* =========================================
+   FIX TUTORIAL SCROLL LOCK
+========================================= */
+
+function unlockPageScroll() {
+
+    document.documentElement.style.overflowY =
+        "auto";
+
+    document.body.style.overflow =
+        "";
+
+    document.body.style.overflowY =
+        "auto";
+
+    document.body.style.overflowX =
+        "hidden";
+
+}
+
+
+/* =========================================
+   TUTORIAL CLOSE WRAPPER
+========================================= */
+
+const originalCloseTutorial =
+    closeTutorial;
+
+closeTutorial = function(
+    markAsSeen = true
+) {
+
+    originalCloseTutorial(
+        markAsSeen
+    );
+
+    unlockPageScroll();
+
+};
+
+
+/* =========================================
+   TUTORIAL OPEN WRAPPER
+========================================= */
+
+const originalOpenTutorial =
+    openTutorial;
+
+openTutorial = function(
+    fromFirstStep = true
+) {
+
+    originalOpenTutorial(
+        fromFirstStep
+    );
+
+    if (tutorialOverlay) {
+
+        tutorialOverlay.style.overflowY =
+            "auto";
+
     }
 
-    .reminder-text span {
-        font-size: 10px;
-    }
+};
 
-    .reminder-settings {
-        grid-template-columns: 1fr;
-    }
 
-    .reminder-settings .secondary-button {
-        width: 100%;
+/* =========================================
+   FORCE PAGE SCROLL
+========================================= */
+
+setTimeout(
+    () => {
+
+        if (!tutorialIsOpen) {
+
+            unlockPageScroll();
+
+        }
+
+    },
+    1200
+);
+
+
+/* =========================================
+   AUTO OPEN TUTORIAL SETIAP APP DIBUKA
+========================================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        setTimeout(
+            () => {
+
+                if (
+                    tutorialOverlay &&
+                    !tutorialIsOpen
+                ) {
+
+                    openTutorial(
+                        true
+                    );
+
+                }
+
+            },
+            1500
+        );
+
     }
-                        }
+);
+
+
+/* =========================================
+   PWA SERVICE WORKER
+========================================= */
+
+if (
+    "serviceWorker" in navigator
+) {
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator.serviceWorker
+                .register(
+                    "./sw.js"
+                )
+                .then(
+                    () => {
+
+                        console.log(
+                            "PWA Service Worker aktif"
+                        );
+
+                    }
+                )
+                .catch(
+                    (error) => {
+
+                        console.error(
+                            "Service Worker gagal:",
+                            error
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+           }
