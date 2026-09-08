@@ -1602,3 +1602,678 @@ code {
     max-width: 100%;
     overflow-x: auto;
 }
+
+/* =========================================================
+   FINAL FIX - SESUAI STRUKTUR INDEX.HTML AKTUAL
+   JARAK KESEKOLAH
+========================================================= */
+
+/* =========================
+   APP HEADER
+========================= */
+
+.app-header {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 18px 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.brand-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.brand-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    color: #172033;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 850;
+    letter-spacing: .5px;
+}
+
+.brand-subtitle {
+    margin-top: 3px;
+    color: #6b7280;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.icon-button {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: #ffffff;
+    color: #172033;
+    border: 1px solid #e5e9f0;
+    box-shadow: 0 5px 18px rgba(23,32,51,.07);
+}
+
+.icon-button svg {
+    width: 21px;
+    height: 21px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main-content {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   PAGE HEADING
+========================= */
+
+.page-heading {
+    width: 100%;
+    padding: 8px 16px 18px;
+}
+
+.page-heading .eyebrow {
+    display: block;
+    margin-bottom: 6px;
+    color: #2563eb;
+    font-size: 10px;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.page-heading h1 {
+    color: #111827;
+    font-size: 28px;
+    line-height: 1.15;
+    font-weight: 850;
+    letter-spacing: -.7px;
+}
+
+.page-heading p {
+    margin-top: 7px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.section-title {
+    width: 100%;
+    padding: 8px 16px 12px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.section-title .eyebrow {
+    display: block;
+    margin-bottom: 4px;
+    color: #2563eb;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.section-title h2 {
+    color: #172033;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.text-button {
+    padding: 6px 2px;
+    background: transparent;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+
+/* =========================
+   LOCATION GRID
+========================= */
+
+.location-grid {
+    padding: 0 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.location-card {
+    width: 100%;
+    min-width: 0;
+    padding: 14px;
+    margin: 0;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e7ebf1;
+    box-shadow: 0 5px 18px rgba(23,32,51,.055);
+    overflow: hidden;
+}
+
+.location-card-top {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+}
+
+.location-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.location-icon svg,
+.location-card .home-icon svg,
+.location-card .school-icon svg {
+    width: 25px !important;
+    height: 25px !important;
+    max-width: 25px !important;
+    max-height: 25px !important;
+}
+
+.home-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.school-icon {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.location-label {
+    min-width: 0;
+    color: #6b7280;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .8px;
+}
+
+.location-value {
+    width: 100%;
+    margin-top: 12px;
+    color: #172033;
+    font-size: 13px;
+    line-height: 1.35;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.small-button {
+    width: 100%;
+    min-height: 36px;
+    margin-top: 11px;
+    padding: 0 10px;
+    border-radius: 10px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+
+/* =========================
+   DASHBOARD RESULT
+========================= */
+
+.result-grid {
+    padding: 0 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.result-card {
+    min-width: 0;
+    padding: 15px;
+    margin: 0;
+    border-radius: 17px;
+    background: #ffffff;
+    border: 1px solid #e7ebf1;
+    box-shadow: 0 5px 18px rgba(23,32,51,.05);
+}
+
+.result-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    border-radius: 11px;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.result-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+.result-card > span {
+    display: block;
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.result-card strong {
+    display: block;
+    margin-top: 3px;
+    color: #172033;
+    font-size: 19px;
+    line-height: 1.15;
+}
+
+
+/* =========================
+   PRIMARY BUTTON
+========================= */
+
+.primary-button {
+    width: calc(100% - 32px);
+    margin: 12px 16px 0;
+    min-height: 48px;
+    border-radius: 14px;
+    background: #2563eb;
+    color: #ffffff;
+    box-shadow: 0 8px 22px rgba(37,99,235,.2);
+}
+
+.primary-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* =========================
+   MAP PAGE
+========================= */
+
+.map-toolbar,
+.map-card,
+.map-info-card,
+.transport-grid,
+.active-speed-card,
+.route-result-card,
+.location-status-grid,
+.map-legend {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.map-toolbar {
+    margin-bottom: 12px;
+}
+
+.map-card {
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.map-card #map {
+    width: 100%;
+    height: 420px;
+    border-radius: 20px;
+}
+
+.map-info-card {
+    margin-top: 12px;
+    padding: 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 15px;
+    background: #ffffff;
+    border: 1px solid #e7ebf1;
+}
+
+.map-info-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.map-info-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.map-info-card strong {
+    display: block;
+    color: #172033;
+    font-size: 12px;
+}
+
+.map-info-card span {
+    display: block;
+    margin-top: 2px;
+    color: #6b7280;
+    font-size: 11px;
+}
+
+
+/* =========================
+   TRANSPORT
+========================= */
+
+.transport-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.transport-grid .transport-button {
+    min-width: 0;
+    min-height: 88px;
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.transport-grid .transport-button svg {
+    width: 25px;
+    height: 25px;
+}
+
+.transport-grid .transport-button span {
+    font-size: 11px;
+}
+
+.transport-grid .transport-button small {
+    color: #6b7280;
+    font-size: 9px;
+}
+
+.transport-grid .transport-button.active small {
+    color: rgba(255,255,255,.8);
+}
+
+
+/* =========================
+   ACTIVE SPEED
+========================= */
+
+.active-speed-card {
+    margin-top: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 14px;
+    background: #f8fafc;
+    border: 1px solid #e7ebf1;
+}
+
+.active-speed-card span {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.active-speed-card strong {
+    color: #172033;
+    font-size: 14px;
+}
+
+
+/* =========================
+   ROUTE RESULT
+========================= */
+
+.route-result-card {
+    margin-top: 12px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    border-radius: 17px;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+}
+
+.route-result-item {
+    text-align: center;
+}
+
+.route-result-item span {
+    display: block;
+    color: #64748b;
+    font-size: 10px;
+}
+
+.route-result-item strong {
+    display: block;
+    margin-top: 3px;
+    color: #172033;
+    font-size: 18px;
+}
+
+.route-result-divider {
+    width: 1px;
+    height: 32px;
+    background: #dbeafe;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.location-status-grid {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 8px;
+}
+
+.status-card {
+    min-width: 0;
+    padding: 12px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid #e7ebf1;
+}
+
+.status-card span {
+    display: block;
+    color: #6b7280;
+    font-size: 10px;
+}
+
+.status-card strong {
+    display: block;
+    margin-top: 3px;
+    color: #172033;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   DANGER BUTTON
+========================= */
+
+.danger-button {
+    width: calc(100% - 32px);
+    min-height: 44px;
+    margin: 9px 16px 0;
+    border-radius: 13px;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+
+/* =========================
+   MAP LEGEND
+========================= */
+
+.map-legend {
+    margin-top: 14px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    color: #6b7280;
+    font-size: 10px;
+}
+
+.map-legend > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.home-dot {
+    background: #2563eb;
+}
+
+.school-dot {
+    background: #dc2626;
+}
+
+.legend-line {
+    width: 18px;
+    height: 3px;
+    border-radius: 5px;
+    background: #2563eb;
+}
+
+
+/* =========================
+   MOBILE FIX
+========================= */
+
+@media (max-width: 380px) {
+
+    .app-header {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .page-heading {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .location-grid,
+    .result-grid {
+        padding-left: 12px;
+        padding-right: 12px;
+        gap: 9px;
+    }
+
+    .location-card {
+        padding: 12px;
+    }
+
+    .location-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+    }
+
+    .location-icon svg,
+    .location-card .home-icon svg,
+    .location-card .school-icon svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .page-heading h1 {
+        font-size: 25px;
+    }
+
+    .map-toolbar,
+    .map-card,
+    .map-info-card,
+    .transport-grid,
+    .active-speed-card,
+    .route-result-card,
+    .location-status-grid,
+    .map-legend {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .primary-button,
+    .danger-button {
+        width: calc(100% - 24px);
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+}
