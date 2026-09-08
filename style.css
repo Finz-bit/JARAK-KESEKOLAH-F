@@ -2788,3 +2788,1361 @@ button {
 ::selection {
     background: rgba(37, 99, 235, 0.18);
 }
+
+/* =========================================================
+   JARAK KESEKOLAH
+   UI POLISH - PART 1
+   KHUSUS TAMPILAN
+========================================================= */
+
+/* ---------- DASAR ---------- */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+/* ---------- APP HEADER ---------- */
+
+.app-header {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    padding: 14px 16px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    background: var(--bg);
+
+    position: relative;
+    z-index: 20;
+}
+
+.brand {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.brand-icon {
+    width: 48px;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: var(--primary);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 18px rgba(37, 99, 235, 0.22);
+}
+
+.brand-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+
+    max-width: 27px !important;
+    max-height: 27px !important;
+}
+
+.brand-text {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-title {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 17px;
+    line-height: 1.05;
+    font-weight: 900;
+
+    letter-spacing: -0.02em;
+
+    white-space: nowrap;
+}
+
+.brand-subtitle {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    line-height: 1.1;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+/* ---------- HEADER BUTTON ---------- */
+
+.icon-button {
+    width: 46px;
+    height: 46px;
+
+    flex: 0 0 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--surface);
+    color: var(--text-secondary);
+
+    box-shadow: var(--shadow-sm);
+
+    cursor: pointer;
+}
+
+.icon-button svg {
+    width: 21px !important;
+    height: 21px !important;
+
+    max-width: 21px !important;
+    max-height: 21px !important;
+}
+
+.icon-button:active {
+    transform: scale(0.95);
+}
+
+/* ---------- MAIN ---------- */
+
+.main-content {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    padding:
+        8px
+        16px
+        calc(var(--nav-height) + 28px);
+
+    overflow-x: hidden;
+}
+
+/* ---------- PAGE ---------- */
+
+.page {
+    width: 100%;
+}
+
+.page-heading {
+    width: 100%;
+
+    margin: 8px 0 20px;
+}
+
+.page-heading .eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--primary);
+
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-heading h1 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 29px;
+    line-height: 1.15;
+    font-weight: 850;
+
+    letter-spacing: -0.035em;
+}
+
+.page-heading p {
+    margin: 7px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+/* ---------- SECTION TITLE ---------- */
+
+.section-title {
+    width: 100%;
+
+    margin: 22px 0 11px;
+
+    color: var(--text);
+
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 850;
+}
+
+/* ---------- LOCATION GRID ---------- */
+
+.location-grid {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 11px;
+}
+
+.location-card {
+    width: 100%;
+    min-width: 0;
+
+    padding: 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 19px;
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+}
+
+.location-card-top {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.location-icon {
+    width: 45px;
+    height: 45px;
+
+    flex: 0 0 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+.location-icon svg,
+.home-icon svg,
+.school-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+
+    max-width: 27px !important;
+    max-height: 27px !important;
+
+    flex: 0 0 27px;
+}
+
+.home-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.school-icon {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.location-label {
+    min-width: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.location-value {
+    width: 100%;
+    min-height: 48px;
+
+    margin-top: 10px;
+
+    color: var(--text);
+
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 700;
+
+    overflow-wrap: anywhere;
+}
+
+.small-button {
+    width: 100%;
+
+    min-height: 38px;
+
+    margin-top: 10px;
+
+    padding: 7px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    background: var(--surface-soft);
+    color: var(--primary);
+
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+/* ---------- RESULT ---------- */
+
+.result-grid {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 11px;
+}
+
+.result-card {
+    width: 100%;
+    min-width: 0;
+
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.result-icon {
+    width: 44px;
+    height: 44px;
+
+    flex: 0 0 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.result-icon svg {
+    width: 23px !important;
+    height: 23px !important;
+
+    max-width: 23px !important;
+    max-height: 23px !important;
+}
+
+.result-card > div:last-child {
+    min-width: 0;
+}
+
+.result-card strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 20px;
+    line-height: 1.1;
+    font-weight: 850;
+}
+
+.result-card span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+/* ---------- PRIMARY BUTTON ---------- */
+
+.primary-button {
+    width: 100%;
+
+    min-height: 52px;
+
+    margin-top: 14px;
+
+    padding: 12px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: 0;
+    border-radius: 15px;
+
+    background: var(--primary);
+    color: #ffffff;
+
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 850;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.18);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.primary-button svg {
+    width: 20px !important;
+    height: 20px !important;
+
+    max-width: 20px !important;
+    max-height: 20px !important;
+}
+
+.primary-button:active {
+    transform: scale(0.98);
+
+    box-shadow:
+        0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+/* ---------- SECONDARY BUTTON ---------- */
+
+.secondary-button {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding: 11px 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 500px) {
+
+    .app-header {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .main-content {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .page-heading {
+        margin-top: 6px;
+        margin-bottom: 17px;
+    }
+
+    .page-heading h1 {
+        font-size: 27px;
+    }
+
+    .location-card {
+        padding: 12px;
+    }
+
+    .location-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+    }
+
+    .location-icon svg,
+    .home-icon svg,
+    .school-icon svg {
+        width: 25px !important;
+        height: 25px !important;
+
+        max-width: 25px !important;
+        max-height: 25px !important;
+    }
+
+    .location-value {
+        font-size: 12px;
+    }
+
+    .result-card {
+        padding: 13px;
+    }
+
+    .result-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .result-icon svg {
+        width: 21px !important;
+        height: 21px !important;
+    }
+}
+
+       /* =========================================================
+   UI POLISH - PART 2
+   PETA / JADWAL / LOKASI / PENGATURAN / NAVIGASI
+========================================================= */
+
+/* =========================================================
+   MAP TOOLBAR
+========================================================= */
+
+.map-toolbar {
+    width: 100%;
+    margin-bottom: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.map-toolbar .field-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.map-toolbar select {
+    width: 100%;
+    min-height: 46px;
+
+    padding: 10px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: 13px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   MAP CARD
+========================================================= */
+
+.map-card {
+    width: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+#map {
+    width: 100%;
+    height: 410px;
+
+    min-height: 320px;
+
+    background: #e2e8f0;
+}
+
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+
+    font-family: inherit;
+
+    z-index: 1;
+}
+
+.leaflet-control-zoom {
+    border: 0 !important;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.15) !important;
+}
+
+.leaflet-control-zoom a {
+    width: 36px !important;
+    height: 36px !important;
+
+    line-height: 36px !important;
+
+    border: 0 !important;
+
+    background: var(--surface) !important;
+    color: var(--text) !important;
+}
+
+.leaflet-control-attribution {
+    font-size: 9px !important;
+}
+
+/* =========================================================
+   MAP INFO
+========================================================= */
+
+.map-info-card {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 17px;
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.map-info-icon {
+    width: 44px;
+    height: 44px;
+
+    flex: 0 0 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.map-info-icon svg {
+    width: 23px !important;
+    height: 23px !important;
+}
+
+.map-info-card strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.map-info-card span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+/* =========================================================
+   TRANSPORT
+========================================================= */
+
+.transport-grid {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 9px;
+}
+
+.transport-button {
+    min-width: 0;
+
+    min-height: 76px;
+
+    padding: 9px 6px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: var(--surface);
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease;
+}
+
+.transport-button svg {
+    width: 25px !important;
+    height: 25px !important;
+
+    max-width: 25px !important;
+    max-height: 25px !important;
+}
+
+.transport-button.active {
+    border-color: var(--primary);
+
+    background: var(--primary-soft);
+    color: var(--primary);
+
+    box-shadow:
+        0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.transport-button:active {
+    transform: scale(0.96);
+}
+
+/* =========================================================
+   ACTIVE SPEED
+========================================================= */
+
+.active-speed-card {
+    width: 100%;
+
+    margin-top: 11px;
+
+    padding: 13px 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    border: 1px solid #dbeafe;
+    border-radius: 15px;
+
+    background: #eff6ff;
+}
+
+.active-speed-card span {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.active-speed-card strong {
+    color: var(--primary);
+
+    font-size: 14px;
+    font-weight: 850;
+}
+
+/* =========================================================
+   ROUTE RESULT
+========================================================= */
+
+.route-result-card {
+    width: 100%;
+
+    margin-top: 13px;
+
+    padding: 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 19px;
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.route-result-item {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.route-result-item strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 19px;
+    line-height: 1.15;
+    font-weight: 850;
+}
+
+.route-result-item span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.route-result-divider {
+    width: 1px;
+    height: 42px;
+
+    flex: 0 0 1px;
+
+    background: var(--border);
+}
+
+/* =========================================================
+   LOCATION STATUS
+========================================================= */
+
+.location-status-grid {
+    width: 100%;
+
+    margin-top: 13px;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+.status-card {
+    min-width: 0;
+
+    padding: 13px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: var(--surface);
+}
+
+.status-card strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.status-card span {
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+.status-card.status-ok {
+    border-color: #bbf7d0;
+    background: #f0fdf4;
+}
+
+.status-card.status-error {
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+
+/* =========================================================
+   DANGER
+========================================================= */
+
+.danger-button {
+    width: 100%;
+
+    min-height: 49px;
+
+    margin-top: 12px;
+
+    padding: 11px 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: 1px solid #fecaca;
+    border-radius: 14px;
+
+    background: #fef2f2;
+    color: #dc2626;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.danger-button svg {
+    width: 19px !important;
+    height: 19px !important;
+}
+
+/* =========================================================
+   SCHEDULE PAGE
+========================================================= */
+
+.schedule-grid {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+.schedule-info-card {
+    width: 100%;
+
+    padding: 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 17px;
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.schedule-info-card strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 18px;
+    line-height: 1.15;
+    font-weight: 850;
+}
+
+.schedule-info-card span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+.history-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.history-item {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    background: var(--surface);
+}
+
+.history-icon {
+    width: 39px;
+    height: 39px;
+
+    flex: 0 0 39px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.history-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.history-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.history-content strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.history-content span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+    width: 100%;
+
+    padding: 28px 18px;
+
+    border: 1px dashed var(--border);
+    border-radius: 18px;
+
+    background: var(--surface);
+
+    text-align: center;
+}
+
+.empty-state-icon {
+    width: 52px;
+    height: 52px;
+
+    margin: 0 auto 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: var(--surface-soft);
+    color: var(--text-muted);
+}
+
+.empty-state-icon svg {
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.empty-state strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.empty-state span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   SETTINGS / TUTORIAL CARD
+========================================================= */
+
+.settings-action-card {
+    width: 100%;
+
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 17px;
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.settings-action-icon {
+    width: 45px;
+    height: 45px;
+
+    flex: 0 0 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.settings-action-icon svg {
+    width: 23px !important;
+    height: 23px !important;
+}
+
+.settings-action-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.settings-action-content strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.settings-action-content span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* =========================================================
+   TEXT SAFETY
+========================================================= */
+
+.page p,
+.page span,
+.page strong,
+.page h1,
+.page h2,
+.page h3,
+.page label {
+    overflow-wrap: anywhere;
+}
+
+.page h1,
+.page h2,
+.page h3 {
+    word-break: normal;
+}
+
+/* =========================================================
+   FINAL SVG SAFETY
+   KHUSUS SVG APLIKASI — BUKAN LEAFLET
+========================================================= */
+
+.app-header svg,
+.location-card svg,
+.result-card svg,
+.primary-button svg,
+.secondary-button svg,
+.action-card svg,
+.settings-card svg,
+.settings-action-card svg,
+.transport-button svg,
+.map-info-card svg,
+.history-item svg,
+.danger-button svg,
+.google-maps-button svg,
+.gps-button svg,
+.bottom-nav svg,
+.tutorial-modal svg {
+    max-width: 100%;
+}
+
+/* =========================================================
+   MOBILE FINAL
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .map-toolbar {
+        gap: 8px;
+    }
+
+    #map {
+        height: 390px;
+    }
+
+    .route-result-card {
+        padding: 14px;
+    }
+
+    .route-result-item strong {
+        font-size: 17px;
+    }
+
+    .schedule-grid {
+        gap: 8px;
+    }
+
+    .option-grid {
+        gap: 6px;
+    }
+}
+
+/* =========================================================
+   EXTRA SMALL
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .transport-grid {
+        gap: 6px;
+    }
+
+    .transport-button {
+        min-height: 70px;
+        font-size: 11px;
+    }
+
+    .location-status-grid {
+        gap: 7px;
+    }
+
+    .status-card {
+        padding: 11px;
+    }
+
+    .bottom-nav {
+        width: calc(100% - 10px);
+    }
+
+    .nav-item {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+}
