@@ -2277,3 +2277,118 @@ code {
     }
 
 }
+
+/* =========================================
+   FIX IKON RUMAH & SEKOLAH
+   ========================================= */
+
+.location-card .location-icon {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    overflow: hidden !important;
+}
+
+.location-card .location-icon svg {
+    width: 56px !important;
+    height: 56px !important;
+
+    min-width: 56px !important;
+    min-height: 56px !important;
+
+    max-width: 56px !important;
+    max-height: 56px !important;
+
+    display: block !important;
+}
+
+
+/* RUMAH & SEKOLAH JANGAN MEMBESAR */
+.location-card {
+    overflow: hidden !important;
+}
+
+.location-card-top {
+    overflow: hidden !important;
+}
+
+
+/* TEKS KARTU */
+.location-card .location-label {
+    display: block !important;
+}
+
+.location-card .location-value {
+    display: block !important;
+}
+
+.location-card .small-button {
+    display: inline-flex !important;
+    width: auto !important;
+}
+
+
+/* =========================================
+   FIX IKON DI HEADER
+   ========================================= */
+
+.app-header .brand-icon {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.app-header .brand-icon svg {
+    width: 28px !important;
+    height: 28px !important;
+}
+
+
+/* =========================================
+   FIX SEMUA SVG BOTTOM NAV
+   ========================================= */
+
+.bottom-nav .nav-item svg {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+}
+
+
+/* =========================================
+   FIX TAMPILAN HP
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .location-card .location-icon {
+        width: 58px !important;
+        height: 58px !important;
+        min-width: 58px !important;
+        min-height: 58px !important;
+    }
+
+    .location-card .location-icon svg {
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        min-height: 50px !important;
+        max-width: 50px !important;
+        max-height: 50px !important;
+    }
+
+}
